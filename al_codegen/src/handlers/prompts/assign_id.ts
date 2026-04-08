@@ -12,28 +12,30 @@ import { z } from "zod";
  * path: "C:/Users/.../Mi proyecto/src/Tables"
 */
 export const registerAssignIdPrompt = (server: McpServer) => {
+    // Esquema JSON de validación de argumentos
     const promptSchema = {
         type: z.string().describe("Tipo de objeto (ej. table, page, report, codeunit, etc.)"),
         path: z.string().describe("Ruta absoluta a la carpeta raíz de la extensión AL (debe contener el archivo \"app.json\")"),
     };
 
-    server.registerPrompt(
-        "assign_id",
-        {
-            title: "Obtención dinámica de ID",
-            description: "Asigna y devuelve el siguiente ID disponible para un tipo de objeto dentro de una extensión AL",
-            argsSchema: promptSchema,
-        },
-        async (args) => ({
-            messages: [
-                {
-                    role: "user",
-                    content: {
-                        type: "text",
-                        text: `Asigna un ID para el tipo de objeto "${args.type}" en la extensión ubicada en "${args.path}".`,
-                    },
+    // Parámetros del prompt
+    const name = "assign_id";
+    const config = {
+        title: "Obtención dinámica de ID",
+        description: "Asigna y devuelve el siguiente ID disponible para un tipo de objeto dentro de una extensión AL",
+        argsSchema: promptSchema,
+    }
+
+    // Registro del prompt
+    server.registerPrompt(name, config, async (args) => ({
+        messages: [
+            {
+                role: "user",
+                content: {
+                    type: "text",
+                    text: `Asigna un ID para el tipo de objeto "${args.type}" en la extensión ubicada en "${args.path}".`,
                 },
-            ],
-        })
-    );
+            },
+        ],
+    }));
 }
