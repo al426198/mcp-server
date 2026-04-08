@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "bin": {
+    "al_codegen": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "files": [
+    "build"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  }
+}

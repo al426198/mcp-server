@@ -1,0 +1,3 @@
+# Ignorar módulos y compilación JS
+/node_modules/
+/build/
