@@ -8,7 +8,7 @@ export type TableMap = Map<string, string[]>;
 const SYMBOL_FILE = "SymbolReference.json";
 
 /**
- * Lee el fichero `.app` indicado, lo descomprime en memoria y extrae
+ * Lee el fichero `.app` indicado, lo descomprime en memoria y extrae el contenido del fichero
  * `SymbolReference.json`, devolviendo sus categorías como un objeto `TableMap`.
  *
  * @param appFilePath - Ruta absoluta o relativa al fichero `.app`.
@@ -16,7 +16,7 @@ const SYMBOL_FILE = "SymbolReference.json";
  *          y cuyos valores son listas de los campos de cada tabla.
  * @throws Si el fichero no existe, no es un fichero válido o no contiene `SymbolReference.json`.
  */
-export function extractAppTableSymbols(appFilePath: string): TableMap {
+export function extractAppSymbols(appFilePath: string): TableMap {
 
     // Abrir el archivo .app (es un archivo ZIP estándar)
     const zip = new AdmZip(appFilePath);
@@ -33,15 +33,17 @@ export function extractAppTableSymbols(appFilePath: string): TableMap {
         throw new Error(`El contenido de '${SYMBOL_FILE}' no es un objeto JSON válido.`);
     }
 
-    // Construir el diccionario de símbolos
+    /*
+    // Construir el diccionario de objetos
     const result: TableMap = new Map();
     const tableObjects: any[] = json["Tables"] || [];
     for (const obj of tableObjects) {
         result.set(obj["Name"], parseTable(obj));
     }
-    return result;
+    */
+    return json;
 }
-
+/*
 // Helper para obtener los campos de una tabla
 function parseTable(json: any): string[] {
     const fields: string[] = [];
@@ -50,3 +52,4 @@ function parseTable(json: any): string[] {
     }
     return fields;
 }
+*/
