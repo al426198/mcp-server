@@ -6,10 +6,11 @@ import { z } from "zod";
  * 
  * Asigna y devuelve el siguiente ID disponible para un tipo de objeto dentro de una extensión AL
  * @param type - Tipo de objeto (ej. table, page, report, codeunit, etc.)
- * @param path - Ruta absoluta a la carpeta raíz de la extensión AL (debe contener el archivo "app.json")
+ * @param path - Ruta absoluta a la carpeta raíz de la extensión AL (debe contener el archivo "app.json").
+ *               Suele llamarse "src".
  * @example
  * type: "table",
- * path: "C:/Users/.../Mi proyecto/src/Tables"
+ * path: "C:/Users/.../<NOMBRE_PROYECTO>/src"
 */
 export const registerAssignIdPrompt = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
