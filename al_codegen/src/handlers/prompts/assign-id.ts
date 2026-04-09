@@ -19,7 +19,7 @@ export const registerAssignIdPrompt = (server: McpServer) => {
     };
 
     // Parámetros del prompt
-    const name = "assign_id";
+    const name = "assign-id";
     const config = {
         title: "Obtención dinámica de ID",
         description: "Asigna y devuelve el siguiente ID disponible para un tipo de objeto dentro de una extensión AL",
