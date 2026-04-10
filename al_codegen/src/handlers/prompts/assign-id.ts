@@ -1,6 +1,19 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
+// Tipos de objetos disponibles en AL
+const TYPES = [
+    "table",
+    "page",
+    "report",
+    "codeunit",
+    "xmlport",
+    "query",
+    "enum",
+    "tableextension",
+    "pageextension",
+]
+
 /**
  * HU102: Obtención dinámica de ID
  * 
@@ -15,7 +28,7 @@ import { z } from "zod";
 export const registerAssignIdPrompt = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const promptSchema = {
-        type: z.string().describe("Tipo de objeto (ej. table, page, report, codeunit, etc.)"),
+        type: z.enum(TYPES).describe("Tipo de objeto (ej. table, page, report, codeunit, etc.)"),
         path: z.string().describe("Ruta absoluta a la carpeta raíz de la extensión AL (debe contener el archivo \"app.json\")"),
     };
 
