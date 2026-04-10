@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-// IMPORTAR MÁS PROMPTS
+import { registerAssignIdPrompt } from "./assign-id.js";
 
 /**
  * Registra peticiones (prompts) en el servidor MCP.
@@ -7,4 +7,5 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
  * @param server - Instancia del servidor MCP
  */
 export const registerPrompts = (server: McpServer) => {
+    registerAssignIdPrompt(server);
 };
