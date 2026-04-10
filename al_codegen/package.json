@@ -4,6 +4,8 @@
     "al_codegen": "./build/index.js"
   },
   "scripts": {
+    "genkey": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
+    "show": "npm run build && npx @modelcontextprotocol/inspector node ./build/index.js MCP_PROXY_AUTH_TOKEN=$(npm run genkey --silent)",
     "build": "tsc"
   },
   "files": [
