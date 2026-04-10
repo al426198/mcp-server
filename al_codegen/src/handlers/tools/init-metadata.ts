@@ -10,7 +10,7 @@ import { readMetadataFolder } from "../../utils/metadata.js";
  * 
  * @param route - Ruta al directorio que contiene los ficheros `.app`. Por defecto, la ruta es `./.alpackages` desde la raíz del proyecto.
  * 
- * @returns Un objeto JSON con los metadatos de los objetos AL
+ * @returns Un mensaje de confirmación indicando si los metadatos han sido obtenidos correctamente o si ya existen, o un mensaje de error si se ha producido un error.
  */
 export const registerInitMetadataTool = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
@@ -49,6 +49,9 @@ export const registerInitMetadataTool = (server: McpServer) => {
                     {
                         type: "text",
                         text: response,
+                        annotations: {
+                            audience: ["assistant"]         // Solo visible para el agente
+                        }
                     },
                 ],
             };

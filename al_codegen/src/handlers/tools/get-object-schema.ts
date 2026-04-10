@@ -11,9 +11,17 @@ import { readMetadata, CATEGORIES } from "../../utils/metadata.js";
  * @param category  - Categoría del objeto AL
  * @param name      - Nombre del objeto AL
  * @param route     - Ruta absoluta al fichero `.app` de la extensión AL. 
- *                    El nombre debería ser: `<publisher>_<name>_<version>.app` desde la raíz del proyecto.
+ *                    El nombre debería ser: `<publisher>_<name>_<version>.app`, obtenidos del fichero `app.json`.
  * 
- * @returns Un objeto JSON con el esquema del objeto AL
+ * @returns Un objeto JSON con el esquema del objeto AL o un mensaje de error si no existe
+ * @example
+ * ```json
+ * {
+ *  "category": "Tables",
+ *  "name": "Customer",
+ *  "route": "C:/Users/.../Default Publisher_Ejemplo_1.0.0.0.app"
+ * }
+ * ``` 
  */
 export const registerGetObjectSchemaTool = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
