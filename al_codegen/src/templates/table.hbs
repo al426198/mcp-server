@@ -2,7 +2,7 @@ table {{id}} "{{name}}"
 {
 
 {{#each properties}}
-{{this.key}} = {{this.value}};
+{{@key}} = {{this}};
 {{/each}}
 
 fields
@@ -11,7 +11,7 @@ fields
 field({{id}}; "{{name}}"; {{type}})
 {
 {{#each properties}}
-{{this.key}} = {{this.value}};
+{{@key}} = {{this}};
 {{/each}}
 }
 {{/each}}

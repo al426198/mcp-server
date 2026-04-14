@@ -12,7 +12,7 @@ const fieldSchema = z.object({
     id: z.number().describe("ID del campo. Debe ser único dentro de la tabla."),
     name: z.string().describe("Nombre del campo."),
     type: z.string().describe("Tipo del campo."),
-    properties: z.record(z.string(), z.string()).optional().describe("Propiedades clave-valor del campo.")
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del campo.")
 });
 
 // Esquema de validación de claves
@@ -80,10 +80,10 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const argsSchema = {
         id: z.number().describe("ID del objeto. Debe ser único dentro de la extensión AL actual."),
         name: z.string().describe("Nombre del objeto. Debe ser único dentro de la extensión AL actual."),
-        properties: z.record(z.string(), z.string()).optional().describe("Propiedades clave-valor del objeto AL."),
+        properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL."),
         fields: z.array(fieldSchema).describe("Campos del objeto AL."),
-        keys: z.array(keySchema).describe("Claves del objeto AL."),
-        fieldGroups: z.array(fieldGroupSchema).describe("Grupos de campos del objeto AL.")
+        keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL."),
+        fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL.")
     };
 
     // Parámetros del prompt
@@ -98,39 +98,21 @@ export const registerGenerateTableTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            // Transform properties from record to array of {key, value} for the template
-            const transformProperties = (props?: Record<string, string>) => {
-                if (!props) return [];
-                return Object.entries(props).map(([key, value]) => ({ key, value }));
-            };
-
-            const data = {
-                ...args,
-                properties: transformProperties(args.properties as Record<string, string>),
-                fields: (args.fields as any[]).map(f => ({
-                    ...f,
-                    properties: transformProperties(f.properties)
-                })),
-                fieldGroups: args.fieldGroups // Asegurar que coincide con la plantilla
-            };
-
+            // Generación de la tabla
             try {
-                // Lectura de la plantilla
-                const templatePath = path.join(__root, "/templates/table.hbs");
-                const templateSource = await fs.readFile(templatePath, "utf-8");
+                const templateSource = await fs.readFile(path.join(__root, "/templates/table.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
-
-                const result = template(data);
-
                 return {
                     content: [
                         {
                             type: "text",
-                            text: result,
+                            text: template(args),
                         },
                     ],
                 };
-            } catch (error: any) {
+            }
+
+            catch (error: any) {
                 return {
                     isError: true,
                     content: [
