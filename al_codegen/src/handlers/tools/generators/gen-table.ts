@@ -35,6 +35,7 @@ const fieldGroupSchema = z.object({
 /**
  * HU201: Generación de tablas en lenguaje AL 
  * Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers).
+ * Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.
  * 
  * @param id - ID del objeto. Debe ser único dentro de la extensión AL actual.
  * @param name - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
@@ -50,8 +51,8 @@ const fieldGroupSchema = z.object({
  *  "id": 1,
  *  "name": "Customer",
  *  "properties": {
- *      "Caption": "Cliente"
- *      "DataClassification": "ToBeClassified"
+ *      "Caption": 'Cliente',
+ *      "DataClassification": ToBeClassified
  *  },
  *  "fields": [
  *      {
@@ -94,7 +95,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const name = "generate-table";
     const config = {
         title: "Generar tabla AL",
-        description: "Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers)",
+        description: "Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers). Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.",
         inputSchema: argsSchema,
     }
 

@@ -7,11 +7,11 @@ import { readMetadata, CATEGORIES, combineMetadata } from "../../utils/metadata.
 /**
  * HU101: Acceso al esquema de un objeto BC
  * 
- * Obtiene el esquema de un objeto de la extensión AL actual. Se asume que los metadatos de la extensión base ya existen
+ * Obtiene el esquema de un objeto de la extensión AL actual.
+ * Se asume que los metadatos de la extensión base ya están inicializados.
+ * 
  * @param category  - Categoría del objeto AL
  * @param name      - Nombre del objeto AL
- * @param route     - Ruta absoluta al fichero `.app` de la extensión AL. 
- *                    El nombre debería ser: `<publisher>_<name>_<version>.app`, obtenidos del fichero `app.json`.
  * 
  * @returns Un objeto JSON con el esquema del objeto AL o un mensaje de error si no existe.
  * 
@@ -28,15 +28,14 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const argsSchema = {
         category: z.enum(CATEGORIES).describe("Categoría del objeto AL"),
-        name: z.string().describe("Nombre del objeto AL"),
-        route: z.string().describe("Ruta absoluta al fichero `.app` de la extensión AL. El nombre debería ser: `<publisher>_<name>_<version>.app` desde la raíz del proyecto."),
+        name: z.string().describe("Nombre del objeto AL")
     };
 
     // Parámetros del prompt
     const name = "get-object-schema";
     const config = {
         title: "Obtener esquema de objeto AL",
-        description: "Obtiene el esquema de un objeto de la extensión AL actual. Se asume que los metadatos de la extensión base ya existen.",
+        description: "Obtiene el esquema de un objeto de la extensión AL actual. Se asume que los metadatos de la extensión AL ya están inicializados.",
         inputSchema: argsSchema,
     }
 
@@ -47,11 +46,8 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
             // Obtener metadatos del entorno
             const envMetadata = JSON.parse(process.env.AL_METADATA || "{}");
 
-            // Combinar metadatos de la extensión AL con los del entorno
-            const metadata = combineMetadata([envMetadata, readMetadata(args.route)]);
-
             // Buscar el objeto en los metadatos
-            const entry = metadata[args.category][args.name];
+            const entry = envMetadata[args.category][args.name];
             const found = entry !== undefined;
 
             // Si no se encuentra el objeto, devolver un mensaje de error

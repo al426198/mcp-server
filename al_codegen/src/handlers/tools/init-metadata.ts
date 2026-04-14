@@ -1,8 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { readMetadataFolder } from "../../utils/metadata.js";
-
+import { readMetadataFolder, readMetadata, combineMetadata } from "../../utils/metadata.js";
 
 /**
  * Obtiene los metadatos de la extensión AL base.
@@ -14,7 +13,8 @@ import { readMetadataFolder } from "../../utils/metadata.js";
 export const registerInitMetadataTool = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const argsSchema = {
-        route: z.string().describe("Ruta al directorio que contiene los ficheros `.app`. Por defecto, la ruta es `./.alpackages` desde la raíz del proyecto."),
+        base_route: z.string().describe("Ruta al directorio que contiene los ficheros `.app`. Por defecto, la ruta es `./.alpackages` desde la raíz del proyecto."),
+        app_route: z.string().describe("Ruta absoluta al fichero `.app` de la extensión AL. El nombre debería ser: `<publisher>_<name>_<version>.app` desde la raíz del proyecto."),
     };
 
     // Parámetros del prompt
@@ -29,27 +29,22 @@ export const registerInitMetadataTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            let response: string;
+            // Obtener metadatos de la extensión base. Si no existen, leerlos de la carpeta `.alpackages`.
+            let envMetadata = process.env.AL_METADATA ? JSON.parse(process.env.AL_METADATA) : readMetadataFolder(args.base_route);
 
-            // Verificar si los metadatos ya han sido obtenidos
-            if (process.env.AL_METADATA) {
-                response = `Los metadatos ya existen en el entorno.`;
-            } else {
-                try {
-                    process.env.AL_METADATA = JSON.stringify(readMetadataFolder(args.route));
-                    response = `Metadatos obtenidos correctamente`;
-                } catch (error) {
-                    response = `Error al obtener los metadatos: ${error}`;
-                }
-            }
+            // Combinar con los metadatos de la extensión actual
+            const metadata = combineMetadata([envMetadata, readMetadata(args.app_route)]);
+
+            // Guardar los metadatos en el entorno
+            process.env.AL_METADATA = JSON.stringify(metadata);
 
             return {
                 content: [
                     {
                         type: "text",
-                        text: response,
+                        text: JSON.stringify(metadata, null, 2),
                         annotations: {
-                            audience: ["assistant"]         // Solo visible para el agente
+                            audience: ["assistant"]                 // Solo visible para el agente
                         }
                     },
                 ],
