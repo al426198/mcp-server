@@ -30,7 +30,7 @@ Clustered = true;
 }
 
 {{#each fieldGroups}}
-fieldgroup({{name}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+fieldgroup({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
 {
 }
 {{/each}}

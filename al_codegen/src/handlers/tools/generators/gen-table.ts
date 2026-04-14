@@ -1,11 +1,14 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import { __root } from "../../../index.js";
+
 import Handlebars from "handlebars";
 import fs from "fs/promises";
-import { __root } from "../../../index.js";
 import path from "path";
 
+// Tipos de grupos de campos que soporta AL
+const FG_TYPES = ["DropDown", "Brick"];
 
 // Esquema de validación de campos
 const fieldSchema = z.object({
@@ -24,7 +27,7 @@ const keySchema = z.object({
 
 // Esquema de validación de grupos de campos
 const fieldGroupSchema = z.object({
-    name: z.string().describe("Nombre del grupo de campos."),
+    type: z.enum(FG_TYPES).describe("Tipo del grupo de campos. Solo funciona DropDown."),
     fieldNames: z.array(z.string()).describe("Nombres de los campos del grupo.")
 });
 
@@ -35,10 +38,10 @@ const fieldGroupSchema = z.object({
  * 
  * @param id - ID del objeto. Debe ser único dentro de la extensión AL actual.
  * @param name - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
- * @param properties - Propiedades clave-valor del objeto AL.
+ * @param properties - Propiedades clave-valor del objeto AL (opcional).
  * @param fields - Campos del objeto AL.
- * @param keys - Claves del objeto AL.
- * @param fieldGroups - Grupos de campos del objeto AL.
+ * @param keys - Claves del objeto AL (opcional).
+ * @param fieldGroups - Grupos de campos del objeto AL (opcional).
  * 
  * @returns La tabla AL generada.
  * @example
@@ -47,7 +50,8 @@ const fieldGroupSchema = z.object({
  *  "id": 1,
  *  "name": "Customer",
  *  "properties": {
- *      "Caption": "Customer"
+ *      "Caption": "Cliente"
+ *      "DataClassification": "ToBeClassified"
  *  },
  *  "fields": [
  *      {
@@ -55,7 +59,7 @@ const fieldGroupSchema = z.object({
  *          "name": "No.",
  *          "type": "Code",
  *          "properties": {
- *              "Caption": "No."
+ *              "Caption": "N.º"
  *          }
  *      }
  *  ],
@@ -68,7 +72,7 @@ const fieldGroupSchema = z.object({
  *  ],
  *  "fieldGroups": [
  *      {
- *          "name": "General",
+ *          "type": "DropDown",
  *          "fieldNames": ["No."]
  *      }
  *  ]
@@ -80,10 +84,10 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const argsSchema = {
         id: z.number().describe("ID del objeto. Debe ser único dentro de la extensión AL actual."),
         name: z.string().describe("Nombre del objeto. Debe ser único dentro de la extensión AL actual."),
-        properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL."),
+        properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
         fields: z.array(fieldSchema).describe("Campos del objeto AL."),
-        keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL."),
-        fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL.")
+        keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
+        fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL (opcional).")
     };
 
     // Parámetros del prompt
@@ -98,10 +102,12 @@ export const registerGenerateTableTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            // Generación de la tabla
             try {
+                // Lectura de la plantilla Handlebars
                 const templateSource = await fs.readFile(path.join(__root, "/templates/table.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
+
+                // Generación de la tabla
                 return {
                     content: [
                         {
