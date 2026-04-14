@@ -5,8 +5,7 @@ import { readMetadataFolder } from "../../utils/metadata.js";
 
 
 /**
- * Obtiene los metadatos generales de BC.
- * Debe ejecutarse una vez tras iniciar el servidor.
+ * Obtiene los metadatos de la extensión AL base.
  * 
  * @param route - Ruta al directorio que contiene los ficheros `.app`. Por defecto, la ruta es `./.alpackages` desde la raíz del proyecto.
  * 
@@ -21,8 +20,8 @@ export const registerInitMetadataTool = (server: McpServer) => {
     // Parámetros del prompt
     const name = "init-object-metadata";
     const config = {
-        title: "Inicializar metadatos de objetos",
-        description: "Obtiene los metadatos generales de los objetos de BC. Se asume que todas las extensiones AL comparten estos archivos, por lo que no debería ejecutarse más de una vez.",
+        title: "Inicializar metadatos de la extensión base",
+        description: "Obtiene los metadatos de la extensión AL base.",
         inputSchema: argsSchema,
     }
 

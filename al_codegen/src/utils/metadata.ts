@@ -38,13 +38,11 @@ export const CATEGORIES = [
  *          o el contenido de dicho fichero no es válido.
  */
 export function extractAppSymbols(appFilePath: string): ObjectMap {
-    // Los ficheros .app de Business Central tienen una cabecera propietaria
-    // antes del contenido ZIP. Buscamos la firma mágica PK (0x50 0x4B 0x03 0x04)
-    // y recortamos el buffer desde ahí para que AdmZip pueda abrirlo.
+    // Recortar el fichero `.app` a partir de la cabecera ZIP (0x50 0x4B 0x03 0x04)
     const rawBuffer = fs.readFileSync(appFilePath);
     const zipOffset = rawBuffer.indexOf(Buffer.from([0x50, 0x4B, 0x03, 0x04]));
     if (zipOffset === -1) {
-        throw new Error(`No se encontró contenido ZIP válido en '${appFilePath}'.`);
+        throw new Error(`No se encontró la cabecera esperada en '${appFilePath}'.`);
     }
     const zip = new AdmZip(rawBuffer.subarray(zipOffset));
 
@@ -75,6 +73,7 @@ export function extractAppSymbols(appFilePath: string): ObjectMap {
 
 /**
  * Procesa un objeto JSON deserializado correspondiente a un objeto AL.
+ * Por ahora, devuelve el mismo objeto.
  * @param obj - Objeto JSON
  * @returns El mismo objeto
  */
@@ -112,32 +111,46 @@ export function readMetadata(filePath: string): ObjectMap {
  * @returns Un Map que combina todos los metadatos encontrados, organizados por categoría.
  */
 export function readMetadataFolder(directoryPath: string): ObjectMap {
-    const combinedMetadata: ObjectMap = {};
+    var combinedMetadata: ObjectMap = {};
 
     // Verificar que el directorio existe
     if (!fs.existsSync(directoryPath)) {
         throw new Error(`El directorio '${directoryPath}' no existe.`);
     }
 
-    // Leer todos los ficheros .app del directorio
+    // Leer todos los ficheros `.app` del directorio
     const files = fs.readdirSync(directoryPath);
     const appFiles = files.filter(f => f.toLowerCase().endsWith(".app"));
 
-    // Procesar cada fichero .app
+    // Procesar cada fichero `.app`
     for (const file of appFiles) {
         const filePath = path.join(directoryPath, file);
         try {
-            const appMetadata = readMetadata(filePath);
+            // Combinar los metadatos del fichero `.app` con los metadatos existentes
+            combinedMetadata = combineMetadata([combinedMetadata, readMetadata(filePath)]);
+        } catch (error: any) {
+            throw new Error(`Error procesando el fichero '${filePath}': ${error.message}`);
+        }
+    }
 
-            // Combinar con los metadatos existentes
-            for (const category in appMetadata) {
-                if (!combinedMetadata[category]) {
-                    combinedMetadata[category] = {};
-                }
-                Object.assign(combinedMetadata[category], appMetadata[category]);
+    return combinedMetadata;
+}
+
+/**
+ * Combina múltiples mapas de metadatos en uno solo.
+ * 
+ * @param maps - Array de mapas de metadatos a combinar.
+ * @returns Un mapa que contiene todos los metadatos combinados.
+ */
+export function combineMetadata(maps: ObjectMap[]): ObjectMap {
+    const combinedMetadata: ObjectMap = {};
+
+    for (const map of maps) {
+        for (const category in map) {
+            if (!combinedMetadata[category]) {
+                combinedMetadata[category] = {};
             }
-        } catch (error) {
-            throw new Error(`Error procesando el directorio '${directoryPath}': ${error}`);
+            Object.assign(combinedMetadata[category], map[category]);
         }
     }
 

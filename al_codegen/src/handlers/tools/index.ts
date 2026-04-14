@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerGetObjectSchemaTool } from "./get-object-schema.js";
 import { registerInitMetadataTool } from "./init-metadata.js";
+import { registerGenerateTableTool } from "./generators/gen-table.js";
 
 /**
  * Registra herramientas en el servidor MCP.
@@ -9,4 +10,5 @@ import { registerInitMetadataTool } from "./init-metadata.js";
 export const registerTools = (server: McpServer) => {
     registerGetObjectSchemaTool(server);
     registerInitMetadataTool(server);
+    registerGenerateTableTool(server);
 };

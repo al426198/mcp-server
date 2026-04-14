@@ -3,23 +3,28 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { registerTools } from "./handlers/tools/index.js";
 import { registerResources } from "./handlers/resources/index.js";
 import { registerPrompts } from "./handlers/prompts/index.js";
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-// == CREAR INSTANCIA DE SERVIDOR ==
+// Obtiene la ruta raíz del proyecto. Útil para trabajar con rutas absolutas.
+export const __root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+// Crear instancia del servidor
 const server = new McpServer({
     name: "al_codegen",
     version: "1.0.0",
 });
 
-// == REGISTRAR HERRAMIENTAS ==
+// Registrar herramientas
 registerTools(server);
 
-// == REGISTRAR RECURSOS ==
+// Registrar recursos
 registerResources(server);
 
-// == REGISTRAR PROMPTS ==
+// Registrar prompts
 registerPrompts(server);
 
-// == INICIO DEL SERVIDOR ==
+// Iniciar servidor
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);

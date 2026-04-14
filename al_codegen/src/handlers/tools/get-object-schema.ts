@@ -1,19 +1,20 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { readMetadata, CATEGORIES } from "../../utils/metadata.js";
+import { readMetadata, CATEGORIES, combineMetadata } from "../../utils/metadata.js";
 
 
 /**
  * HU101: Acceso al esquema de un objeto BC
  * 
- * Obtiene el esquema de un objeto de la extensión AL actual.
+ * Obtiene el esquema de un objeto de la extensión AL actual. Se asume que los metadatos de la extensión base ya existen
  * @param category  - Categoría del objeto AL
  * @param name      - Nombre del objeto AL
  * @param route     - Ruta absoluta al fichero `.app` de la extensión AL. 
  *                    El nombre debería ser: `<publisher>_<name>_<version>.app`, obtenidos del fichero `app.json`.
  * 
- * @returns Un objeto JSON con el esquema del objeto AL o un mensaje de error si no existe
+ * @returns Un objeto JSON con el esquema del objeto AL o un mensaje de error si no existe.
+ * 
  * @example
  * ```json
  * {
@@ -35,7 +36,7 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
     const name = "get-object-schema";
     const config = {
         title: "Obtener esquema de objeto AL",
-        description: "Obtiene el esquema de un objeto de la extensión AL actual",
+        description: "Obtiene el esquema de un objeto de la extensión AL actual. Se asume que los metadatos de la extensión base ya existen.",
         inputSchema: argsSchema,
     }
 
@@ -44,24 +45,28 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
         config,
         async (args): Promise<CallToolResult> => {
             // Obtener metadatos del entorno
-            // Deberían combinarse a posteriori con los metadatos de la extensión AL
-            // const metadata = JSON.parse(process.env.AL_METADATA || "{}");
+            const envMetadata = JSON.parse(process.env.AL_METADATA || "{}");
 
-            // Leer metadatos de la extensión AL
-            const metadata = readMetadata(args.route);
+            // Combinar metadatos de la extensión AL con los del entorno
+            const metadata = combineMetadata([envMetadata, readMetadata(args.route)]);
 
             // Buscar el objeto en los metadatos
             const entry = metadata[args.category][args.name];
+            const found = entry !== undefined;
 
             // Si no se encuentra el objeto, devolver un mensaje de error
-            const response = entry === undefined ? `Objeto ${args.name} no encontrado en la categoría ${args.category}` : JSON.stringify(entry, null, 2);
+            const response = found ? JSON.stringify(entry, null, 2) : `Objeto ${args.name} no encontrado en la categoría ${args.category}`;
 
             // Respuesta del servidor
             return {
+                isError: !found,
                 content: [
                     {
                         type: "text",
                         text: response,
+                        annotations: {
+                            audience: ["assistant"]         // Solo visible para el agente
+                        }
                     },
                 ],
             };
