@@ -123,11 +123,12 @@ export function readMetadataFolder(directoryPath: string): ObjectMap {
     const appFiles = files.filter(f => f.toLowerCase().endsWith(".app"));
 
     // Procesar cada fichero `.app`
+    let metadata: ObjectMap = {};
     for (const file of appFiles) {
         const filePath = path.join(directoryPath, file);
         try {
             // Combinar los metadatos del fichero `.app` con los metadatos existentes
-            combinedMetadata = combineMetadata([combinedMetadata, readMetadata(filePath)]);
+            metadata = combineMetadata([combinedMetadata, readMetadata(filePath)]);
         } catch (error: any) {
             throw new Error(`Error procesando el fichero '${filePath}': ${error.message}`);
         }

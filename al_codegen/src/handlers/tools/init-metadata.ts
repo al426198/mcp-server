@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { readMetadataFolder, readMetadata, combineMetadata } from "../../utils/metadata.js";
+import { readMetadata, combineMetadata } from "../../utils/metadata.js";
 
 /**
  * Obtiene los metadatos de la extensión AL base.
@@ -13,15 +13,14 @@ import { readMetadataFolder, readMetadata, combineMetadata } from "../../utils/m
 export const registerInitMetadataTool = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const argsSchema = {
-        base_route: z.string().describe("Ruta al directorio que contiene los ficheros `.app`. Por defecto, la ruta es `./.alpackages` desde la raíz del proyecto."),
         app_route: z.string().describe("Ruta absoluta al fichero `.app` de la extensión AL. El nombre debería ser: `<publisher>_<name>_<version>.app` desde la raíz del proyecto."),
     };
 
     // Parámetros del prompt
     const name = "init-object-metadata";
     const config = {
-        title: "Inicializar metadatos de la extensión base",
-        description: "Obtiene los metadatos de la extensión AL base.",
+        title: "Inicializar metadatos de la extensión AL",
+        description: "Obtiene los metadatos de la extensión AL. Sobreescribe los datos de la extensión AL anterior, si hubiera.",
         inputSchema: argsSchema,
     }
 
@@ -29,20 +28,30 @@ export const registerInitMetadataTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            // Obtener metadatos de la extensión base. Si no existen, leerlos de la carpeta `.alpackages`.
-            let envMetadata = process.env.AL_METADATA ? JSON.parse(process.env.AL_METADATA) : readMetadataFolder(args.base_route);
+            let hasError = false;
+            let response = "";
 
-            // Combinar con los metadatos de la extensión actual
-            const metadata = combineMetadata([envMetadata, readMetadata(args.app_route)]);
+            try {
+                // Combinar con los metadatos de la extensión actual
+                const metadata = combineMetadata([JSON.parse(process.env.AL_METADATA || "{}"), readMetadata(args.app_route)]);
 
-            // Guardar los metadatos en el entorno
-            process.env.AL_METADATA = JSON.stringify(metadata);
+                // Guardar en el entorno
+                process.env.AL_METADATA = JSON.stringify(metadata, null, 2);
+
+                // Respuesta del servidor
+                response = "Metadatos leídos exitosamente";
+            }
+            catch (error: any) {
+                hasError = true;
+                response = `Error al obtener los metadatos: ${error.message}`;
+            }
 
             return {
+                isError: hasError,
                 content: [
                     {
                         type: "text",
-                        text: JSON.stringify(metadata, null, 2),
+                        text: "Metadatos leídos exitosamente",
                         annotations: {
                             audience: ["assistant"]                 // Solo visible para el agente
                         }

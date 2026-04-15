@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { readMetadata, CATEGORIES, combineMetadata } from "../../utils/metadata.js";
+import { CATEGORIES } from "../../utils/metadata.js";
 
 
 /**
