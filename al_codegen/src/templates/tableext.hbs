@@ -1,9 +1,9 @@
-table {{id}} "{{name}}"
+tableextension {{id}} "{{name}}" extends "{{target}}"
 {
     {{#each properties}}
     {{@key}} = {{this}};
     {{/each}}
-
+    {{#if showFields}}
     fields
     {
         {{#each fields}}
@@ -14,8 +14,17 @@ table {{id}} "{{name}}"
             {{/each}}
         }
         {{/each}}
+
+        {{#each modifyFields}}
+        modify("{{name}}")
+        {
+            {{#each properties}}
+            {{@key}} = {{this}};
+            {{/each}}
+        }
+        {{/each}}
     }
-    
+    {{/if}}
     {{#if keys}}
     keys
     {
@@ -33,30 +42,10 @@ table {{id}} "{{name}}"
     fieldgroups 
     {
         {{#each fieldGroups}}
-        fieldgroup({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+        addlast({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
         {
         }
         {{/each}}
     }
     {{/if}}
-
-    trigger OnInsert()
-    begin
-
-    end;
-
-    trigger OnModify()
-    begin
-
-    end;
-
-    trigger OnDelete()
-    begin
-
-    end;
-
-    trigger OnRename()
-    begin
-
-    end;
 }
