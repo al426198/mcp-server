@@ -1,0 +1,59 @@
+table {{id}} "{{name}}"
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    fields
+    {
+        {{#each fields}}
+        field({{id}}; "{{name}}"; {{type}})
+        {
+            {{#each properties}}
+            {{@key}} = {{this}};
+            {{/each}}
+        }
+        {{/each}}
+    }
+
+    keys
+    {
+        {{#each keys}}
+        key({{name}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+        {
+            {{#if clustered}}
+            Clustered = true;
+            {{/if}}
+        }
+        {{/each}}
+    }
+
+    fieldgroups 
+    {
+        {{#each fieldGroups}}
+        fieldgroup({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+        {
+        }
+        {{/each}}
+    }
+
+    trigger OnInsert()
+    begin
+
+    end;
+
+    trigger OnModify()
+    begin
+
+    end;
+
+    trigger OnDelete()
+    begin
+
+    end;
+
+    trigger OnRename()
+    begin
+
+    end;
+}

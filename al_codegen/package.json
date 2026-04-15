@@ -5,7 +5,7 @@
   },
   "scripts": {
     "genkey": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
-    "show": "npm run build && npx @modelcontextprotocol/inspector node ./build/index.js MCP_PROXY_AUTH_TOKEN=$(npm run genkey --silent)",
+    "show": "npm run build && npx @modelcontextprotocol/inspector node ./build/index.js MCP_PROXY_AUTH_TOKEN=$(npm run genkey)",
     "build": "tsc"
   },
   "files": [
@@ -14,11 +14,15 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "adm-zip": "^0.5.17",
+    "dotenv": "^17.4.2",
+    "handlebars": "^4.7.9",
+    "stream-json": "^2.1.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.5.8",
     "@types/node": "^25.5.0",
+    "@types/stream-json": "^1.7.8",
     "typescript": "^6.0.2"
   }
 }

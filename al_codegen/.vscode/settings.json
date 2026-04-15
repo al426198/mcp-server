@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        // Evita que los ficheros .hbs se autoindenten al guardar
+        "*.hbs": "al"
+    }
+}
