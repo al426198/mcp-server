@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { CATEGORIES } from "../../utils/metadata.js";
+import { CATEGORIES } from "../../utils/metadata-helpers.js";
 
 
 /**
@@ -43,8 +43,8 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            // Obtener metadatos del entorno
-            const envMetadata = JSON.parse(process.env.AL_METADATA || "{}");
+            // Obtener metadatos en memoria
+            const envMetadata = JSON.parse(process.env.METADATA || "{}");
 
             // Buscar el objeto en los metadatos
             const entry = envMetadata[args.category][args.name];

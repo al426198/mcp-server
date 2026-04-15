@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { readMetadata, combineMetadata } from "../../utils/metadata.js";
+import { readMetadataFile, combineMetadata } from "../../utils/metadata-helpers.js";
 
 /**
  * Obtiene los metadatos de la extensión AL base.
@@ -20,7 +20,7 @@ export const registerInitMetadataTool = (server: McpServer) => {
     const name = "init-object-metadata";
     const config = {
         title: "Inicializar metadatos de la extensión AL",
-        description: "Obtiene los metadatos de la extensión AL. Sobreescribe los datos de la extensión AL anterior, si hubiera.",
+        description: "Inicializa los metadatos de la extensión AL.",
         inputSchema: argsSchema,
     }
 
@@ -33,12 +33,7 @@ export const registerInitMetadataTool = (server: McpServer) => {
 
             try {
                 // Combinar con los metadatos de la extensión actual
-                const metadata = combineMetadata([JSON.parse(process.env.AL_METADATA || "{}"), readMetadata(args.app_route)]);
-
-                // Guardar en el entorno
-                process.env.AL_METADATA = JSON.stringify(metadata, null, 2);
-
-                // Respuesta del servidor
+                process.env.METADATA = JSON.stringify(combineMetadata([JSON.parse(process.env.METADATA || "{}"), await readMetadataFile(args.app_route)]));
                 response = "Metadatos leídos exitosamente";
             }
             catch (error: any) {
@@ -46,12 +41,13 @@ export const registerInitMetadataTool = (server: McpServer) => {
                 response = `Error al obtener los metadatos: ${error.message}`;
             }
 
+            // Respuesta del servidor
             return {
                 isError: hasError,
                 content: [
                     {
                         type: "text",
-                        text: "Metadatos leídos exitosamente",
+                        text: response,
                         annotations: {
                             audience: ["assistant"]                 // Solo visible para el agente
                         }

@@ -4,8 +4,9 @@ import { registerTools } from "./handlers/tools/index.js";
 import { registerResources } from "./handlers/resources/index.js";
 import { registerPrompts } from "./handlers/prompts/index.js";
 import { fileURLToPath } from 'url';
-import { readMetadataFolder } from "./utils/metadata.js";
+import { readMetadataFolder } from "./utils/metadata-helpers.js";
 import path from 'path';
+import 'dotenv/config';
 
 // Obtiene la ruta raíz del proyecto. Útil para trabajar con rutas absolutas.
 export const __root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -16,22 +17,30 @@ const server = new McpServer({
     version: "1.0.0",
 });
 
-// Obtener metadatos de la extensión base (carpeta `.alpackages`).
-// La ruta al proyecto debe estar definida en el cliente.
-const PROJECT_PATH = process.env.PROJECT_PATH || "";
-process.env.AL_METADATA = JSON.stringify(readMetadataFolder(path.join(PROJECT_PATH, ".alpackages")));
+// Ruta al directorio raíz del proyecto
+const PROJECT_PATH = process.env.AL_PROJECT_PATH;
 
-// Registrar herramientas
-registerTools(server);
-
-// Registrar recursos
-registerResources(server);
-
-// Registrar prompts
-registerPrompts(server);
-
-// Iniciar servidor
 async function main() {
+    // Comprobar que se ha especificado la ruta al directorio raíz del proyecto.
+    if (!PROJECT_PATH) {
+        console.error("Error: No se ha especificado la ruta al directorio raíz del proyecto.");
+        process.exit(1);
+    }
+
+    // Obtener metadatos de la extensión base (carpeta `.alpackages`).
+    try {
+        process.env.METADATA = JSON.stringify(await readMetadataFolder(path.join(PROJECT_PATH, ".alpackages")));
+    } catch (error: any) {
+        console.error("Error al cargar metadatos:", error.message);
+        process.exit(1);
+    }
+
+    // Registrar componentes
+    registerTools(server);
+    registerResources(server);
+    registerPrompts(server);
+
+    // Iniciar servidor
     const transport = new StdioServerTransport();
     await server.connect(transport);
     console.error("Servidor MCP ejecutándose en stdio");

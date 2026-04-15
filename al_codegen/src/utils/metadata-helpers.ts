@@ -1,6 +1,8 @@
 import AdmZip from "adm-zip";
 import fs from "fs";
 import path from "path";
+import { Readable } from "stream";
+import { streamObject } from "stream-json/streamers/stream-object.js";
 
 // Metadatos de tablas existentes en el archivo ".app" 
 export type ObjectMap = Record<string, Record<string, any>>;
@@ -37,7 +39,7 @@ export const CATEGORIES = [
  * @throws Si el fichero no existe, no contiene `SymbolReference.json`
  *          o el contenido de dicho fichero no es válido.
  */
-export function extractAppSymbols(appFilePath: string): ObjectMap {
+async function extractAppSymbols(appFilePath: string): Promise<ObjectMap> {
     // Recortar el fichero `.app` a partir de la cabecera ZIP (0x50 0x4B 0x03 0x04)
     const rawBuffer = fs.readFileSync(appFilePath);
     const zipOffset = rawBuffer.indexOf(Buffer.from([0x50, 0x4B, 0x03, 0x04]));
@@ -47,14 +49,28 @@ export function extractAppSymbols(appFilePath: string): ObjectMap {
     const zip = new AdmZip(rawBuffer.subarray(zipOffset));
 
     // Obtener el fichero SymbolReference.json
-    const entry = zip.getEntry(SYMBOL_FILE);
-    if (!entry) {
+    const symbolFile = zip.getEntry(SYMBOL_FILE);
+    if (!symbolFile) {
         throw new Error(`No se encontró '${SYMBOL_FILE}' dentro de '${appFilePath}'.`);
     }
 
     // SymbolReference.json está codificado en UTF-8 con BOM.
-    // Leer el buffer ignorando la cabecera BOM (3 bytes) y decodificarlo a JSON.
-    const json = JSON.parse(new TextDecoder("utf-8").decode(entry.getData().subarray(3)));
+    // Omitir los 3 bytes de BOM y parsear el buffer mediante streaming para evitar
+    // truncaciones con ficheros grandes.
+    const jsonBuffer = symbolFile.getData().subarray(3);
+    const jsonStream = Readable.from(jsonBuffer)
+        .pipe(streamObject.withParserAsStream());
+
+    const json: Record<string, any> = {};
+    await new Promise<void>((resolve, reject) => {
+        jsonStream.on("data", ({ key, value }: { key: string; value: any }) => {
+            json[key] = value;
+        });
+        jsonStream.on("end", resolve);
+        jsonStream.on("error", reject);
+    });
+
+
     if (typeof json !== "object" || json === null) {
         throw new Error(`El contenido de '${SYMBOL_FILE}' no es un objeto JSON válido.`);
     }
@@ -73,7 +89,7 @@ export function extractAppSymbols(appFilePath: string): ObjectMap {
 
 /**
  * Procesa un objeto JSON deserializado correspondiente a un objeto AL.
- * Por ahora, devuelve el mismo objeto.
+ * Por ahora, devuelve el objeto en sí, pero se puede acceder a cualquiera de sus propiedades.
  * @param obj - Objeto JSON
  * @returns El mismo objeto
  */
@@ -87,7 +103,7 @@ function parseObject(obj: Record<string, unknown>): Record<string, unknown> {
  * @param filePath - Ruta al fichero `.app`.
  * @returns Un Map que contiene los metadatos del fichero `.app`, organizados por categoría.
  */
-export function readMetadata(filePath: string): ObjectMap {
+export async function readMetadataFile(filePath: string): Promise<ObjectMap> {
     // Verificar que el fichero existe
     if (!fs.existsSync(filePath)) {
         throw new Error(`El fichero '${filePath}' no existe.`);
@@ -95,7 +111,7 @@ export function readMetadata(filePath: string): ObjectMap {
 
     // Leer el fichero app
     try {
-        return extractAppSymbols(filePath);
+        return await extractAppSymbols(filePath);
     } catch (error: any) {
         throw new Error(`Error procesando el fichero '${filePath}': ${error.message}`);
     }
@@ -103,16 +119,12 @@ export function readMetadata(filePath: string): ObjectMap {
 
 /**
  * Lee todos los ficheros `.app` de un directorio y extrae sus metadatos.
- * El directorio debería contener únicamente ficheros `.app`
- * (generalmente, suele llamarse `.alpackages` dentro de la extensión).
-
+ * El directorio debería contener únicamente ficheros `.app`.
  * 
  * @param directoryPath - Ruta al directorio que contiene los ficheros `.app`.
  * @returns Un Map que combina todos los metadatos encontrados, organizados por categoría.
  */
-export function readMetadataFolder(directoryPath: string): ObjectMap {
-    var combinedMetadata: ObjectMap = {};
-
+export async function readMetadataFolder(directoryPath: string): Promise<ObjectMap> {
     // Verificar que el directorio existe
     if (!fs.existsSync(directoryPath)) {
         throw new Error(`El directorio '${directoryPath}' no existe.`);
@@ -123,22 +135,20 @@ export function readMetadataFolder(directoryPath: string): ObjectMap {
     const appFiles = files.filter(f => f.toLowerCase().endsWith(".app"));
 
     // Procesar cada fichero `.app`
-    let metadata: ObjectMap = {};
-    for (const file of appFiles) {
+    const metadataList: ObjectMap[] = await Promise.all(appFiles.map(async (file) => {
         const filePath = path.join(directoryPath, file);
         try {
             // Combinar los metadatos del fichero `.app` con los metadatos existentes
-            metadata = combineMetadata([combinedMetadata, readMetadata(filePath)]);
+            return await readMetadataFile(filePath);
         } catch (error: any) {
             throw new Error(`Error procesando el fichero '${filePath}': ${error.message}`);
         }
-    }
-
-    return combinedMetadata;
+    }));
+    return combineMetadata(metadataList);
 }
 
 /**
- * Combina múltiples mapas de metadatos en uno solo.
+ * Combina varios mapas de metadatos en uno solo.
  * 
  * @param maps - Array de mapas de metadatos a combinar.
  * @returns Un mapa que contiene todos los metadatos combinados.
