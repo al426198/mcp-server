@@ -15,22 +15,30 @@ export const CATEGORIES = [
     "PermissionSetExtensions",
     "ReportExtensions",
     "InternalsVisibleToModules"
-];
+] as const;
 
-// Metadatos de tablas existentes
-// Clave: nombre de la categoría del objeto ("Tables", "Pages", etc.)
-// Valor: objeto JSON con los metadatos de cada objeto de esa categoría
-export type ObjectMap = Record<string, Record<string, any>>;
+// Tipo de las categorías de objetos AL
+export type Category = typeof CATEGORIES[keyof typeof CATEGORIES];
 
-// Almacena los metadatos de la extensión AL actual.
-let metadata: ObjectMap = {};
+/**
+ * Metadatos de tablas existentes
+ * 
+ * - Clave: nombre de la categoría del objeto ("Tables", "Pages", etc.). Debe pertenecer a CATEGORIES.
+ * - Valor: objeto JSON con los metadatos de cada objeto de esa categoría
+ */
+export type ObjectMap = Map<Category, Record<string, any>>;
+
+/**
+ * Almacena los metadatos de la extensión AL actual.
+ */
+let metadata: ObjectMap;
 
 /**
  * Obtiene los metadatos cargados en memoria.
  * @returns El mapa de metadatos.
  */
 export function getMetadata(): ObjectMap {
-    return metadata;
+    return metadata || new Map<Category, Record<string, any>>();
 }
 
 /**

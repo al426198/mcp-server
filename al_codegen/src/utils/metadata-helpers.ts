@@ -1,8 +1,7 @@
 import AdmZip from "adm-zip";
 import fs from "fs";
 import path from "path";
-import { collectObjects } from "./helper.js";
-import { ObjectMap } from "./metadata-state.js";
+import { ObjectMap, Category, CATEGORIES } from "./metadata-state.js";
 
 // Nombre del fichero que contiene los símbolos en el archivo `.app`
 const SYMBOL_FILE = "SymbolReference.json";
@@ -37,9 +36,39 @@ async function extractAppSymbols(appFilePath: string): Promise<ObjectMap> {
         throw new Error(`El contenido de '${SYMBOL_FILE}' no es un objeto válido: ${error.message}`);
     }
 
-    // Recolectar objetos del fichero JSON
-    const result: ObjectMap = {};
+    // Recolectar objetos del fichero JSON de forma recursiva
+    const result: ObjectMap = new Map();
     return collectObjects(json, result);
+}
+
+/**
+ * Recorre el archivo de metadatos (y todos sus namespaces anidados) de forma recursiva y
+ * acumula los objetos en un mapa.
+ * 
+ * @param node - Nodo del árbol de metadatos.
+ * @param result - Mapa donde se almacenan los objetos.
+ * @returns Mapa con los objetos recolectados.
+ */
+function collectObjects(node: any, result: ObjectMap): ObjectMap {
+    for (const cat of CATEGORIES) {
+        if (Array.isArray(node[cat])) {
+            if (!result.has(cat)) {
+                result.set(cat, {});
+            }
+            for (const obj of node[cat]) {
+                result.get(cat)![obj.Name] = obj;
+            }
+        }
+    }
+
+    // Descender recursivamente en los Namespaces hijos
+    if (Array.isArray(node.Namespaces)) {
+        for (const child of node.Namespaces) {
+            collectObjects(child, result);
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -92,13 +121,13 @@ export async function readMetadataFolder(directoryPath: string): Promise<ObjectM
  * @returns Un mapa que contiene todos los metadatos combinados.
  */
 export function combineMetadata(maps: ObjectMap[]): ObjectMap {
-    const combinedMetadata: ObjectMap = {};
+    const combinedMetadata: ObjectMap = new Map<Category, Record<string, any>>();
     for (const map of maps) {
-        for (const category in map) {
-            if (!combinedMetadata[category]) {
-                combinedMetadata[category] = {};
+        for (const category of map.keys()) {
+            if (!combinedMetadata.has(category)) {
+                combinedMetadata.set(category, {});
             }
-            Object.assign(combinedMetadata[category], map[category]);
+            Object.assign(combinedMetadata.get(category)!, map.get(category));
         }
     }
     return combinedMetadata;
