@@ -2,31 +2,10 @@ import AdmZip from "adm-zip";
 import fs from "fs";
 import path from "path";
 import { collectObjects } from "./helper.js";
+import { ObjectMap } from "./metadata-state.js";
 
-// Metadatos de tablas existentes en el archivo ".app" 
-export type ObjectMap = Record<string, Record<string, any>>;
-
-// Nombre del fichero que contiene los símbolos dentro del .app 
+// Nombre del fichero que contiene los símbolos en el archivo `.app`
 const SYMBOL_FILE = "SymbolReference.json";
-
-// Categorías de objetos disponibles en AL existentes en el fichero de símbolos 
-export const CATEGORIES = [
-    "Tables",
-    "Codeunits",
-    "Pages",
-    "TableExtensions",
-    "Reports",
-    "XmlPorts",
-    "Queries",
-    "ControlAddIns",
-    "EnumTypes",
-    "DotNetPackages",
-    "Interfaces",
-    "PermissionSets",
-    "PermissionSetExtensions",
-    "ReportExtensions",
-    "InternalsVisibleToModules"
-];
 
 /**
  * Lee el fichero `.app` indicado, lo descomprime en memoria y extrae el contenido del fichero
@@ -59,7 +38,8 @@ async function extractAppSymbols(appFilePath: string): Promise<ObjectMap> {
     }
 
     // Recolectar objetos del fichero JSON
-    return collectObjects(json);
+    const result: ObjectMap = {};
+    return collectObjects(json, result);
 }
 
 /**

@@ -1,8 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { __root } from "../../../../index.js";
-import { fieldSchema, fieldModifySchema, argsSchema } from "./schemas.js";
-import { z } from "zod";
+import { tableExtensionSchema } from "./schemas.js";
 
 import Handlebars from "handlebars";
 import fs from "fs/promises";
@@ -66,12 +65,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
     const config_ext = {
         title: "Generar extensión de tabla AL",
         description: "Genera una extensión de tabla en lenguaje AL. No soporta lógica compleja (ej. triggers). Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.",
-        inputSchema: {
-            ...argsSchema,
-            target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual."),
-            fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
-            modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
-        },
+        inputSchema: tableExtensionSchema,
     }
 
     server.registerTool(

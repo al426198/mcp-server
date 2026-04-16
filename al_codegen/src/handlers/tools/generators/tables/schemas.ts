@@ -1,4 +1,6 @@
-import { z } from "zod";
+/**
+ * Esquemas de validación de argumentos para la generación de tablas y extensiones de tablas.
+ */
 
 // Tipos de grupos de campos que soporta AL
 const FG_TYPES = ["DropDown", "Brick"];
@@ -30,12 +32,22 @@ export const fieldModifySchema = z.object({
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del campo."),
 });
 
-// Esquema JSON de validación de argumentos
-export const argsSchema = {
-    id: z.number().describe("ID del objeto. Debe ser único dentro de la extensión AL actual."),
+// Esquema JSON de validación de argumentos de tabla
+export const tableSchema = {
+    id: z.number().describe("ID del objeto. Se debe obtener mediante AL ID Object Ninja para garantizar la concurrencia."),
     name: z.string().describe("Nombre del objeto. Debe ser único dentro de la extensión AL actual."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
     keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
     fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL (opcional).")
 };
+
+// Esquema JSON de validación de argumentos de extensión de tabla
+export const tableExtensionSchema = {
+    ...tableSchema,
+    target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual."),
+    fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
+    modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
+};
+
+import { z } from "zod";

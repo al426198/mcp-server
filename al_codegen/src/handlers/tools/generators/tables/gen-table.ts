@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { __root } from "../../../../index.js";
-import { argsSchema } from "./schemas.js";
+import { tableSchema } from "./schemas.js";
 
 import Handlebars from "handlebars";
 import fs from "fs/promises";
@@ -64,7 +64,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const config = {
         title: "Generar tabla AL",
         description: "Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers). Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.",
-        inputSchema: argsSchema,
+        inputSchema: tableSchema,
     }
 
     server.registerTool(
