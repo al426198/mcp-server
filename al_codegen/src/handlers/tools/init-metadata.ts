@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { readMetadataFile, combineMetadata } from "../../utils/metadata-helpers.js";
+import { getMetadata, setMetadata } from "../../utils/metadata-state.js";
 
 /**
  * Obtiene los metadatos de la extensión AL base.
@@ -32,8 +33,8 @@ export const registerInitMetadataTool = (server: McpServer) => {
             let response = "";
 
             try {
-                // Combinar con los metadatos de la extensión actual
-                process.env.METADATA = JSON.stringify(combineMetadata([JSON.parse(process.env.METADATA || "{}"), await readMetadataFile(args.app_route)]));
+                // Combinar metadatos de la extensión actual con los de la extensión base
+                setMetadata(combineMetadata([getMetadata(), await readMetadataFile(args.app_route)]));
                 response = "Metadatos leídos exitosamente";
             }
             catch (error: any) {

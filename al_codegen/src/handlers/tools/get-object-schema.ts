@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { CATEGORIES } from "../../utils/metadata-helpers.js";
+import { getMetadata } from "../../utils/metadata-state.js";
 
 
 /**
@@ -44,10 +45,10 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
         config,
         async (args): Promise<CallToolResult> => {
             // Obtener metadatos en memoria
-            const envMetadata = JSON.parse(process.env.METADATA || "{}");
+            const envMetadata = getMetadata();
 
             // Buscar el objeto en los metadatos
-            const entry = envMetadata[args.category][args.name];
+            const entry = envMetadata[args.category]?.[args.name];
             const found = entry !== undefined;
 
             // Si no se encuentra el objeto, devolver un mensaje de error

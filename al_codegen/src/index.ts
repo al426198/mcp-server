@@ -5,6 +5,7 @@ import { registerResources } from "./handlers/resources/index.js";
 import { registerPrompts } from "./handlers/prompts/index.js";
 import { fileURLToPath } from 'url';
 import { readMetadataFolder } from "./utils/metadata-helpers.js";
+import { setMetadata } from "./utils/metadata-state.js";
 import path from 'path';
 import 'dotenv/config';
 
@@ -29,7 +30,7 @@ async function main() {
 
     // Obtener metadatos de la extensión base (carpeta `.alpackages`).
     try {
-        process.env.METADATA = JSON.stringify(await readMetadataFolder(path.join(PROJECT_PATH, ".alpackages")));
+        setMetadata(await readMetadataFolder(path.join(PROJECT_PATH, ".alpackages")));
     } catch (error: any) {
         console.error("Error al cargar metadatos:", error.message);
         process.exit(1);
