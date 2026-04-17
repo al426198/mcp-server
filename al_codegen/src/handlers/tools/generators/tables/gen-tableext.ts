@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { __root } from "../../../../index.js";
-import { tableExtensionSchema } from "./schemas.js";
+import { tableExtensionSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
 import fs from "fs/promises";

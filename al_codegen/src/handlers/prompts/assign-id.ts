@@ -18,6 +18,8 @@ const TYPES = [
  * HU102: Obtención dinámica de ID
  * 
  * Asigna y devuelve el siguiente ID disponible para un tipo de objeto dentro de una extensión AL.
+ * Debe estar configurado el servidor MCP de AL Object ID Ninja.
+ * 
  * @param type - Tipo de objeto (ej. table, page, report, codeunit, etc.)
  * 
  * @returns El ID asignado al objeto. Se garantiza que este ID es único dentro de la extensión, incluso si se modifica concurrentemente.

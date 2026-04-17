@@ -61,7 +61,7 @@ function collectObjects(node: any, result: ObjectMap): ObjectMap {
         }
     }
 
-    // Descender recursivamente en los Namespaces hijos
+    // Descender recursivamente por cada namespace
     if (Array.isArray(node.Namespaces)) {
         for (const child of node.Namespaces) {
             collectObjects(child, result);
@@ -124,10 +124,7 @@ export function combineMetadata(maps: ObjectMap[]): ObjectMap {
     const combinedMetadata: ObjectMap = new Map<Category, Record<string, any>>();
     for (const map of maps) {
         for (const category of map.keys()) {
-            if (!combinedMetadata.has(category)) {
-                combinedMetadata.set(category, {});
-            }
-            Object.assign(combinedMetadata.get(category)!, map.get(category));
+            Object.assign(combinedMetadata.get(category) || {}, map.get(category));
         }
     }
     return combinedMetadata;

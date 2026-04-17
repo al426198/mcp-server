@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { __root } from "../../../../index.js";
-import { tableSchema } from "./schemas.js";
+import { tableSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
 import fs from "fs/promises";
@@ -14,8 +14,8 @@ import path from "path";
  * Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers).
  * Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.
  * 
- * @param id - ID del objeto. Debe ser único dentro de la extensión AL actual.
- * @param name - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
+ * @param id - ID del objeto.
+ * @param name - Nombre del objeto.
  * @param properties - Propiedades clave-valor del objeto AL (opcional).
  * @param fields - Campos del objeto AL.
  * @param keys - Claves del objeto AL (opcional).
@@ -56,14 +56,13 @@ import path from "path";
  *  ]
  * }
  * ```
- * 
  */
 export const registerGenerateTableTool = (server: McpServer) => {
     // Parámetros del prompt
     const name = "generate-table";
     const config = {
         title: "Generar tabla AL",
-        description: "Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers). Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.",
+        description: "Genera una tabla en lenguaje AL. Antes de empezar a generar código, se pueden usar las herramientas 'assign-id' y 'get-object-schema' para obtener el ID y verificar la existencia de la tabla y las referencias a otros objetos AL.",
         inputSchema: tableSchema,
     }
 

@@ -32,8 +32,8 @@ export const registerInitMetadataTool = (server: McpServer) => {
             let hasError = false;
             let response = "";
 
+            // Combinar metadatos de la extensión actual con los de la extensión base
             try {
-                // Combinar metadatos de la extensión actual con los de la extensión base
                 setMetadata(combineMetadata([getMetadata(), await readMetadataFile(args.app_route)]));
                 response = "Metadatos leídos exitosamente";
             }

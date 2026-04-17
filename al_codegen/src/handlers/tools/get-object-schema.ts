@@ -3,7 +3,6 @@ import { z } from "zod";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { getMetadata, CATEGORIES } from "../../utils/metadata-state.js";
 
-
 /**
  * HU101: Acceso al esquema de un objeto BC
  * 
@@ -43,15 +42,23 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
         name,
         config,
         async (args): Promise<CallToolResult> => {
-            // Obtener metadatos en memoria
+            let found = false;
+            let response = "";
+
+            // Obtener metadatos en memoria, o pedir al agente que los inicialice si no existen
             const envMetadata = getMetadata();
+            if (envMetadata.size > 0) {
+                // Buscar el objeto en los metadatos
+                const entry = envMetadata.get(args.category)?.[args.name];
+                found = entry !== undefined;
 
-            // Buscar el objeto en los metadatos
-            const entry = envMetadata.get(args.category)?.[args.name];
-            const found = entry !== undefined;
-
-            // Si no se encuentra el objeto, devolver un mensaje de error
-            const response = found ? JSON.stringify(entry, null, 2) : `Objeto ${args.name} no encontrado en la categoría ${args.category}`;
+                // Si no se encuentra el objeto, devolver un mensaje de error
+                response = found ? JSON.stringify(entry, null, 2) : `Objeto ${args.name} no encontrado en la categoría ${args.category}`;
+            }
+            else {
+                response = `Metadatos vacíos; utiliza el comando 'initialize-metadata' para inicializarlos`;
+                found = false;
+            }
 
             // Respuesta del servidor
             return {
