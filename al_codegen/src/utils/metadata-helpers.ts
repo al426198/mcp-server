@@ -124,7 +124,10 @@ export function combineMetadata(maps: ObjectMap[]): ObjectMap {
     const combinedMetadata: ObjectMap = new Map<Category, Record<string, any>>();
     for (const map of maps) {
         for (const category of map.keys()) {
-            Object.assign(combinedMetadata.get(category) || {}, map.get(category));
+            if (!combinedMetadata.has(category)) {
+                combinedMetadata.set(category, {});
+            }
+            Object.assign(combinedMetadata.get(category)!, map.get(category));
         }
     }
     return combinedMetadata;

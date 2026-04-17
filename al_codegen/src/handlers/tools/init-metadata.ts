@@ -18,10 +18,10 @@ export const registerInitMetadataTool = (server: McpServer) => {
     };
 
     // Parámetros del prompt
-    const name = "init-object-metadata";
+    const name = "init-extension-metadata";
     const config = {
-        title: "Inicializar metadatos de la extensión AL",
-        description: "Inicializa los metadatos de la extensión AL.",
+        title: "Inicializar metadatos de la extensión AL actual",
+        description: "Inicializa los metadatos de la extensión AL actual. Se asume que los metadatos de la extensión base ya están inicializados.",
         inputSchema: argsSchema,
     }
 

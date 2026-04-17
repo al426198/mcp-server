@@ -47,18 +47,13 @@ export const registerGetObjectSchemaTool = (server: McpServer) => {
 
             // Obtener metadatos en memoria, o pedir al agente que los inicialice si no existen
             const envMetadata = getMetadata();
-            if (envMetadata.size > 0) {
-                // Buscar el objeto en los metadatos
-                const entry = envMetadata.get(args.category)?.[args.name];
-                found = entry !== undefined;
 
-                // Si no se encuentra el objeto, devolver un mensaje de error
-                response = found ? JSON.stringify(entry, null, 2) : `Objeto ${args.name} no encontrado en la categoría ${args.category}`;
-            }
-            else {
-                response = `Metadatos vacíos; utiliza el comando 'initialize-metadata' para inicializarlos`;
-                found = false;
-            }
+            // Buscar el objeto en los metadatos
+            const entry = envMetadata.get(args.category)?.[args.name];
+            found = entry !== undefined;
+
+            // Si no se encuentra el objeto, devolver un mensaje de error
+            response = found ? JSON.stringify(entry, null, 2) : `Objeto ${args.name} no encontrado en la categoría ${args.category}. Si es un objeto de una extensión propia, utiliza el comando 'init-extension-metadata' para inicializar sus metadatos.`;
 
             // Respuesta del servidor
             return {
