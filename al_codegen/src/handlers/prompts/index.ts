@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { registerAssignIdPrompt } from "./assign-id.js";
+import { registerCreateNewObjectPrompt } from "./create-al-object.js";
 
 /**
  * Registra peticiones (prompts) en el servidor MCP.
@@ -7,5 +7,5 @@ import { registerAssignIdPrompt } from "./assign-id.js";
  * @param server - Instancia del servidor MCP
  */
 export const registerPrompts = (server: McpServer) => {
-    registerAssignIdPrompt(server);
+    registerCreateNewObjectPrompt(server);
 };

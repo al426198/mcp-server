@@ -7,7 +7,7 @@ const FG_TYPES = ["DropDown", "Brick"];
 
 // Esquema de validación de campos (nuevos o modificados)
 export const fieldSchema = z.object({
-    id: z.number().default(50101).describe("ID del campo. Debe ser único dentro de la tabla."),
+    id: z.number().describe("ID del campo. Debe ser único dentro de la tabla."),
     name: z.string().describe("Nombre del campo. Debe ser único dentro de la tabla."),
     type: z.string().describe("Tipo del campo."),
     length: z.number().optional().describe("Longitud del campo. Solo se aplica a campos de tipo `Code` o `Text`."),
@@ -35,7 +35,7 @@ export const fieldModifySchema = z.object({
 
 // Esquema JSON de validación de argumentos de tabla
 export const tableSchema = {
-    id: z.number().describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
+    id: z.number().default(50101).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual; la herramienta 'get-object-schema' puede ser utilizada para verificar esto."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
@@ -46,7 +46,7 @@ export const tableSchema = {
 // Esquema JSON de validación de argumentos de extensión de tabla
 export const tableExtensionSchema = {
     ...tableSchema,
-    target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actuall; la herramienta 'get-object-schema' puede ser utilizada para verificar esto."),
+    target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual; la herramienta 'get-object-schema' puede ser utilizada para verificar esto."),
     fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
     modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
 };

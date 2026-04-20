@@ -63,7 +63,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const name = "generate-table";
     const config = {
         title: "Generar tabla AL",
-        description: "Genera una tabla en lenguaje AL. Antes de empezar a generar código, utiliza las herramientas 'assign-id' y 'get-object-schema' para obtener el ID de la tabla y verificar la existencia de la tabla y las referencias a otros objetos AL, respectivamente.",
+        description: "Genera una tabla en lenguaje AL.",
         inputSchema: tableSchema,
     }
 
