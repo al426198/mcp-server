@@ -7,7 +7,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     fields
     {
         {{#each fields}}
-        field({{id}}; "{{name}}"; {{type}})
+        field({{id}}; "{{name}}"; {{type}}{{#if length}}[{{length}}]{{/if}})
         {
             {{#each properties}}
             {{@key}} = {{this}};

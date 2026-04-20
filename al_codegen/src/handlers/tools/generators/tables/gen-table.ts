@@ -36,6 +36,7 @@ import path from "path";
  *          "id": 1,
  *          "name": "No.",
  *          "type": "Code",
+ *          "length": 20,
  *          "properties": {
  *              "Caption": "N.º"
  *          }
@@ -62,7 +63,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
     const name = "generate-table";
     const config = {
         title: "Generar tabla AL",
-        description: "Genera una tabla en lenguaje AL. Antes de empezar a generar código, se pueden usar las herramientas 'assign-id' y 'get-object-schema' para obtener el ID y verificar la existencia de la tabla y las referencias a otros objetos AL.",
+        description: "Genera una tabla en lenguaje AL. Antes de empezar a generar código, utiliza las herramientas 'assign-id' y 'get-object-schema' para obtener el ID de la tabla y verificar la existencia de la tabla y las referencias a otros objetos AL, respectivamente.",
         inputSchema: tableSchema,
     }
 

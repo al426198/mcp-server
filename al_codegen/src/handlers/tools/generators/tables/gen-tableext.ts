@@ -64,7 +64,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
     const name_ext = "generate-table-extension";
     const config_ext = {
         title: "Generar extensión de tabla AL",
-        description: "Genera una extensión de tabla en lenguaje AL. No soporta lógica compleja (ej. triggers). Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.",
+        description: "Genera una extensión de tabla en lenguaje AL. Antes de empezar a generar código, utiliza las herramientas 'assign-id' y 'get-object-schema' para obtener el ID de la extensión de tabla y verificar la existencia de la extensión de tabla y las referencias a otros objetos AL, respectivamente.",
         inputSchema: tableExtensionSchema,
     }
 

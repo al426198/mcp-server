@@ -7,9 +7,10 @@ const FG_TYPES = ["DropDown", "Brick"];
 
 // Esquema de validación de campos (nuevos o modificados)
 export const fieldSchema = z.object({
-    id: z.number().optional().describe("ID del campo. Debe ser único dentro de la tabla."),
+    id: z.number().default(50101).describe("ID del campo. Debe ser único dentro de la tabla."),
     name: z.string().describe("Nombre del campo. Debe ser único dentro de la tabla."),
-    type: z.string().optional().describe("Tipo del campo."),
+    type: z.string().describe("Tipo del campo."),
+    length: z.number().optional().describe("Longitud del campo. Solo se aplica a campos de tipo `Code` o `Text`."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del campo."),
 });
 
