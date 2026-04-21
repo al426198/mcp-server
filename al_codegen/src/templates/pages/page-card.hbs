@@ -1,0 +1,62 @@
+page {{id}} "{{name}}"
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    layout
+    {
+        area(Content)
+        {
+            {{#each groups}}
+            group("{{name}}")
+            {
+                {{#each fields}}
+                field("{{name}}"; {{source}})
+                {
+                    {{#each properties}}
+                    {{@key}} = {{this}};
+                    {{/each}}
+                }
+                {{/each}}
+            }
+            {{/each}}
+        }
+        area(FactBoxes)
+        {
+            {{#if parts}}
+                {{#each parts}}
+                part("{{name}}")
+                {
+                    {{#if properties}}
+                        {{#each properties}}
+                            {{@key}} = {{this}};
+                        {{/each}}
+                    {{/if}}
+                }
+                {{/each}}
+            {{/if}}
+        }
+    }
+    {{#if actions}}
+    actions
+    {
+        area(Processing)
+        {
+            {{#each actions}}
+            action("{{name}}")
+            {
+                {{#each properties}}
+                {{@key}} = {{this}};
+                {{/each}}
+
+                trigger OnAction()
+                begin
+                    
+                end;
+            }
+            {{/each}}
+        }
+    }
+    {{/if}}
+}
