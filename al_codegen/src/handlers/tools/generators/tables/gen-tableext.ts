@@ -74,7 +74,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
         async (args): Promise<CallToolResult> => {
             try {
                 // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/tableext.hbs"), "utf-8");
+                const templateSource = await fs.readFile(path.join(__root, "src/templates/tables/tableext.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
                 // Generación de la tabla
