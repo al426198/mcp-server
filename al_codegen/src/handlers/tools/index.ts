@@ -3,6 +3,7 @@ import { registerGetObjectSchemaTool } from "./get-object-schema.js";
 import { registerInitMetadataTool } from "./init-metadata.js";
 import { registerGenerateTableTool } from "./generators/tables/gen-table.js";
 import { registerGenerateTableExtensionTool } from "./generators/tables/gen-tableext.js";
+import { registerGenerateListPageTool } from "./generators/pages/gen-page-list.js";
 import { registerGenerateApiPageTool } from "./generators/pages/gen-page-api.js";
 
 /**
@@ -14,5 +15,6 @@ export const registerTools = (server: McpServer) => {
     registerInitMetadataTool(server);
     registerGenerateTableTool(server);
     registerGenerateTableExtensionTool(server);
+    registerGenerateListPageTool(server);
     registerGenerateApiPageTool(server);
 };
