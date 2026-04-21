@@ -2,6 +2,8 @@
  * Esquemas de validación de argumentos para la generación de tablas y extensiones de tablas.
  */
 
+import { z } from "zod";
+
 // Tipos de grupos de campos que soporta AL. 'Brick' no es sintáticamente incorrecto, pero funciona solo para páginas.
 const FG_TYPES = ["DropDown", "Brick"];
 
@@ -34,21 +36,18 @@ export const fieldModifySchema = z.object({
 });
 
 // Esquema JSON de validación de argumentos de tabla
-export const tableSchema = {
+export const tableSchema = z.object({
     id: z.number().default(50100).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
     keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
     fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL (opcional).")
-};
+});
 
 // Esquema JSON de validación de argumentos de extensión de tabla
-export const tableExtensionSchema = {
-    ...tableSchema,
+export const tableExtensionSchema = tableSchema.extend({
     target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual."),
     fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
     modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
-};
-
-import { z } from "zod";
+});
