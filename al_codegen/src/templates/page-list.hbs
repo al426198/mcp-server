@@ -1,0 +1,65 @@
+page {{id}} "{{name}}"
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    layout
+    {
+        area(Content)
+        {
+            {{#if repeater}}
+            repeater("{{repeater.name}}")
+            {
+                {{#each repeater.properties}}
+                {{@key}} = {{this}};
+                {{/each}}
+
+                {{#each repeater.fields}}
+                field("{{name}}"; Rec."{{sourceField}}")
+                {
+                    {{#each properties}}
+                    {{@key}} = {{this}};
+                    {{/each}}
+                }
+                {{/each}}
+            }
+            {{/if}}
+        }
+        area(FactBoxes)
+        {
+            {{#if parts}}
+                {{#each parts}}
+                part("{{name}}"; "{{source}}")
+                {
+                    {{#each properties}}
+                    {{@key}} = {{this}};
+                    {{/each}}
+                }
+                {{/each}}
+            {{/if}}
+        }
+    }
+    {{#if actions}}
+    
+    actions
+    {
+        area(Processing)
+        {
+            {{#each actions}}
+            action("{{name}}")
+            {
+                {{#each properties}}
+                {{@key}} = {{this}};
+                {{/each}}
+
+                trigger OnAction()
+                begin
+                    
+                end;
+            }
+            {{/each}}
+        }
+    }
+    {{/if}}
+}
