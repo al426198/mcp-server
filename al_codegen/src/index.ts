@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { registerTools } from "./handlers/tools/index.js";
@@ -7,7 +8,6 @@ import { fileURLToPath } from 'url';
 import { readMetadataFolder } from "./utils/metadata-helpers.js";
 import { setMetadata } from "./utils/metadata-state.js";
 import path from 'path';
-import 'dotenv/config';
 
 // Obtiene la ruta raíz del proyecto. Útil para trabajar con rutas absolutas.
 export const __root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
