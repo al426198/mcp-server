@@ -11,8 +11,12 @@ page {{id}} "{{name}}"
             {{#each groups}}
             group("{{name}}")
             {
+                {{#each properties}}
+                {{@key}} = {{this}};
+                {{/each}}
+
                 {{#each fields}}
-                field("{{name}}"; {{source}})
+                field("{{name}}"; Rec."{{sourceField}}")
                 {
                     {{#each properties}}
                     {{@key}} = {{this}};
@@ -26,18 +30,17 @@ page {{id}} "{{name}}"
         {
             {{#if parts}}
                 {{#each parts}}
-                part("{{name}}")
+                part("{{name}}"; "{{source}}")
                 {
-                    {{#if properties}}
-                        {{#each properties}}
-                            {{@key}} = {{this}};
-                        {{/each}}
-                    {{/if}}
+                    {{#each properties}}
+                    {{@key}} = {{this}};
+                    {{/each}}
                 }
                 {{/each}}
             {{/if}}
         }
     }
+
     {{#if actions}}
     actions
     {

@@ -8,7 +8,7 @@ import fs from "fs/promises";
 import path from "path";
 
 /**
- * HU203: Generación de páginas de tipo Card en lenguaje AL
+ * HU202: Generación de páginas de tipo Card en lenguaje AL
  * 
  * Genera una página de tipo Card en lenguaje AL.
  * 
@@ -20,12 +20,55 @@ import path from "path";
  * @param actions - Acciones de la página (opcional).
  * 
  * @returns La página AL generada.
+ * @example
+ * ```json
+ * {
+ *   "id": 50100,
+ *   "name": "Cliente",
+ *   "sourceTable": "Customer",
+ *   "properties": {
+ *     "ApplicationArea": "All",
+ *     "Caption": "Ficha Cliente",
+ *     "UsageCategory": "None"
+ *   },
+ *   "groups": [
+ *     {
+ *       "name": "General",
+ *       "fields": [
+ *         {
+ *           "name": "Nº Cliente",
+ *           "source": "No."
+ *         },
+ *         {
+ *           "name": "Nombre",
+ *           "source": "Name"
+ *         }
+ *       ]
+ *     }
+ *   ],
+ *   "parts": [
+ *     {
+ *       "name": "Foto",
+ *       "source": "Customer Picture"
+ *     }
+ *   ],
+ *   "actions": [
+ *     {
+ *       "name": "New",
+ *       "properties": {
+ *         "Caption": "'Nuevo pedido'",
+ *         "Image": "NewDocument"
+ *       }
+ *     }
+ *   ]
+ * }
+ * ```
  */
 export const registerGenerateCardPageTool = (server: McpServer) => {
     // Parámetros del prompt
     const name = "generate-card-page";
     const config = {
-        title: "Generar página Card AL",
+        title: "Generar página AL tipo 'Card'",
         description: "Genera una página de tipo Card en lenguaje AL.",
         inputSchema: cardPageSchema,
     }
@@ -61,7 +104,7 @@ export const registerGenerateCardPageTool = (server: McpServer) => {
                     content: [
                         {
                             type: "text",
-                            text: `Error al generar la página Card: ${error.message}`,
+                            text: `Error al generar la página: ${error.message}`,
                         },
                     ],
                 };

@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /**
  * Esquemas de validación de argumentos para la generación de tablas y extensiones de tablas.
  */
@@ -30,14 +32,14 @@ export const fieldGroupSchema = z.object({
 // Esquema de validación de campos modificados
 export const fieldModifySchema = z.object({
     name: z.string().describe("Nombre del campo a modificar."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del campo a modificar."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del campo a modificar."),
 });
 
 // Esquema JSON de validación de argumentos de tabla
 export const tableSchema = {
     id: z.number().default(50100).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del objeto AL (opcional)."),
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
     keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
     fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL (opcional).")
@@ -50,5 +52,3 @@ export const tableExtensionSchema = {
     fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
     modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
 };
-
-import { z } from "zod";
