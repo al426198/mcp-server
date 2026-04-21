@@ -29,7 +29,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     keys
     {
         {{#each keys}}
-        key({{name}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+        key("{{name}}"; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
         {
             {{#if clustered}}
             Clustered = true;
