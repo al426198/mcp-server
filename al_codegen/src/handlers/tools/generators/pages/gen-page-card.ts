@@ -87,12 +87,17 @@ export const registerGenerateCardPageTool = (server: McpServer) => {
                 properties["PageType"] = "Card";
                 properties["SourceTable"] = args.sourceTable;
 
+                // Ordenar propiedades por clave alfabéticamente
+                const sortedProperties = Object.fromEntries(
+                    Object.entries(properties).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+                );
+
                 // Generación de la página
                 return {
                     content: [
                         {
                             type: "text",
-                            text: template({ ...args, properties }),
+                            text: template({ ...args, properties: sortedProperties }),
                         },
                     ],
                 };

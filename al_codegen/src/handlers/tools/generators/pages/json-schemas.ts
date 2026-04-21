@@ -40,7 +40,10 @@ export const cardPageSchema = z.object({
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades opcionales de la página. No incluye 'PageType' ni 'SourceTable'."),
     groups: z.array(groupSchema).default([]).optional().describe("Grupos de controles de la página (opcional). Si no se especifica, se creará un grupo con todos los campos de la tabla."),
     parts: z.array(partSchema).default([]).optional().describe("Partes de la página (opcional)."),
-    actions: z.array(actionSchema).default([]).optional().describe("Acciones de la página (opcional)."),
+    actions: z.array(actionSchema).default([]).optional().describe("Acciones de la página (opcional).")
+});
+
+// Esquema de validación de campos en la página
 export const pageFieldSchema = z.object({
     name: z.string().describe("Nombre del control de campo en la página."),
     sourceField: z.string().describe("Nombre del campo en la tabla de origen."),
