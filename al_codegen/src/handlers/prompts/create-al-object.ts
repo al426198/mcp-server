@@ -99,7 +99,7 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "user",
                         content: {
                             type: "text",
-                            text: `Si todo ha ido bien, devuelve el objeto generado. Si no, indica el error.`,
+                            text: `Si todo ha ido bien, devuelve el objeto generado. Si no, indica el error obtenido.`,
                         },
                     },
                 ],

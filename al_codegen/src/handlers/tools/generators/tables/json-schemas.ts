@@ -16,7 +16,7 @@ export const fieldSchema = z.object({
 
 // Esquema de validación de claves
 export const keySchema = z.object({
-    name: z.string().describe("Nombre de la clave. Debe ser único dentro de la tabla."),
+    name: z.string().default("PK").describe("Nombre de la clave. Debe ser único dentro de la tabla."),
     fieldNames: z.array(z.string()).describe("Nombres de los campos de la clave."),
     clustered: z.boolean().default(false).describe("Indica si la clave es agrupada.")
 });
@@ -35,8 +35,8 @@ export const fieldModifySchema = z.object({
 
 // Esquema JSON de validación de argumentos de tabla
 export const tableSchema = {
-    id: z.number().default(50101).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
-    name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual; la herramienta 'get-object-schema' puede ser utilizada para verificar esto."),
+    id: z.number().default(50100).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
+    name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del objeto AL (opcional)."),
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
     keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
@@ -46,7 +46,7 @@ export const tableSchema = {
 // Esquema JSON de validación de argumentos de extensión de tabla
 export const tableExtensionSchema = {
     ...tableSchema,
-    target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual; la herramienta 'get-object-schema' puede ser utilizada para verificar esto."),
+    target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual."),
     fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
     modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
 };
