@@ -37,6 +37,6 @@ export const listPageSchema = z.object({
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
     sourceTable: z.string().describe("Nombre de la tabla de origen de la página. Debe existir dentro de la extensión AL actual."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades de la página (opcional)."),
-    repeater: repeaterSchema,
+    repeater: repeaterSchema.optional().describe("Repetidor de la página (opcional)."),
     actions: z.array(pageActionSchema).default([]).optional().describe("Acciones de la página (opcional)."),
 });

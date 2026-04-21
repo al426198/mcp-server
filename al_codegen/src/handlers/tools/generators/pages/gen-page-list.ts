@@ -25,33 +25,33 @@ import path from "path";
  * @example
  * ```json
  * {
-    id: 50100,
-    name: "Customer List",
-    sourceTable: "Customer",
-    properties: {
+    "id": 50100,
+    "name": "Customer List",
+    "sourceTable": "Customer",
+    "properties": {
         "Caption": "Customer",
         "UsageCategory": "Administration",
         "ApplicationArea": "All",
         "CardPageId": "Customer Card"
     },
     repeater: {
-        name: "Customers",
-        fields: [
+        "name": "Customers",
+        "fields": [
             {
-                name: "N.º",
-                sourceField: "No."
+                "name": "N.º",
+                "sourceField": "No."
             },
             {
-                name: "Nombre",
-                sourceField: "Name"
+                "name": "Nombre",
+                "sourceField": "Name"
             },
             {
-                name: "Cód. divisa",
-                sourceField: "Currency Code"
+                "name": "Cód. divisa",
+                "sourceField": "Currency Code"
             },
             {
-                name: "Saldo (div. local)",
-                sourceField: "Balance (LCY)"
+                "name": "Saldo (div. local)",
+                "sourceField": "Balance (LCY)"
             }
         ]
     }
