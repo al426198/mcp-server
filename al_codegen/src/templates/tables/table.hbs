@@ -7,12 +7,7 @@ table {{id}} "{{name}}"
     fields
     {
         {{#each fields}}
-        field({{id}}; "{{name}}"; {{type}}{{#if length}}[{{length}}]{{/if}})
-        {
-            {{#each properties}}
-            {{@key}} = {{this}};
-            {{/each}}
-        }
+        {{> field}}
         {{/each}}
     }
     
@@ -20,12 +15,7 @@ table {{id}} "{{name}}"
     keys
     {
         {{#each keys}}
-        key("{{name}}"; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
-        {
-            {{#if clustered}}
-            Clustered = true;
-            {{/if}}
-        }
+        {{> key}}
         {{/each}}
     }
     {{/if}}
@@ -33,9 +23,7 @@ table {{id}} "{{name}}"
     fieldgroups 
     {
         {{#each fieldGroups}}
-        fieldgroup({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
-        {
-        }
+        {{> fieldgroup}}
         {{/each}}
     }
     {{/if}}

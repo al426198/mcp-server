@@ -7,12 +7,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     fields
     {
         {{#each fields}}
-        field({{id}}; "{{name}}"; {{type}}{{#if length}}[{{length}}]{{/if}})
-        {
-            {{#each properties}}
-            {{@key}} = {{this}};
-            {{/each}}
-        }
+        {{> field}}
         {{/each}}
 
         {{#each modifyFields}}
@@ -29,12 +24,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     keys
     {
         {{#each keys}}
-        key("{{name}}"; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
-        {
-            {{#if clustered}}
-            Clustered = true;
-            {{/if}}
-        }
+        {{> key}}
         {{/each}}
     }
     {{/if}}

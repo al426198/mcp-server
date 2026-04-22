@@ -1,0 +1,6 @@
+key("{{name}}"; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+{
+    {{#if clustered}}
+    Clustered = true;
+    {{/if}}
+}

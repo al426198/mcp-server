@@ -1,11 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
 import { listPageSchema } from "./json-schemas.js";
+import { BasePageGenerator } from "./gen-page.js";
 
-import Handlebars from "handlebars";
-import fs from "fs/promises";
-import path from "path";
+// Clase que encapsula las propiedades específicas de una página de tipo List.
+class ListPageGenerator extends BasePageGenerator {
+    name = "generate-list-page";
+    title = "Generar página AL tipo 'List'";
+    description = "Genera una página de tipo List en lenguaje AL.";
+    inputSchema = listPageSchema;
+    templatePath = "src/templates/pages/page-list.hbs";
+    pageType = "List";
+    defaultProperties = { "UsageCategory": "Lists" };
+}
 
 /**
  * HU204: Generación de páginas de tipo List en lenguaje AL
@@ -58,50 +64,5 @@ import path from "path";
 }
  */
 export const registerGenerateListPageTool = (server: McpServer) => {
-    // Parámetros del prompt
-    const name = "generate-list-page";
-    const config = {
-        title: "Generar página List AL",
-        description: "Genera una página de tipo List en lenguaje AL.",
-        inputSchema: listPageSchema,
-    }
-
-    server.registerTool(
-        name,
-        config,
-        async (args): Promise<CallToolResult> => {
-            try {
-                // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/page-list.hbs"), "utf-8");
-                const template = Handlebars.compile(templateSource);
-
-                // Añadir propiedades por defecto
-                const properties = args.properties || {};
-                properties["PageType"] = "List";
-                properties["SourceTable"] = args.sourceTable;
-
-                // Generación de la página
-                return {
-                    content: [
-                        {
-                            type: "text",
-                            text: template(args),
-                        },
-                    ],
-                };
-            }
-
-            catch (error: any) {
-                return {
-                    isError: true,
-                    content: [
-                        {
-                            type: "text",
-                            text: `Error al generar la página List: ${error.message}`,
-                        },
-                    ],
-                };
-            }
-        }
-    );
+    new ListPageGenerator().registerPageTool(server);
 };

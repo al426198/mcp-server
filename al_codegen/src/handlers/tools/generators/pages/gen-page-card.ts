@@ -1,11 +1,16 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
 import { cardPageSchema } from "./json-schemas.js";
+import { BasePageGenerator } from "./gen-page.js";
 
-import Handlebars from "handlebars";
-import fs from "fs/promises";
-import path from "path";
+class CardPageGenerator extends BasePageGenerator {
+    name = "generate-card-page";
+    title = "Generar página AL tipo 'Card'";
+    description = "Genera una página de tipo Card en lenguaje AL.";
+    inputSchema = cardPageSchema;
+    templatePath = "src/templates/pages/page-card.hbs";
+    pageType = "Card";
+    protected defaultProperties = { "UsageCategory": "None" };
+}
 
 /**
  * HU202: Generación de páginas de tipo Card en lenguaje AL
@@ -37,11 +42,11 @@ import path from "path";
  *       "fields": [
  *         {
  *           "name": "Nº Cliente",
- *           "source": "No."
+ *           "sourceField": "No."
  *         },
  *         {
  *           "name": "Nombre",
- *           "source": "Name"
+ *           "sourceField": "Name"
  *         }
  *       ]
  *     }
@@ -65,55 +70,5 @@ import path from "path";
  * ```
  */
 export const registerGenerateCardPageTool = (server: McpServer) => {
-    // Parámetros del prompt
-    const name = "generate-card-page";
-    const config = {
-        title: "Generar página AL tipo 'Card'",
-        description: "Genera una página de tipo Card en lenguaje AL.",
-        inputSchema: cardPageSchema,
-    }
-
-    server.registerTool(
-        name,
-        config,
-        async (args): Promise<CallToolResult> => {
-            try {
-                // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/pages/page-card.hbs"), "utf-8");
-                const template = Handlebars.compile(templateSource);
-
-                // Añadir propiedades por defecto
-                const properties = args.properties || {};
-                properties["PageType"] = "Card";
-                properties["SourceTable"] = args.sourceTable;
-
-                // Ordenar propiedades por clave alfabéticamente
-                const sortedProperties = Object.fromEntries(
-                    Object.entries(properties).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-                );
-
-                // Generación de la página
-                return {
-                    content: [
-                        {
-                            type: "text",
-                            text: template({ ...args, properties: sortedProperties }),
-                        },
-                    ],
-                };
-            }
-
-            catch (error: any) {
-                return {
-                    isError: true,
-                    content: [
-                        {
-                            type: "text",
-                            text: `Error al generar la página: ${error.message}`,
-                        },
-                    ],
-                };
-            }
-        }
-    );
+    new CardPageGenerator().registerPageTool(server);
 };

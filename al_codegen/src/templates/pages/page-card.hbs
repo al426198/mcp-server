@@ -6,42 +6,30 @@ page {{id}} "{{name}}"
 
     layout
     {
+        {{#if groups}}
         area(Content)
         {
             {{#each groups}}
-            group("{{name}}")
+            {{> group}}
+            {{/each}}
+        }
+        {{/if}}
+        {{#if parts}}
+        area(FactBoxes)
+        {
+            {{#each parts}}
+            part("{{name}}"; "{{source}}")
             {
                 {{#each properties}}
                 {{@key}} = {{this}};
                 {{/each}}
-
-                {{#each fields}}
-                field("{{name}}"; Rec."{{sourceField}}")
-                {
-                    {{#each properties}}
-                    {{@key}} = {{this}};
-                    {{/each}}
-                }
-                {{/each}}
             }
             {{/each}}
         }
-        area(FactBoxes)
-        {
-            {{#if parts}}
-                {{#each parts}}
-                part("{{name}}"; "{{source}}")
-                {
-                    {{#each properties}}
-                    {{@key}} = {{this}};
-                    {{/each}}
-                }
-                {{/each}}
-            {{/if}}
-        }
+        {{/if}}
     }
-
     {{#if actions}}
+    
     actions
     {
         area(Processing)

@@ -1,11 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
 import { apiPageSchema } from "./json-schemas.js";
+import { BasePageGenerator } from "./gen-page.js";
 
-import Handlebars from "handlebars";
-import fs from "fs/promises";
-import path from "path";
+// Clase que encapsula las propiedades específicas de una página de tipo API.
+class ApiPageGenerator extends BasePageGenerator {
+    name = "generate-api-page";
+    title = "Generar página AL tipo 'API'";
+    description = "Genera una página de tipo API en lenguaje AL.";
+    inputSchema = apiPageSchema;
+    templatePath = "src/templates/pages/page-api.hbs";
+    pageType = "API";
+    defaultProperties = { "DelayedInsert": "true" };
+}
 
 /**
  * HU205: Generación de páginas de tipo API en lenguaje AL
@@ -42,57 +48,5 @@ import path from "path";
  * ```
  */
 export const registerGenerateApiPageTool = (server: McpServer) => {
-    // Parámetros del prompt
-    const name = "generate-api-page";
-    const config = {
-        title: "Generar página API AL",
-        description: "Genera una página de tipo API en lenguaje AL.",
-        inputSchema: apiPageSchema,
-    }
-
-    server.registerTool(
-        name,
-        config,
-        async (args): Promise<CallToolResult> => {
-            try {
-                // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/page-api.hbs"), "utf-8");
-                const template = Handlebars.compile(templateSource);
-
-                // Añadir propiedades por defecto
-                const properties = args.properties || {};
-                properties["SourceTable"] = args.sourceTable;
-                properties["PageType"] = "API";
-                properties["DelayedInsert"] = "true";
-                properties["APIGroup"] = args.apiGroup;
-                properties["APIPublisher"] = args.apiPublisher;
-                properties["APIVersion"] = args.apiVersion;
-                properties["EntityName"] = args.entityName;
-                properties["EntitySetName"] = args.entitySetName;
-                properties["ODataKeyFields"] = args.odataKeyFields;
-
-                // Generación de la página
-                return {
-                    content: [
-                        {
-                            type: "text",
-                            text: template({ ...args, properties }),
-                        },
-                    ],
-                };
-            }
-
-            catch (error: any) {
-                return {
-                    isError: true,
-                    content: [
-                        {
-                            type: "text",
-                            text: `Error al generar la página API: ${error.message}`,
-                        },
-                    ],
-                };
-            }
-        }
-    );
+    new ApiPageGenerator().registerPageTool(server);
 };

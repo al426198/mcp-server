@@ -1,0 +1,15 @@
+repeater("{{repeater.name}}")
+{
+    {{#each repeater.properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    {{#each repeater.fields}}
+    field("{{name}}"; Rec."{{sourceField}}")
+    {
+        {{#each properties}}
+        {{@key}} = {{this}};
+        {{/each}}
+    }
+    {{/each}}
+}
