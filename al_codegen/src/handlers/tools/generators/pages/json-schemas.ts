@@ -25,11 +25,18 @@ export const pageActionSchema = z.object({
     // Añadir descripción para trigger "OnAction" en un futuro
 });
 
-// Esquema de validación de grupos
-export const groupSchema = z.object({
-    name: z.string().describe("Nombre del grupo. Debe ser único dentro de la página."),
+// Esquema de validación de grupos de campos
+export const fieldGroupSchema = z.object({
+    name: z.string().describe("Nombre del grupo de campos. Debe ser único dentro de la página."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo (opcional)."),
     fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del grupo (opcional)."),
+});
+
+// Esquema de validación de grupos de acciones
+export const actionGroupSchema = z.object({
+    name: z.string().describe("Nombre del grupo de acciones. Debe ser único dentro de la página."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo de acciones (opcional)."),
+    actions: z.array(pageActionSchema).default([]).optional().describe("Acciones dentro del grupo (opcional)."),
 });
 
 // Esquema de validación de repetidores
@@ -49,7 +56,7 @@ export const basePageSchema = z.object({
 
 // Esquema JSON de validación de argumentos de página tipo Card
 export const cardPageSchema = basePageSchema.extend({
-    groups: z.array(groupSchema).default([]).optional().describe("Grupos de controles de la página (opcional)."),
+    groups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de controles de la página (opcional)."),
     parts: z.array(pagePartSchema).default([]).optional().describe("Partes de la página (opcional) para el área 'FactBoxes'."),
     actions: z.array(pageActionSchema).default([]).optional().describe("Acciones de la página (opcional).")
 });
@@ -57,6 +64,7 @@ export const cardPageSchema = basePageSchema.extend({
 // Esquema JSON de validación de argumentos de página tipo List
 export const listPageSchema = basePageSchema.extend({
     repeater: repeaterSchema.optional().describe("Repetidor de la página (opcional)."),
+    parts: z.array(pagePartSchema).default([]).optional().describe("Partes de la página (opcional) para el área 'FactBoxes'."),
     actions: z.array(pageActionSchema).default([]).optional().describe("Acciones de la página (opcional)."),
 });
 
@@ -78,18 +86,22 @@ const PAGE_EXTENSION_OPERATIONS = [
     "movefirst", "movelast", "moveafter", "movebefore"
 ] as const;
 
+export const changeSchema = z.object({
+    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir controles/acciones, 'modify' para cambiar propiedades, 'move*' para mover controles/acciones."),
+    anchor: z.string().describe("Nombre del control/acción o categoría pivote."),
+});
+
 // Esquema de validación de un bloque de cambio en el layout de una extensión de página
-export const layoutChangeSchema = z.object({
-    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir campos, 'modify' para cambiar propiedades, 'move*' para mover controles."),
-    anchor: z.string().describe("Nombre del control o categoría pivote."),
-    control: z.union([pageFieldSchema, pagePartSchema]).optional().describe("Controles a añadir o modificar. Solo aplica a operaciones add* y modify."),
+export const layoutChangeSchema = changeSchema.extend({
+    control: z.discriminatedUnion("type", [
+        pageFieldSchema.extend({ type: z.literal("field") }),
+        pagePartSchema.extend({ type: z.literal("part") }),
+    ]).optional().describe("Control a añadir o modificar. Solo aplica a operaciones add* y modify."),
 });
 
 // Esquema de validación de un bloque de cambio en las actions de una extensión de página
-export const actionChangeSchema = z.object({
-    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir acciones, 'modify' para cambiar propiedades, 'move*' para mover acciones."),
-    anchor: z.string().describe("Nombre del control o categoría pivote."),
-    action: pageActionSchema.describe("Acción a añadir o modificar. Solo aplica a operaciones add* y modify."),
+export const actionChangeSchema = changeSchema.extend({
+    actions: z.array(z.union([actionGroupSchema, pageActionSchema])).optional().describe("Acciones o grupos de acciones a añadir o modificar."),
 });
 
 // Esquema JSON de validación de argumentos de extensión de página

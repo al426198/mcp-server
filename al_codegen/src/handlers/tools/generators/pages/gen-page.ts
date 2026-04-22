@@ -35,9 +35,6 @@ export abstract class BasePageGenerator {
     // Esquema JSON de valdiación de entrada
     protected abstract inputSchema: any;
 
-    // Ruta de la plantilla Handlebars
-    protected abstract templatePath: string;
-
     // Tipo de página
     protected abstract pageType: string;
 
@@ -57,13 +54,13 @@ export abstract class BasePageGenerator {
             async (args: any): Promise<CallToolResult> => {
                 try {
                     // Lectura de la plantilla Handlebars
-                    const templateSource = fs.readFileSync(path.join(__root, this.templatePath), "utf-8");
+                    const templateSource = fs.readFileSync(path.join(__root, "src/templates/pages/page.hbs"), "utf-8");
                     const template = Handlebars.compile(templateSource);
 
                     // Añadir propiedades por defecto
                     const properties = args.properties || {};
                     properties["PageType"] = this.pageType;
-                    properties["SourceTable"] = '"' + args.sourceTable + '"';
+                    properties["SourceTable"] = args.sourceTable;
 
                     // Ordenar propiedades por clave alfabéticamente
                     const sortedProperties = Object.fromEntries(
@@ -87,7 +84,7 @@ export abstract class BasePageGenerator {
                         content: [
                             {
                                 type: "text",
-                                text: `Error al generar la página ${args.pageType}: ${error.message}`,
+                                text: `Error al generar la página de tipo ${this.pageType}: ${error.message}`,
                             },
                         ],
                     };

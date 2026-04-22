@@ -8,7 +8,6 @@ class ListPageGenerator extends BasePageGenerator {
     title = "Generar página AL tipo 'List'";
     description = "Genera una página de tipo List en lenguaje AL.";
     inputSchema = listPageSchema;
-    templatePath = "src/templates/pages/page-list.hbs";
     pageType = "List";
     defaultProperties = { "UsageCategory": "Lists" };
 }

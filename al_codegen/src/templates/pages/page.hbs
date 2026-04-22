@@ -1,23 +1,24 @@
 page {{id}} "{{name}}"
 {
     {{#each properties}}
+    {{#if (eq @key "PageType")}}
+    {{@key}} = \"{{this}}\";
+    {{else}}
     {{@key}} = {{this}};
+    {{/if}}
     {{/each}}
 
     layout
     {
-        {{> layout}}
+        {{> (lookup properties "PageType")}}
     }
     {{#if actions}}
 
     actions
     {
-        area(Processing)
-        {
-            {{#each actions}}
-            {{> action}}
-            {{/each}}
-        }
+        {{#each areas}}
+        {{> area}}
+        {{/each}}
     }
     {{/if}}
 }

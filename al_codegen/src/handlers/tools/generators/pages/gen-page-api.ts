@@ -8,7 +8,6 @@ class ApiPageGenerator extends BasePageGenerator {
     title = "Generar página AL tipo 'API'";
     description = "Genera una página de tipo API en lenguaje AL.";
     inputSchema = apiPageSchema;
-    templatePath = "src/templates/pages/page-api.hbs";
     pageType = "API";
     defaultProperties = { "DelayedInsert": "true" };
 }

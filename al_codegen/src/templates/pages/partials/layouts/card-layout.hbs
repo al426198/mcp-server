@@ -1,12 +1,14 @@
 area(Content)
 {
-    {{> repeater}}
+    {{#each groups}}
+    {{> group}}
+    {{/each}}
 }
 {{#if parts}}
 area(FactBoxes)
 {
     {{#each parts}}
-        {{> part}}
+    {{> part}}
     {{/each}}
 }
 {{/if}}

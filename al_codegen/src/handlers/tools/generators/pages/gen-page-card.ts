@@ -7,7 +7,6 @@ class CardPageGenerator extends BasePageGenerator {
     title = "Generar página AL tipo 'Card'";
     description = "Genera una página de tipo Card en lenguaje AL.";
     inputSchema = cardPageSchema;
-    templatePath = "src/templates/pages/page-card.hbs";
     pageType = "Card";
     protected defaultProperties = { "UsageCategory": "None" };
 }

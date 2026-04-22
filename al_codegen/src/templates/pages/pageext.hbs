@@ -5,7 +5,7 @@ pageextension {{id}} "{{name}}" extends "{{target}}"
         {{#each controls}}
         {{operation}}("{{anchor}}")
         {
-            {{> control type=this.type}}
+            {{> control}}
         }
         {{/each}}
     }
@@ -13,13 +13,8 @@ pageextension {{id}} "{{name}}" extends "{{target}}"
 
     actions
     {
-        {{#each actions}}
-        {{operation}}("{{anchor}}")
-        {
-            {{#each items}}
-            {{> action}}
-            {{/each}}
-        }
+        {{#each areas}}
+        {{> area}}
         {{/each}}
     }
     {{/if}}
