@@ -6,6 +6,7 @@ import { registerGenerateTableExtensionTool } from "./generators/tables/gen-tabl
 import { registerGenerateCardPageTool } from "./generators/pages/gen-page-card.js";
 import { registerGenerateListPageTool } from "./generators/pages/gen-page-list.js";
 import { registerGenerateApiPageTool } from "./generators/pages/gen-page-api.js";
+import { registerGeneratePageExtensionTool } from "./generators/pages/gen-pageext.js";
 
 /**
  * Registra herramientas en el servidor MCP.
@@ -19,4 +20,5 @@ export const registerTools = (server: McpServer) => {
     registerGenerateCardPageTool(server);
     registerGenerateListPageTool(server);
     registerGenerateApiPageTool(server);
+    registerGeneratePageExtensionTool(server);
 };

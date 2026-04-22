@@ -1,0 +1,12 @@
+area(Content)
+{
+    {{> repeater}}
+}
+{{#if parts}}
+area(FactBoxes)
+{
+    {{#each parts}}
+        {{> part}}
+    {{/each}}
+}
+{{/if}}

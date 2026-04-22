@@ -1,0 +1,23 @@
+page {{id}} "{{name}}"
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    layout
+    {
+        {{> layout}}
+    }
+    {{#if actions}}
+
+    actions
+    {
+        area(Processing)
+        {
+            {{#each actions}}
+            {{> action}}
+            {{/each}}
+        }
+    }
+    {{/if}}
+}

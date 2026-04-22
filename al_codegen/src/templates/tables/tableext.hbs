@@ -3,24 +3,16 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     {{#each properties}}
     {{@key}} = {{this}};
     {{/each}}
-    {{#if showFields}}
+    {{#if fields}}
     fields
     {
         {{#each fields}}
         {{> field}}
         {{/each}}
-
-        {{#each modifyFields}}
-        modify("{{name}}")
-        {
-            {{#each properties}}
-            {{@key}} = {{this}};
-            {{/each}}
-        }
-        {{/each}}
     }
     {{/if}}
     {{#if keys}}
+    
     keys
     {
         {{#each keys}}
@@ -29,12 +21,11 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     }
     {{/if}}
     {{#if fieldGroups}}
+
     fieldgroups 
     {
         {{#each fieldGroups}}
-        addlast({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
-        {
-        }
+        {{> fieldgroup add=true}}
         {{/each}}
     }
     {{/if}}

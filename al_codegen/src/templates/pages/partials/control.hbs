@@ -1,0 +1,9 @@
+{{#if type "===" "field"}}
+    {{> page-field}}
+{{else if type "===" "group"}}
+    {{> group}}
+{{else if type "===" "repeater"}}
+    {{> repeater}}
+{{else if type "===" "part"}}
+    {{> part}}
+{{/if}}

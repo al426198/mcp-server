@@ -48,6 +48,5 @@ export const tableSchema = z.object({
 // Esquema JSON de validación de argumentos de extensión de tabla
 export const tableExtensionSchema = tableSchema.extend({
     target: z.string().describe("Nombre de la tabla base a extender. Debe existir en la extensión AL actual."),
-    fields: z.array(fieldSchema).default([]).optional().describe("Campos del objeto AL a añadir (opcional)."),
-    modifyFields: z.array(fieldModifySchema).default([]).optional().describe("Campos a modificar (opcional).")
+    fields: z.array(z.union([fieldSchema, fieldModifySchema])).default([]).optional().describe("Campos del objeto AL a añadir o modificar (opcional)."),
 });

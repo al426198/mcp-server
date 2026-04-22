@@ -5,31 +5,10 @@ import { z } from "zod";
  */
 
 // Esquema de validación de campos en la página
-export const fieldControlSchema = z.object({
-    name: z.string().describe("Nombre del control de campo en la página. Debe ser único dentro de la página."),
-    sourceField: z.string().describe("Fuente de datos del campo. Se asume que es una referencia a un campo de la tabla especificada en la propiedad 'SourceTable'."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del campo."),
-});
-
-// Esquema de validación de grupos
-export const groupSchema = z.object({
-    name: z.string().describe("Nombre del grupo. Debe ser único dentro de la página."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo (opcional)."),
-    fields: z.array(fieldControlSchema).default([]).optional().describe("Campos dentro del grupo (opcional)."),
-});
-
-// Esquema de validación de campos en la página
 export const pageFieldSchema = z.object({
     name: z.string().describe("Nombre del control de campo en la página."),
     sourceField: z.string().describe("Nombre del campo en la tabla de origen."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del campo en la página."),
-});
-
-// Esquema de validación de repetidores
-export const repeaterSchema = z.object({
-    name: z.string().default("General").describe("Nombre del repetidor."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor."),
-    fields: z.array(pageFieldSchema).describe("Campos dentro del repetidor."),
 });
 
 // Esquema de validación de partes
@@ -44,6 +23,20 @@ export const pageActionSchema = z.object({
     name: z.string().describe("Nombre de la acción."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades de la acción."),
     // Añadir descripción para trigger "OnAction" en un futuro
+});
+
+// Esquema de validación de grupos
+export const groupSchema = z.object({
+    name: z.string().describe("Nombre del grupo. Debe ser único dentro de la página."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo (opcional)."),
+    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del grupo (opcional)."),
+});
+
+// Esquema de validación de repetidores
+export const repeaterSchema = z.object({
+    name: z.string().default("General").describe("Nombre del repetidor."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor."),
+    fields: z.array(pageFieldSchema).describe("Campos dentro del repetidor."),
 });
 
 // Esquema base JSON de validación de argumentos de página
@@ -76,4 +69,32 @@ export const apiPageSchema = basePageSchema.extend({
     entitySetName: z.string().describe("Nombre del conjunto de entidades."),
     odataKeyFields: z.string().default("SystemId").describe("Campos clave de OData."),
     repeater: repeaterSchema.optional().describe("Repetidor de la página (opcional)."),
+});
+
+// Operaciones válidas dentro de layout y actions de una extensión de página
+const PAGE_EXTENSION_OPERATIONS = [
+    "addfirst", "addlast", "addafter", "addbefore",
+    "modify",
+    "movefirst", "movelast", "moveafter", "movebefore"
+] as const;
+
+// Esquema de validación de un bloque de cambio en el layout de una extensión de página
+export const layoutChangeSchema = z.object({
+    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir campos, 'modify' para cambiar propiedades, 'move*' para mover controles."),
+    anchor: z.string().describe("Nombre del control o categoría pivote."),
+    control: z.union([pageFieldSchema, pagePartSchema]).optional().describe("Controles a añadir o modificar. Solo aplica a operaciones add* y modify."),
+});
+
+// Esquema de validación de un bloque de cambio en las actions de una extensión de página
+export const actionChangeSchema = z.object({
+    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir acciones, 'modify' para cambiar propiedades, 'move*' para mover acciones."),
+    anchor: z.string().describe("Nombre del control o categoría pivote."),
+    action: pageActionSchema.describe("Acción a añadir o modificar. Solo aplica a operaciones add* y modify."),
+});
+
+// Esquema JSON de validación de argumentos de extensión de página
+export const pageExtensionSchema = basePageSchema.extend({
+    target: z.string().describe("Nombre de la página base a extender. Debe existir dentro de la extensión AL actual."),
+    layout: z.array(layoutChangeSchema).default([]).optional().describe("Lista de bloques de cambio en el layout de la página (opcional)."),
+    actions: z.array(actionChangeSchema).default([]).optional().describe("Lista de bloques de cambio en las acciones de la página (opcional)."),
 });

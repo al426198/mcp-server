@@ -4,7 +4,7 @@ import { __root } from "../../../../index.js";
 import { tableExtensionSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 
 /**
@@ -17,8 +17,7 @@ import path from "path";
  * @param name - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
  * @param target - Nombre de la tabla base a extender. Debe existir en la extensión AL actual.
  * @param properties - Propiedades clave-valor del objeto AL (opcional).
- * @param fields - Campos del objeto AL a añadir (opcional).
- * @param modifyFields - Campos del objeto AL a modificar (opcional).
+ * @param fields - Campos del objeto AL a añadir o modificar (opcional).
  * @param fieldGroups - Grupos de campos del objeto AL a añadir (opcional).
  * 
  * @returns La extensión de tabla AL generada.
@@ -37,12 +36,11 @@ import path from "path";
  *          "id": 50100,
  *          "name": "Ejemplo",
  *          "type": "Text",
+ *          "length": 100,
  *          "properties": {
  *              "Caption": "Campo nuevo"
  *          }
- *      }
- *  ],
- *  "modifyFields": [
+ *      },
  *      {
  *          "name": "No.",
  *          "properties": {
@@ -64,7 +62,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
     const name_ext = "generate-table-extension";
     const config_ext = {
         title: "Generar extensión de tabla AL",
-        description: "Genera una extensión de tabla en lenguaje AL.",
+        description: "Genera una extensión de tabla (tableextension) en lenguaje AL.",
         inputSchema: tableExtensionSchema,
     }
 
@@ -74,7 +72,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
         async (args): Promise<CallToolResult> => {
             try {
                 // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/tables/tableext.hbs"), "utf-8");
+                const templateSource = fs.readFileSync(path.join(__root, "src/templates/tables/tableext.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
                 // Generación de la tabla
@@ -82,7 +80,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
                     content: [
                         {
                             type: "text",
-                            text: template({ ...args, showFields: (args.fields && args.fields.length > 0) || (args.modifyFields && args.modifyFields.length > 0) }),
+                            text: template(args),
                         },
                     ],
                 };

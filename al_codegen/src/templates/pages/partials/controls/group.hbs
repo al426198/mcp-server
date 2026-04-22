@@ -1,0 +1,10 @@
+group("{{name}}")
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+
+    {{#each fields}}
+    {{> page-field}}
+    {{/each}}
+}

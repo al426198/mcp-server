@@ -3,7 +3,7 @@ import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { __root } from "../../../../index.js";
 
 import Handlebars from "handlebars";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 
 
@@ -57,7 +57,7 @@ export abstract class BasePageGenerator {
             async (args: any): Promise<CallToolResult> => {
                 try {
                     // Lectura de la plantilla Handlebars
-                    const templateSource = await fs.readFile(path.join(__root, this.templatePath), "utf-8");
+                    const templateSource = fs.readFileSync(path.join(__root, this.templatePath), "utf-8");
                     const template = Handlebars.compile(templateSource);
 
                     // Añadir propiedades por defecto

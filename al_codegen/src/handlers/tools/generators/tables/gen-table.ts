@@ -4,9 +4,8 @@ import { __root } from "../../../../index.js";
 import { tableSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
-
 
 /**
  * HU201: Generación de tablas en lenguaje AL
@@ -73,7 +72,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
         async (args): Promise<CallToolResult> => {
             try {
                 // Lectura de la plantilla Handlebars
-                const templateSource = await fs.readFile(path.join(__root, "src/templates/tables/table.hbs"), "utf-8");
+                const templateSource = fs.readFileSync(path.join(__root, "src/templates/tables/table.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
                 // Generación de la tabla

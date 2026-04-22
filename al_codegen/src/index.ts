@@ -7,6 +7,7 @@ import { registerPrompts } from "./handlers/prompts/index.js";
 import { fileURLToPath } from 'url';
 import { readMetadataFolder } from "./utils/metadata-helpers.js";
 import { setMetadata } from "./utils/metadata-state.js";
+import { registerTablePartials } from "./templates/tables/partials/index.js";
 import path from 'path';
 
 // Obtiene la ruta raíz del proyecto. Útil para trabajar con rutas absolutas.
@@ -40,6 +41,9 @@ async function main() {
     registerTools(server);
     registerResources(server);
     registerPrompts(server);
+
+    // Registrar parciales de Handlebars
+    registerTablePartials();
 
     // Iniciar servidor
     const transport = new StdioServerTransport();

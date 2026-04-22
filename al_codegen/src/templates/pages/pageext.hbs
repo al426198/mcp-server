@@ -1,0 +1,26 @@
+pageextension {{id}} "{{name}}" extends "{{target}}"
+{
+    layout
+    {
+        {{#each controls}}
+        {{operation}}("{{anchor}}")
+        {
+            {{> control type=this.type}}
+        }
+        {{/each}}
+    }
+    {{#if actions}}
+
+    actions
+    {
+        {{#each actions}}
+        {{operation}}("{{anchor}}")
+        {
+            {{#each items}}
+            {{> action}}
+            {{/each}}
+        }
+        {{/each}}
+    }
+    {{/if}}
+}
