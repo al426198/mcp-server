@@ -10,6 +10,18 @@ class ApiPageGenerator extends BasePageGenerator {
     inputSchema = apiPageSchema;
     pageType = "API";
     defaultProperties = { "DelayedInsert": "true" };
+
+    // Extrae las propiedades específicas de la página de tipo API de los argumentos recibidos.
+    protected getProperties(args: any): Record<string, string> {
+        return {
+            "APIGroup": args.apiGroup,
+            "APIPublisher": args.apiPublisher,
+            "APIVersion": args.apiVersion,
+            "EntityName": args.entityName,
+            "EntitySetName": args.entitySetName,
+            "ODataKeyFields": args.odataKeyFields
+        };
+    }
 }
 
 /**

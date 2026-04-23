@@ -38,8 +38,13 @@ export abstract class BasePageGenerator {
     // Tipo de página
     protected abstract pageType: string;
 
-    // Propiedades por defecto (opcional), se pueden añadir según el caso
+    // Propiedades por defecto (opcional), su valor está definido a priori. Se pueden añadir según el caso.
     protected defaultProperties: Record<string, string> = {};
+
+    // Propiedades específicas de la página del tipo que sea, su valor se pasa como argumento.
+    protected getProperties(args: any): Record<string, string> {
+        return {};
+    }
 
     public registerPageTool(server: McpServer): void {
         const config = {
@@ -57,8 +62,14 @@ export abstract class BasePageGenerator {
                     const templateSource = fs.readFileSync(path.join(__root, "src/templates/pages/page.hbs"), "utf-8");
                     const template = Handlebars.compile(templateSource);
 
-                    // Añadir propiedades por defecto
-                    const properties = args.properties || {};
+                    // Combinar propiedades por defecto con las pasadas como argumentos (opcionales)
+                    const properties = {
+                        ...this.defaultProperties,
+                        ...(args.properties || {}),
+                        ...this.getProperties(args)
+                    };
+
+                    // Propiedades obligatorias que sobreescriben cualquier valor previo
                     properties["PageType"] = this.pageType;
                     properties["SourceTable"] = '\"' + args.sourceTable + '\"';     // Por seguridad se entrecomilla
 
