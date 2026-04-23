@@ -61,7 +61,7 @@ class ListPageGenerator extends BasePageGenerator {
         ]
     }
 }
- */
+*/
 export const registerGenerateListPageTool = (server: McpServer) => {
     new ListPageGenerator().registerPageTool(server);
 };

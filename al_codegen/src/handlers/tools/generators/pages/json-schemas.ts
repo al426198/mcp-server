@@ -4,18 +4,18 @@ import { z } from "zod";
  * Esquemas de validación de argumentos para la generación de páginas.
  */
 
-// Esquema de validación de campos en la página
+// Esquema de validación de campos
 export const pageFieldSchema = z.object({
-    name: z.string().describe("Nombre del control de campo en la página."),
-    sourceField: z.string().describe("Nombre del campo en la tabla de origen."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del campo en la página."),
+    name: z.string().describe("Nombre del control de campo."),
+    sourceField: z.string().describe("Nombre del campo en la tabla de origen (propiedad 'SourceTable')."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del control de campo (opcional)."),
 });
 
 // Esquema de validación de partes
 export const pagePartSchema = z.object({
     name: z.string().describe("Nombre de la parte."),
     source: z.string().describe("Nombre de la página o tabla de origen de la parte."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades de la parte."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades de la parte (opcional)."),
 });
 
 // Esquema de validación de acciones
@@ -28,22 +28,22 @@ export const pageActionSchema = z.object({
 // Esquema de validación de grupos de campos
 export const fieldGroupSchema = z.object({
     name: z.string().describe("Nombre del grupo de campos. Debe ser único dentro de la página."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo (opcional)."),
-    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del grupo (opcional)."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo de campos (opcional)."),
+    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del grupo de campos (opcional)."),
 });
 
 // Esquema de validación de grupos de acciones
 export const actionGroupSchema = z.object({
     name: z.string().describe("Nombre del grupo de acciones. Debe ser único dentro de la página."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo de acciones (opcional)."),
-    actions: z.array(pageActionSchema).default([]).optional().describe("Acciones dentro del grupo (opcional)."),
+    actions: z.array(pageActionSchema).default([]).optional().describe("Acciones dentro del grupo de acciones (opcional)."),
 });
 
 // Esquema de validación de repetidores
 export const repeaterSchema = z.object({
     name: z.string().default("General").describe("Nombre del repetidor."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor."),
-    fields: z.array(pageFieldSchema).describe("Campos dentro del repetidor."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor (opcional)."),
+    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del repetidor (opcional)."),
 });
 
 // Esquema base JSON de validación de argumentos de página

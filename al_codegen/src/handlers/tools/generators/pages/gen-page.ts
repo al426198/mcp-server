@@ -11,7 +11,7 @@ import path from "path";
  * HU202 + HU203 + HU204: Generación de páginas en lenguaje AL
  * 
  * Registra una herramienta en el servidor MCP para generar páginas de tipo AL.
- * Para ver ejemplos, véase el resto de ficheros de este módulo.
+ * Para ver ejemplos, véase el resto de ficheros `gen-page-*.ts`.
  * 
  * @param server - Servidor MCP.
  * @param name - Nombre de la herramienta.
@@ -38,7 +38,7 @@ export abstract class BasePageGenerator {
     // Tipo de página
     protected abstract pageType: string;
 
-    // Propiedades por defecto (opcional)
+    // Propiedades por defecto (opcional), se pueden añadir según el caso
     protected defaultProperties: Record<string, string> = {};
 
     public registerPageTool(server: McpServer): void {

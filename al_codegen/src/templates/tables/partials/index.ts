@@ -9,7 +9,7 @@ import { __root } from "../../../index.js";
 export const registerTablePartials = () => {
     Handlebars.registerPartial(
         "field",
-        fs.readFileSync(path.join(__root, "src/templates/tables/partials/field.hbs"), "utf-8")
+        fs.readFileSync(path.join(__root, "src/templates/tables/partials/table-field.hbs"), "utf-8")
     );
     Handlebars.registerPartial(
         "fieldgroup",

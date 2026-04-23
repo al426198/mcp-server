@@ -15,8 +15,4 @@ export const registerPageActionPartials = () => {
         "area",
         fs.readFileSync(path.join(__root, "src/templates/pages/partials/actions/area.hbs"), "utf-8")
     );
-    Handlebars.registerPartial(
-        "group",
-        fs.readFileSync(path.join(__root, "src/templates/pages/partials/actions/group.hbs"), "utf-8")
-    );
 };

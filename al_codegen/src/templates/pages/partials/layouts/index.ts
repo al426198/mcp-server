@@ -4,7 +4,8 @@ import path from "path";
 import { __root } from "../../../../index.js";
 
 /**
- * Registra parciales de plantillas de páginas en Handlebars.
+ * Registra parciales de layouts de páginas en Handlebars.
+ * El nombre del parcial debe coincidir con el PageType para evitar el uso de un "switch".
  */
 export const registerPageLayoutPartials = () => {
     Handlebars.registerPartial(

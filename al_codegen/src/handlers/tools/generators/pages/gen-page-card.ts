@@ -8,7 +8,7 @@ class CardPageGenerator extends BasePageGenerator {
     description = "Genera una página de tipo Card en lenguaje AL.";
     inputSchema = cardPageSchema;
     pageType = "Card";
-    protected defaultProperties = { "UsageCategory": "None" };
+    defaultProperties = { "UsageCategory": "None" };
 }
 
 /**
@@ -32,8 +32,7 @@ class CardPageGenerator extends BasePageGenerator {
  *   "sourceTable": "Customer",
  *   "properties": {
  *     "ApplicationArea": "All",
- *     "Caption": "Ficha Cliente",
- *     "UsageCategory": "None"
+ *     "Caption": "Ficha Cliente"
  *   },
  *   "groups": [
  *     {
