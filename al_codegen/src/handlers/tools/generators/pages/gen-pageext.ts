@@ -53,14 +53,22 @@ import path from "path";
  *     {
  *       "operation": "addlast",
  *       "anchor": "Processing",
- *       "items": [
+ *       "groups": [
  *         {
- *           "name": "MyAction",
+ *           "name": "MyGroup",
  *           "properties": {
- *             "Caption": "'Mi acción'",
- *             "Image": "NewDocument",
- *             "ApplicationArea": "All"
- *           }
+ *             "Caption": "'Mi grupo'",
+ *           },
+ *           "actions": [
+ *             {
+ *               "name": "MyAction",
+ *               "properties": {
+ *                 "Caption": "'Mi acción'",
+ *                 "Image": "NewDocument",
+ *                 "ApplicationArea": "All"
+ *               }
+ *             }
+ *           ]
  *         }
  *       ]
  *     }

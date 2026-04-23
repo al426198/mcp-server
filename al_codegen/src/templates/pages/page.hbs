@@ -10,12 +10,12 @@ page {{id}} "{{name}}"
     {
         {{> (lookup properties "PageType")}}
     }
-    {{#if actions}}
+    {{#if areas}}
 
     actions
     {
         {{#each areas}}
-        {{> area}}
+        {{> action-group}}
         {{/each}}
     }
     {{/if}}

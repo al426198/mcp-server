@@ -1,0 +1,20 @@
+{{type}}("{{name}}")
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{{this}}};
+    {{/each}}
+
+    {{/if}}
+    {{#if groups}}
+    {{#each groups}}
+    {{> action-cluster}}
+    {{/each}}
+
+    {{/if}}
+    {{#if actions}}
+    {{#each actions}}
+    {{> action}}
+    {{/each}}
+    {{/if}}
+}

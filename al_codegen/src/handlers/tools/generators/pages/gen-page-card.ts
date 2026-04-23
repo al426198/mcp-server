@@ -55,13 +55,33 @@ class CardPageGenerator extends BasePageGenerator {
  *       "source": "Customer Picture"
  *     }
  *   ],
- *   "actions": [
+ *   "actionClusters": [
  *     {
- *       "name": "New",
- *       "properties": {
- *         "Caption": "'Nuevo pedido'",
- *         "Image": "NewDocument"
- *       }
+ *       "name": "Processing",
+ *       "type": "area",
+ *       "actions": [
+ *        {
+ *           "name": "New",
+ *           "properties": {
+ *             "Caption": "'Nuevo pedido'",
+ *             "Image": "NewDocument"
+ *           }
+ *         }
+ *       ],
+ *      "groups": [
+ *       {
+ *           "name": "RelatedInformation",
+ *           "actions": [
+ *            {
+ *               "name": "New",
+ *               "properties": {
+ *                 "Caption": "'Nuevo pedido'",
+ *                 "Image": "NewDocument"
+ *               }
+ *             }
+ *           ]
+ *         }
+ *      ]
  *     }
  *   ]
  * }

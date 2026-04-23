@@ -31,32 +31,23 @@ pageextension {{id}} "{{name}}" extends "{{target}}"
     actions
     {
         {{#each actionChanges}}
-        {{#if controls}}
+        {{#if control}}
+        {{operation}}("{{anchor}}"; "{{control}}")
+        {{else}}
         {{operation}}("{{anchor}}")
         {
             {{#each controls}}
-            {{#if actions}}
-            group("{{name}}")
-            {
-                {{#each actions}}
-                {{> action}}
-                {{/each}}
-            }
+            {{#if groups}}
+            {{> action-group}}
             {{else}}
             {{> action}}
             {{/if}}
             {{/each}}
-        }
-        {{else if properties}}
-        {{operation}}("{{anchor}}")
-        {
             {{#each properties}}
             {{@key}} = {{{this}}};
             {{/each}}
         }
-        {{~else~}}
-        {{operation}}("{{anchor}}"; "{{control}}")
-        {{~/if}}
+        {{/if}}
         {{/each}}
     }
     {{/if}}

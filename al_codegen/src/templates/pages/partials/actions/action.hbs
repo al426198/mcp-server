@@ -1,8 +1,11 @@
 action("{{name}}")
 {
+    {{#if properties}}
     {{#each properties}}
-    {{@key}} = {{this}};
+    {{@key}} = {{{this}}};
     {{/each}}
+
+    {{/if}}
 
     trigger OnAction()
     begin
