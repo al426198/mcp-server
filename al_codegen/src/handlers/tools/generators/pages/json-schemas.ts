@@ -81,32 +81,43 @@ export const apiPageSchema = basePageSchema.extend({
 
 // Operaciones válidas dentro de layout y actions de una extensión de página
 const PAGE_EXTENSION_OPERATIONS = [
-    "addfirst", "addlast", "addafter", "addbefore",
+    "addfirst",
+    "addlast",
+    "addafter",
+    "addbefore",
     "modify",
-    "movefirst", "movelast", "moveafter", "movebefore"
-] as const;
+    "movefirst",
+    "movelast",
+    "moveafter",
+    "movebefore"
+];
 
-export const changeSchema = z.object({
-    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir controles/acciones, 'modify' para cambiar propiedades, 'move*' para mover controles/acciones."),
-    anchor: z.string().describe("Nombre del control/acción o categoría pivote."),
+export const baseChangeSchema = z.object({
+    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir controles/grupos/acciones, 'modify' para cambiar propiedades, 'move*' para mover controles/acciones."),
+    anchor: z.string().describe("Nombre del control/grupo/acción pivote. Debe existir en el objeto extendido."),
 });
 
-// Esquema de validación de un bloque de cambio en el layout de una extensión de página
-export const layoutChangeSchema = changeSchema.extend({
-    control: z.discriminatedUnion("type", [
-        pageFieldSchema.extend({ type: z.literal("field") }),
-        pagePartSchema.extend({ type: z.literal("part") }),
-    ]).optional().describe("Control a añadir o modificar. Solo aplica a operaciones add* y modify."),
+// Esquemas de validación de cambios en una extensión de página
+export const addChangeSchema = baseChangeSchema.extend({
+    controls: z.array(z.union(
+        [
+            pageFieldSchema.extend({ type: z.literal("field").default("field") }),
+            fieldGroupSchema.extend({ type: z.literal("group").default("group") }),
+            pageActionSchema.extend({ type: z.literal("action").default("action") })
+        ])).default([]).optional().describe("Controles a añadir (opcional)."),
 });
 
-// Esquema de validación de un bloque de cambio en las actions de una extensión de página
-export const actionChangeSchema = changeSchema.extend({
-    actions: z.array(z.union([actionGroupSchema, pageActionSchema])).optional().describe("Acciones o grupos de acciones a añadir o modificar."),
+export const modifyChangeSchema = baseChangeSchema.extend({
+    properties: z.record(z.string(), z.string()).describe("Propiedades del control a modificar."),
+});
+
+export const moveChangeSchema = baseChangeSchema.extend({
+    control: z.string().describe("Control a mover. Debe existir en el objeto extendido."),
 });
 
 // Esquema JSON de validación de argumentos de extensión de página
-export const pageExtensionSchema = basePageSchema.extend({
+export const pageExtensionSchema = basePageSchema.omit({ sourceTable: true }).extend({
     target: z.string().describe("Nombre de la página base a extender. Debe existir dentro de la extensión AL actual."),
-    layout: z.array(layoutChangeSchema).default([]).optional().describe("Lista de bloques de cambio en el layout de la página (opcional)."),
-    actions: z.array(actionChangeSchema).default([]).optional().describe("Lista de bloques de cambio en las acciones de la página (opcional)."),
+    layoutChanges: z.array(z.union([modifyChangeSchema, moveChangeSchema, addChangeSchema])).default([]).optional().describe("Lista de bloques de cambio en el layout de la página (opcional)."),
+    actionChanges: z.array(z.union([modifyChangeSchema, moveChangeSchema, addChangeSchema])).default([]).optional().describe("Lista de bloques de cambio en las acciones de la página (opcional)."),
 });

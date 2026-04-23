@@ -30,38 +30,38 @@ class ListPageGenerator extends BasePageGenerator {
  * @example
  * ```json
  * {
-    "id": 50100,
-    "name": "Customer List",
-    "sourceTable": "Customer",
-    "properties": {
-        "Caption": "Customer",
-        "UsageCategory": "Administration",
-        "ApplicationArea": "All",
-        "CardPageId": "Customer Card"
-    },
-    repeater: {
-        "name": "Customers",
-        "fields": [
-            {
-                "name": "N.º",
-                "sourceField": "No."
-            },
-            {
-                "name": "Nombre",
-                "sourceField": "Name"
-            },
-            {
-                "name": "Cód. divisa",
-                "sourceField": "Currency Code"
-            },
-            {
-                "name": "Saldo (div. local)",
-                "sourceField": "Balance (LCY)"
-            }
-        ]
-    }
-}
-*/
+ *   "id": 50100,
+ *   "name": "Customer List",
+ *   "sourceTable": "Customer",
+ *   "properties": {
+ *     "Caption": "Customer",
+ *     "UsageCategory": "Administration",
+ *     "ApplicationArea": "All",
+ *     "CardPageId": "Customer Card"
+ *   },
+ *   repeater: {
+ *     "name": "Customers",
+ *     "fields": [
+ *       {
+ *         "name": "N.º",
+ *         "sourceField": "No."
+ *       },
+ *       {
+ *         "name": "Nombre",
+ *         "sourceField": "Name"
+ *       },
+ *       {
+ *         "name": "Cód. divisa",
+ *         "sourceField": "Currency Code"
+ *       },
+ *       {
+ *         "name": "Saldo (div. local)",
+ *         "sourceField": "Balance (LCY)"
+ *       }
+ *     ]
+ *   }
+ * }
+ */
 export const registerGenerateListPageTool = (server: McpServer) => {
     new ListPageGenerator().registerPageTool(server);
 };

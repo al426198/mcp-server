@@ -53,7 +53,7 @@ import path from "path";
  *          "type": "DropDown",
  *          "fieldNames": ["Ejemplo"]
  *      }
- *  ]
+ *   ]
  * }
  * ```
  */

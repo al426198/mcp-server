@@ -1,13 +1,16 @@
 tableextension {{id}} "{{name}}" extends "{{target}}"
 {
+    {{#if properties}}
     {{#each properties}}
     {{@key}} = {{this}};
     {{/each}}
+
+    {{/if}}
     {{#if fields}}
     fields
     {
         {{#each fields}}
-        {{> field}}
+        {{> table:field}}
         {{/each}}
     }
     {{/if}}

@@ -1,13 +1,15 @@
 table {{id}} "{{name}}"
 {
+    {{#if properties}}
     {{#each properties}}
     {{@key}} = {{this}};
     {{/each}}
-
+    
+    {{/if}}
     fields
     {
         {{#each fields}}
-        {{> field}}
+        {{> table:field}}
         {{/each}}
     }
     {{#if keys}}

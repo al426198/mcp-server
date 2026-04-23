@@ -1,6 +1,8 @@
 area(Content)
 {
-    {{> repeater repeater}}
+    {{#with repeater}}
+    {{> repeater}}
+    {{/with}}
 }
 {{#if parts}}
 area(FactBoxes)

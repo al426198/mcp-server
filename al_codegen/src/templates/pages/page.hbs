@@ -1,9 +1,11 @@
 page {{id}} "{{name}}"
 {
+    {{#if properties}}
     {{#each properties}}
     {{@key}} = {{{this}}};
     {{/each}}
 
+    {{/if}}
     layout
     {
         {{> (lookup properties "PageType")}}

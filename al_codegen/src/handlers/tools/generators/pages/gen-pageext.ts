@@ -11,10 +11,6 @@ import path from "path";
  * HU207: Generación de extensiones de página en lenguaje AL
  *
  * Genera una extensión de página (pageextension) en lenguaje AL.
- * Soporta las siguientes operaciones dentro de `layout` y `actions`:
- *  - addfirst / addlast / addafter / addbefore  → añadir campos o acciones
- *  - modify                                     → sobrescribir propiedades de un control existente
- *  - movefirst / movelast / moveafter / movebefore → mover controles existentes
  *
  * @param id      - ID del objeto. Debe obtenerse con la herramienta 'assign-id'.
  * @param name    - Nombre del objeto de extensión.
@@ -30,11 +26,11 @@ import path from "path";
  *   "id": 50101,
  *   "name": "MyExtension",
  *   "target": "340 Declaration Lines",
- *   "layout": [
+ *   "layoutChanges": [
  *     {
  *       "operation": "addafter",
  *       "anchor": "Customer/Vendor No.",
- *       "fields": [
+ *       "controls": [
  *         {
  *           "name": "Campo nuevo",
  *           "sourceField": "Campo nuevo",
@@ -50,10 +46,10 @@ import path from "path";
  *     {
  *       "operation": "moveafter",
  *       "anchor": "Customer/Vendor No.",
- *       "fieldNames": ["Campo nuevo"]
+ *       "control": "Campo nuevo"
  *     }
  *   ],
- *   "actions": [
+ *   "actionChanges": [
  *     {
  *       "operation": "addlast",
  *       "anchor": "Processing",
