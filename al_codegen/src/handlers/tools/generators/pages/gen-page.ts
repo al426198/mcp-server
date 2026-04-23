@@ -60,7 +60,7 @@ export abstract class BasePageGenerator {
                     // Añadir propiedades por defecto
                     const properties = args.properties || {};
                     properties["PageType"] = this.pageType;
-                    properties["SourceTable"] = args.sourceTable;
+                    properties["SourceTable"] = '\"' + args.sourceTable + '\"';     // Por seguridad se entrecomilla
 
                     // Ordenar propiedades por clave alfabéticamente
                     const sortedProperties = Object.fromEntries(
