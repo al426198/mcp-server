@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { listPageSchema } from "./json-schemas.js";
-import { BasePageGenerator } from "./gen-page.js";
+import { listPageSchema } from "../json-schemas.js";
+import { BasePageGenerator } from "../gen-page.js";
 
 // Clase que encapsula las propiedades específicas de una página de tipo List.
 class ListPageGenerator extends BasePageGenerator {

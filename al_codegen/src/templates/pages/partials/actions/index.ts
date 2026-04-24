@@ -12,7 +12,7 @@ export const registerPageActionPartials = () => {
         fs.readFileSync(path.join(__root, "src/templates/pages/partials/actions/action.hbs"), "utf-8")
     );
     Handlebars.registerPartial(
-        "group",
+        "action-cluster",
         fs.readFileSync(path.join(__root, "src/templates/pages/partials/actions/action-cluster.hbs"), "utf-8")
     );
 };

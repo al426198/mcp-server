@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { apiPageSchema } from "./json-schemas.js";
-import { BasePageGenerator } from "./gen-page.js";
+import { apiPageSchema } from "../json-schemas.js";
+import { BasePageGenerator } from "../gen-page.js";
 
 // Clase que encapsula las propiedades específicas de una página de tipo API.
 class ApiPageGenerator extends BasePageGenerator {
@@ -54,7 +54,19 @@ class ApiPageGenerator extends BasePageGenerator {
  *   "apiVersion": "1.0",
  *   "entityName": "Customer",
  *   "entitySetName": "Customers",
- *   "odataKeyFields": "SystemId"
+ *   "odataKeyFields": "SystemId",
+ *   "repeater": {
+ *     "name": "General",
+ *     "fields": [
+ *       {
+ *         "name": "Name",
+ *         "sourceField": "Name",
+ *         "properties": {
+ *           "Caption": "'Name'"
+ *         }
+ *       }
+ *     ]
+ *   }
  * }
  * ```
  */

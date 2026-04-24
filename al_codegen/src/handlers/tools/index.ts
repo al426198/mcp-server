@@ -3,9 +3,9 @@ import { registerGetObjectSchemaTool } from "./get-object-schema.js";
 import { registerInitMetadataTool } from "./init-metadata.js";
 import { registerGenerateTableTool } from "./generators/tables/gen-table.js";
 import { registerGenerateTableExtensionTool } from "./generators/tables/gen-tableext.js";
-import { registerGenerateCardPageTool } from "./generators/pages/gen-page-card.js";
-import { registerGenerateListPageTool } from "./generators/pages/gen-page-list.js";
-import { registerGenerateApiPageTool } from "./generators/pages/gen-page-api.js";
+import { registerGenerateCardPageTool } from "./generators/pages/subtypes/gen-page-card.js";
+import { registerGenerateListPageTool } from "./generators/pages/subtypes/gen-page-list.js";
+import { registerGenerateApiPageTool } from "./generators/pages/subtypes/gen-page-api.js";
 import { registerGeneratePageExtensionTool } from "./generators/pages/gen-pageext.js";
 
 /**

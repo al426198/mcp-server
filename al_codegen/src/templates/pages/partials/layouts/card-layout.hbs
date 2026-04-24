@@ -1,9 +1,11 @@
+{{#if groups}}
 area(Content)
 {
     {{#each groups}}
     {{> group}}
     {{/each}}
 }
+{{/if}}
 {{#if parts}}
 area(FactBoxes)
 {

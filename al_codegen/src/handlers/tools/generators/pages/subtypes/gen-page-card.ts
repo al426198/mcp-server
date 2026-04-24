@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { cardPageSchema } from "./json-schemas.js";
-import { BasePageGenerator } from "./gen-page.js";
+import { cardPageSchema } from "../json-schemas.js";
+import { BasePageGenerator } from "../gen-page.js";
 
 class CardPageGenerator extends BasePageGenerator {
     name = "generate-card-page";
@@ -55,7 +55,7 @@ class CardPageGenerator extends BasePageGenerator {
  *       "source": "Customer Picture"
  *     }
  *   ],
- *   "actionClusters": [
+ *   "areas": [
  *     {
  *       "name": "Processing",
  *       "type": "area",

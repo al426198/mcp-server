@@ -27,9 +27,16 @@ export const pageActionSchema = z.object({
 
 // Esquema de validación de grupos de campos
 export const fieldGroupSchema = z.object({
-    name: z.string().describe("Nombre del grupo de campos. Debe ser único dentro de la página."),
+    name: z.string().default("General").describe("Nombre del grupo de campos. Debe ser único dentro de la página."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo de campos (opcional)."),
     fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del grupo de campos (opcional)."),
+});
+
+// Esquema de validación de repetidores
+export const repeaterSchema = z.object({
+    name: z.string().default("General").describe("Nombre del repetidor. Debe ser único dentro de la página."),
+    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor (opcional)."),
+    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del repetidor (opcional)."),
 });
 
 // Esquema de validación de grupos de acciones anidados (por defecto tipo 'group')
@@ -43,18 +50,11 @@ const actionGroupSchema: z.ZodType<any> = z.lazy(() => z.object({
 
 // Esquema de validación de áreas de acciones
 export const actionAreaSchema = z.object({
-    name: z.string().describe("Nombre del grupo o área de acciones. Debe ser único dentro de la página."),
+    name: z.string().default("Processing").describe("Nombre del grupo o área de acciones. Debe ser único dentro de la página."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del grupo o área de acciones (opcional)."),
     actions: z.array(pageActionSchema).default([]).optional().describe("Acciones dentro del grupo o área de acciones (opcional)."),
     groups: z.array(actionGroupSchema).default([]).optional().describe("Grupos de acciones dentro del área o grupo de acciones (opcional)."),
     type: z.literal("area").default("area").describe("El primer nivel dentro de una jerarquía de acciones debe ser 'area'"),
-});
-
-// Esquema de validación de repetidores
-export const repeaterSchema = z.object({
-    name: z.string().default("General").describe("Nombre del repetidor."),
-    properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades del repetidor (opcional)."),
-    fields: z.array(pageFieldSchema).default([]).optional().describe("Campos dentro del repetidor (opcional)."),
 });
 
 // Esquema base JSON de validación de argumentos de página
@@ -104,13 +104,13 @@ const PAGE_EXTENSION_OPERATIONS = [
 ];
 
 export const baseChangeSchema = z.object({
-    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Usa 'add*' para añadir controles/grupos/acciones, 'modify' para cambiar propiedades, 'move*' para mover controles/acciones."),
+    operation: z.enum(PAGE_EXTENSION_OPERATIONS).describe("Tipo de operación. Se usa 'add*' para añadir controles/grupos/acciones, 'modify' para cambiar propiedades, 'move*' para mover controles/acciones."),
     anchor: z.string().describe("Nombre del control/grupo/acción pivote. Debe existir en el objeto extendido."),
 });
 
 // Esquemas de validación de cambios en una extensión de página
 export const addChangeSchema = baseChangeSchema.extend({
-    controls: z.array(z.union([
+    changes: z.array(z.union([
         pageFieldSchema.extend({ type: z.literal("field").default("field") }),
         fieldGroupSchema.extend({ type: z.literal("group").default("group") }),
         pageActionSchema.extend({ type: z.literal("action").default("action") }),
@@ -123,7 +123,7 @@ export const modifyChangeSchema = baseChangeSchema.extend({
 });
 
 export const moveChangeSchema = baseChangeSchema.extend({
-    control: z.string().describe("Control/Acción a mover. Debe existir en el objeto extendido."),
+    target: z.string().describe("Control/Acción a mover. Debe existir en el objeto extendido."),
 });
 
 // Esquema JSON de validación de argumentos de extensión de página

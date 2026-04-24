@@ -10,12 +10,12 @@ pageextension {{id}} "{{name}}" extends "{{target}}"
     layout
     {
         {{#each layoutChanges}}
-        {{#if control}}
-        {{operation}}("{{anchor}}"; "{{control}}")
+        {{#if target}}
+        {{operation}}("{{anchor}}"; "{{target}}")
         {{else}}
         {{operation}}("{{anchor}}")
         {
-            {{#each controls}}
+            {{#each changes}}
             {{> (lookup this "type")}}
             {{/each}}
             {{#each properties}}
@@ -31,14 +31,14 @@ pageextension {{id}} "{{name}}" extends "{{target}}"
     actions
     {
         {{#each actionChanges}}
-        {{#if control}}
-        {{operation}}("{{anchor}}"; "{{control}}")
+        {{#if target}}
+        {{operation}}("{{anchor}}"; "{{target}}")
         {{else}}
         {{operation}}("{{anchor}}")
         {
-            {{#each controls}}
+            {{#each changes}}
             {{#if groups}}
-            {{> action-group}}
+            {{> action-cluster}}
             {{else}}
             {{> action}}
             {{/if}}
