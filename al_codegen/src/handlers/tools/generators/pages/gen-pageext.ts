@@ -30,7 +30,7 @@ import path from "path";
  *     {
  *       "operation": "addafter",
  *       "anchor": "Customer/Vendor No.",
- *       "controls": [
+ *       "changes": [
  *         {
  *           "name": "Campo nuevo",
  *           "sourceField": "Campo nuevo",
@@ -53,11 +53,11 @@ import path from "path";
  *     {
  *       "operation": "addlast",
  *       "anchor": "Processing",
- *       "groups": [
+ *       "changes": [
  *         {
  *           "name": "MyGroup",
  *           "properties": {
- *             "Caption": "'Mi grupo'",
+ *             "Caption": "'Mi grupo'"
  *           },
  *           "actions": [
  *             {
@@ -71,6 +71,18 @@ import path from "path";
  *           ]
  *         }
  *       ]
+ *     },
+ *     {
+ *       "operation": "modify",
+ *       "anchor": "MyAction",
+ *       "properties": {
+ *           "Visible": "false"
+ *       }
+ *     },
+ *     {
+ *       "operation": "moveafter",
+ *       "anchor": "MyGroup",
+ *       "target": "MyAction"
  *     }
  *   ]
  * }

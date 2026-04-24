@@ -1,9 +1,3 @@
-{{#if add}}
-addlast({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
+{{fg_type}}({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
 {
 }
-{{else}}
-fieldgroup({{type}}; {{#each fieldNames}}"{{this}}"{{#unless @last}}, {{/unless}}{{/each}})
-{
-}
-{{/if}}

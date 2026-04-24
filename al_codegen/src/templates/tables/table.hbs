@@ -9,7 +9,7 @@ table {{id}} "{{name}}"
     fields
     {
         {{#each fields}}
-        {{> table:field}}
+        {{> table-field}}
         {{/each}}
     }
     {{#if keys}}
@@ -26,7 +26,7 @@ table {{id}} "{{name}}"
     fieldgroups 
     {
         {{#each fieldGroups}}
-        {{> fieldgroup}}
+        {{> fieldgroup fg_type="fieldgroup"}}
         {{/each}}
     }
     {{/if}}

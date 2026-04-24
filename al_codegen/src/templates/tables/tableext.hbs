@@ -10,7 +10,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     fields
     {
         {{#each fields}}
-        {{> table:field}}
+        {{> table-field}}
         {{/each}}
     }
     {{/if}}
@@ -28,7 +28,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
     fieldgroups 
     {
         {{#each fieldGroups}}
-        {{> fieldgroup add=true}}
+        {{> fieldgroup fg_type="addlast"}}
         {{/each}}
     }
     {{/if}}
