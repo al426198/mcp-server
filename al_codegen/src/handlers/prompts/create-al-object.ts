@@ -47,9 +47,12 @@ const METADATA_PATH = process.env.AL_PROJECT_PATH + `/${publisher}_${name}_${ver
 export const registerCreateNewObjectPrompt = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const promptSchema = {
-        name: z.string().min(1, "El nombre del objeto AL no puede estar vacío.").describe("Nombre del objeto. Debe ser único dentro de la extensión AL actual"),
-        type: z.enum(TYPES).describe("Tipo de objeto"),
-        description: z.string().optional().describe("Descripción textual del objeto"),
+        name: z.string().describe("Nombre del objeto."),
+        target: z.string().optional().describe("Nombre del objeto base a extender (obligatorio si el objeto es una extensión)."),
+        type: z.enum(TYPES).describe("Tipo de objeto."),
+        description: z.string().optional().describe(
+            "Descripción textual del objeto. Se pueden incluir campos, controles, acciones, etc. a generar, o bien se puede explicar qué función debe cumplir el objeto AL."
+        ),
     };
 
     // Parámetros del prompt
@@ -65,6 +68,9 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
         name,
         config,
         async (args) => {
+            if (args.type.includes("extension") && !args.target) {
+                throw new Error("Un objeto base es obligatorio para extensiones. Proporciona el nombre del objeto base a extender.");
+            }
             return {
                 messages: [
                     {
@@ -85,7 +91,14 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Si el objeto existe, devuelve un mensaje de error. Si no existe, proporciona el siguiente ID disponible para el tipo de objeto "${args.type}".`,
+                            text: `Si el objeto es una extensión (${args.type} sigue el patrón "*extension"), comprueba que el objeto base "${args.target}" existe mediante la herramienta 'get-object-schema'.`,
+                        },
+                    },
+                    {
+                        role: "assistant",
+                        content: {
+                            type: "text",
+                            text: `Si ha ido todo bien en los pasos anteriores, proporciona el siguiente ID disponible para el tipo de objeto "${args.type}". En caso contrario, devuelve un mensaje de error`,
                         },
                     },
                     {
