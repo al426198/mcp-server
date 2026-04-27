@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
+import { ROOT } from "../../../../index.js";
 import { pageExtensionSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
@@ -102,7 +102,7 @@ export const registerGeneratePageExtensionTool = (server: McpServer) => {
         async (args: any): Promise<CallToolResult> => {
             try {
                 // Lectura de la plantilla Handlebars
-                const templateSource = fs.readFileSync(path.join(__root, "src/templates/pages/pageext.hbs"), "utf-8");
+                const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/pages/pageext.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
                 // Generación de la extensión de página

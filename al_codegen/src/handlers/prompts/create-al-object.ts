@@ -1,6 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import fs from "fs";
 
 /** 
  * Tipos de objetos disponibles en AL
@@ -8,25 +7,18 @@ import fs from "fs";
  * y los tipos extensión 'tableextension' y 'pageextension'
  */
 const TYPES = [
-    "table",
-    "page",
-    "codeunit",
-    "report",
-    "xmlport",
-    "query",
-    "enum",
-    "tableextension",
-    "pageextension",
-    "reportextension",
-    "enumextension"
+    "Table",
+    "Page",
+    "Codeunit",
+    "Report",
+    "XmlPort",
+    "Query",
+    "Enum",
+    "TableExtension",
+    "PageExtension",
+    "ReportExtension",
+    "EnumExtension"
 ]
-
-// Ruta del fichero de configuración de la extensión AL
-const CONFIG_PATH = process.env.AL_PROJECT_PATH + "/app.json";
-
-// Ruta del fichero de metadatos de la extensión AL
-const { publisher, name, version } = getAppInfo();
-const METADATA_PATH = process.env.AL_PROJECT_PATH + `/${publisher}_${name}_${version}.app`;
 
 /**
  * #SP1: Generación de objetos AL.
@@ -52,14 +44,14 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
         type: z.enum(TYPES).describe("Tipo de objeto."),
         description: z.string().optional().describe(
             "Descripción textual del objeto. Se pueden incluir campos, controles, acciones, etc. a generar, o bien se puede explicar qué función debe cumplir el objeto AL."
-        ),
+        )
     };
 
     // Parámetros del prompt
     const name = "create-new-object";
     const config = {
         title: "Generación de nuevo objeto AL",
-        description: "Permite generar un nuevo objeto AL con el nombre e ID proporcionados. Se puede añadir una descripción textual del objeto para generar un objeto AL más detallado.",
+        description: "Permite generar un nuevo objeto AL con el nombre e ID proporcionados.\nSe puede añadir una descripción textual del objeto para generar un objeto AL más detallado.",
         argsSchema: promptSchema,
     }
 
@@ -77,21 +69,14 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Inicializa los metadatos de la extensión ubicados en el fichero "${METADATA_PATH}" mediante la herramienta 'init-extension-metadata'.`,
+                            text: `Comprueba que no exista un objeto con el nombre "${args.name}" en la categoría "${args.type}" en los metadatos de la extensión.`,
                         },
                     },
                     {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Comprueba que no exista un objeto con el nombre "${args.name}" en la categoría "${args.type}" en los metadatos de la extensión mediante la herramienta 'get-object-schema'.`,
-                        },
-                    },
-                    {
-                        role: "assistant",
-                        content: {
-                            type: "text",
-                            text: `Si el objeto es una extensión (${args.type} sigue el patrón "*extension"), comprueba que el objeto base "${args.target}" existe mediante la herramienta 'get-object-schema'.`,
+                            text: `Si el objeto es una extensión (${args.type} sigue el patrón "*extension"), comprueba que el objeto base "${args.target}" existe.`,
                         },
                     },
                     {
@@ -109,30 +94,29 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         },
                     },
                     {
-                        role: "user",
+                        role: "assistant",
                         content: {
                             type: "text",
-                            text: `Si todo ha ido bien, devuelve el objeto generado. Si no, indica el error obtenido.`,
+                            text: `Guarda el contenido del objeto AL generado en un fichero en el directorio "${process.env.AL_PROJECT_PATH}/${args.type}s/${args.name}.al".`,
+                        },
+                    },
+                    {
+                        role: "assistant",
+                        content: {
+                            type: "text",
+                            text: `Compila el proyecto mediante la herramienta 'al_compile'. Si hay algún error, corrígelo y vuelve a compilar el código. 
+                            En caso de no poder solucionarlo, indica el error obtenido.`,
+                        },
+                    },
+                    {
+                        role: "assistant",
+                        content: {
+                            type: "text",
+                            text: `Si todo ha ido bien, devuelve el objeto generado. En caso contrario, explica el error obtenido.`,
                         },
                     },
                 ],
             };
-        });
-}
-
-/**
- * Helper para leer la información de la extensión AL desde el fichero de configuración `app.json`
- * @returns Un objeto con publisher, name y version
- * @throws Si no se encuentra el fichero de configuración de la extensión AL
- */
-function getAppInfo() {
-    if (!fs.existsSync(CONFIG_PATH)) {
-        throw new Error("No se ha encontrado el fichero de configuración de la extensión AL en la ruta: " + CONFIG_PATH);
-    }
-    const appJson = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
-    return {
-        publisher: appJson.publisher,
-        name: appJson.name,
-        version: appJson.version
-    };
+        }
+    );
 }

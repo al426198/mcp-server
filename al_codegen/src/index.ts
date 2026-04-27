@@ -5,36 +5,34 @@ import { registerTools } from "./handlers/tools/index.js";
 import { registerResources } from "./handlers/resources/index.js";
 import { registerPrompts } from "./handlers/prompts/index.js";
 import { fileURLToPath } from 'url';
-import { readMetadataFolder } from "./utils/metadata-helpers.js";
-import { setMetadata } from "./utils/metadata-state.js";
 import { registerTablePartials } from "./templates/tables/partials/index.js";
 import { registerPagePartials } from "./templates/pages/partials/index.js";
 import path from 'path';
+import fs from 'fs';
 
-// Obtiene la ruta raíz del proyecto. Útil para trabajar con rutas absolutas.
-export const __root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// Ruta raíz del proyecto
+export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-// Crear instancia del servidor
-const server = new McpServer({
-    name: "al_codegen",
-    version: "1.0.0",
-});
-
-// Ruta al directorio raíz del proyecto
+// Ruta al directorio raíz del proyecto AL
 const PROJECT_PATH = process.env.AL_PROJECT_PATH;
 
+// Ruta al directorio donde se almacenan los ficheros `.app` de las extensiones base.
+export const BASE_METADATA_PATH = path.join(PROJECT_PATH!, ".alpackages");
+
+// Ruta al fichero de metadatos de la extensión AL
+const appJson = JSON.parse(fs.readFileSync(path.join(PROJECT_PATH!, "app.json"), "utf8"));
+export const APP_METADATA_PATH = path.join(PROJECT_PATH!, `${appJson.publisher}_${appJson.name}_${appJson.version}.app`);
+
 async function main() {
+    // Crear instancia del servidor
+    const server = new McpServer({
+        name: "al_codegen",
+        version: "1.0.0",
+    });
+
     // Comprobar que se ha especificado la ruta al directorio raíz del proyecto.
     if (!PROJECT_PATH) {
         console.error("Error: No se ha especificado la ruta al directorio raíz del proyecto.");
-        process.exit(1);
-    }
-
-    // Obtener metadatos de la extensión base (carpeta `.alpackages`).
-    try {
-        setMetadata(await readMetadataFolder(path.join(PROJECT_PATH, ".alpackages")));
-    } catch (error: any) {
-        console.error("Error al cargar metadatos:", error.message);
         process.exit(1);
     }
 

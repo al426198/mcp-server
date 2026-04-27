@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
+import { ROOT } from "../../../../index.js";
 import { tableSchema } from "./json-schemas.js";
 
 import Handlebars from "handlebars";
@@ -72,7 +72,7 @@ export const registerGenerateTableTool = (server: McpServer) => {
         async (args): Promise<CallToolResult> => {
             try {
                 // Lectura de la plantilla Handlebars
-                const templateSource = fs.readFileSync(path.join(__root, "src/templates/tables/table.hbs"), "utf-8");
+                const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/tables/table.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
                 // Generación de la tabla
