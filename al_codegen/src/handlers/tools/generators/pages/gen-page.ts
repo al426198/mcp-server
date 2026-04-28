@@ -1,6 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { __root } from "../../../../index.js";
+import { ROOT } from "../../../../index.js";
 
 import Handlebars from "handlebars";
 import fs from "fs";
@@ -59,7 +59,7 @@ export abstract class BasePageGenerator {
             async (args: any): Promise<CallToolResult> => {
                 try {
                     // Lectura de la plantilla Handlebars
-                    const templateSource = fs.readFileSync(path.join(__root, "src/templates/pages/page.hbs"), "utf-8");
+                    const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/pages/page.hbs"), "utf-8");
                     const template = Handlebars.compile(templateSource);
 
                     // Combinar propiedades por defecto con las pasadas como argumentos (opcionales)

@@ -1,7 +1,7 @@
 import Handlebars from "handlebars";
 import fs from "fs";
 import path from "path";
-import { __root } from "../../../index.js";
+import { ROOT } from "../../../index.js";
 
 /**
  * Registra parciales de tablas en Handlebars.
@@ -9,14 +9,14 @@ import { __root } from "../../../index.js";
 export const registerTablePartials = () => {
     Handlebars.registerPartial(
         "table-field",
-        fs.readFileSync(path.join(__root, "src/templates/tables/partials/field.hbs"), "utf-8")
+        fs.readFileSync(path.join(ROOT, "src/templates/tables/partials/field.hbs"), "utf-8")
     );
     Handlebars.registerPartial(
         "fieldgroup",
-        fs.readFileSync(path.join(__root, "src/templates/tables/partials/fieldgroup.hbs"), "utf-8")
+        fs.readFileSync(path.join(ROOT, "src/templates/tables/partials/fieldgroup.hbs"), "utf-8")
     );
     Handlebars.registerPartial(
         "key",
-        fs.readFileSync(path.join(__root, "src/templates/tables/partials/key.hbs"), "utf-8")
+        fs.readFileSync(path.join(ROOT, "src/templates/tables/partials/key.hbs"), "utf-8")
     );
 };
