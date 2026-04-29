@@ -54,7 +54,7 @@ export const registerGenerateCodeunitTool = (server: McpServer) => {
     const name = "generate-codeunit";
     const config = {
         title: "Generar codeunit AL",
-        description: "Genera una codeunit en lenguaje AL con sus procedimientos y trigger OnRun.",
+        description: "Genera una codeunit en lenguaje AL.",
         inputSchema: codeunitSchema,
     };
 
