@@ -56,16 +56,14 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Comprueba que no exista un objeto con el nombre "${args.name}" en la categoría "${args.type}" en el proyecto. 
-                            Si ya existe, devuelve un mensaje de error.`,
+                            text: `Comprueba que no exista un objeto con el nombre "${args.name}" en la categoría "${args.type}" en el proyecto. Si ya existe, devuelve un mensaje de error.`,
                         },
                     },
                     {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Si el objeto es una extensión (${args.type} sigue el patrón "*extension"), comprueba que el objeto base "${args.target}" existe en el proyecto. 
-                            Si no existe, devuelve un mensaje de error.`,
+                            text: `Si el objeto es una extensión (${args.type} sigue el patrón "*extension"), comprueba que el objeto base "${args.target}" existe en el proyecto. Si no existe, devuelve un mensaje de error.`,
                         },
                     },
                     {
@@ -79,24 +77,21 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Genera un objeto AL de tipo "${args.type}" con el nombre "${args.name}" y el ID obtenido en el paso anterior. 
-                            A continuación se muestra la descripción del objeto:\n${args.description ? `\n${args.description}` : ""}`,
+                            text: `Genera un objeto AL de tipo "${args.type}" con el nombre "${args.name}" y el ID obtenido en el paso anterior. A continuación se muestra la descripción del objeto:\n\"${args.description ? `\n${args.description}` : ""}\"`,
                         },
                     },
                     {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Guarda el objeto AL generado utilizando la herramienta 'save-al-file' con los parámetros type="${args.type}", name="${args.name}" 
-                            y el contenido generado en el paso anterior.`,
+                            text: `Guarda el objeto AL generado utilizando la herramienta 'save-al-file' con los parámetros type="${args.type}", name="${args.name}"  y el contenido generado en el paso anterior.`,
                         },
                     },
                     {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Compila el proyecto mediante la herramienta 'al_compile'. Si hay algún error en el código generado, corrígelo y vuelve a compilar el código. 
-                            En caso de no poder solucionarlo, indica el error obtenido.`,
+                            text: `Compila el proyecto mediante la herramienta 'al_compile'. Si hay algún error en el código generado, corrígelo y vuelve a compilar el código. En caso de no poder solucionarlo, indica el error obtenido.`,
                         },
                     },
                     {
