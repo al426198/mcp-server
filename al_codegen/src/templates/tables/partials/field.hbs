@@ -1,0 +1,10 @@
+{{#if id}}
+field({{id}}; "{{name}}"; {{type}}{{#if length}}[{{length}}]{{/if}})
+{{else}}
+modify("{{name}}")
+{{/if}}
+{
+    {{#each properties}}
+    {{@key}} = {{{this}}};
+    {{/each}}
+}

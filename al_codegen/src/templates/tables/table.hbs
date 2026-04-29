@@ -1,0 +1,52 @@
+table {{id}} "{{name}}"
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+    {{/if}}
+    fields
+    {
+        {{#each fields}}
+        {{> table-field}}
+        {{/each}}
+    }
+    {{#if keys}}
+
+    keys
+    {
+        {{#each keys}}
+        {{> key}}
+        {{/each}}
+    }
+    {{/if}}
+    {{#if fieldGroups}}
+    
+    fieldgroups 
+    {
+        {{#each fieldGroups}}
+        {{> fieldgroup fg_type="fieldgroup"}}
+        {{/each}}
+    }
+    {{/if}}
+
+    trigger OnInsert()
+    begin
+
+    end;
+
+    trigger OnModify()
+    begin
+
+    end;
+
+    trigger OnDelete()
+    begin
+
+    end;
+
+    trigger OnRename()
+    begin
+
+    end;
+}

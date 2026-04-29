@@ -1,0 +1,60 @@
+pageextension {{id}} "{{name}}" extends "{{target}}"
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{{this}}};
+    {{/each}}
+
+    {{/if}}
+    {{#if layoutChanges}}
+    layout
+    {
+        {{#each layoutChanges}}
+        {{#if target}}
+        {{operation}}("{{anchor}}"; "{{target}}")
+        {{else}}
+        {{operation}}("{{anchor}}")
+        {
+            {{#each changes}}
+            {{> (lookup this "type")}}
+            {{/each}}
+            {{#each properties}}
+            {{@key}} = {{{this}}};
+            {{/each}}
+        }
+        {{/if}}
+        {{#unless @last}}
+
+        {{/unless}}
+        {{/each}}
+    }
+    {{/if}}
+    {{#if actionChanges}}
+
+    actions
+    {
+        {{#each actionChanges}}
+        {{#if target}}
+        {{operation}}("{{anchor}}"; "{{target}}")
+        {{else}}
+        {{operation}}("{{anchor}}")
+        {
+            {{#each changes}}
+            {{#if groups}}
+            {{> action-cluster}}
+            {{else}}
+            {{> action}}
+            {{/if}}
+            {{/each}}
+            {{#each properties}}
+            {{@key}} = {{{this}}};
+            {{/each}}
+        }
+        {{/if}}
+        {{#unless @last}}
+
+        {{/unless}}
+        {{/each}}
+    }
+    {{/if}}
+}

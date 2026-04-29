@@ -1,0 +1,6 @@
+part("{{name}}"; "{{source}}")
+{
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+}

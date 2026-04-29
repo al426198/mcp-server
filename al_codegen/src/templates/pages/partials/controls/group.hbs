@@ -1,0 +1,11 @@
+group("{{name}}")
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{this}};
+    {{/each}}
+    {{/if}}
+    {{#each fields}}
+    {{> field}}
+    {{/each}}
+}

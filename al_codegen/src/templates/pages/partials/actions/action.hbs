@@ -1,0 +1,13 @@
+action("{{name}}")
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{{this}}};
+    {{/each}}
+
+    {{/if}}
+    trigger OnAction()
+    begin
+
+    end;
+}
