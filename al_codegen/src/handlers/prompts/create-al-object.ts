@@ -95,7 +95,7 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Compila el proyecto mediante la herramienta 'al_compile'. Si hay algún error, corrígelo y vuelve a compilar el código. 
+                            text: `Compila el proyecto mediante la herramienta 'al_compile'. Si hay algún error en el código generado, corrígelo y vuelve a compilar el código. 
                             En caso de no poder solucionarlo, indica el error obtenido.`,
                         },
                     },
@@ -103,7 +103,7 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Si todo ha ido bien, devuelve el objeto generado. En caso contrario, explica el error obtenido.`,
+                            text: `Devuelve el objeto generado.`,
                         },
                     },
                 ],
