@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { registerObjectGenerators } from "./generators/index.js";
+import { registerSaveAlFileTool } from "./save-al-file.js";
 
 /**
  * Registra herramientas en el servidor MCP.
@@ -7,4 +8,5 @@ import { registerObjectGenerators } from "./generators/index.js";
  */
 export const registerTools = (server: McpServer) => {
     registerObjectGenerators(server);
+    registerSaveAlFileTool(server);
 };

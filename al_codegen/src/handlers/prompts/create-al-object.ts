@@ -1,24 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-
-/** 
- * Tipos de objetos disponibles en AL
- * Para el proyecto solo serán considerados 'table', 'page' y 'codeunit', 
- * y los tipos extensión 'tableextension' y 'pageextension'
- */
-const TYPES = [
-    "Table",
-    "Page",
-    "Codeunit",
-    "Report",
-    "XmlPort",
-    "Query",
-    "Enum",
-    "TableExtension",
-    "PageExtension",
-    "ReportExtension",
-    "EnumExtension"
-]
+import { TYPES } from "../../index.js";
 
 /**
  * #SP1: Generación de objetos AL.
@@ -40,7 +22,7 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
     // Esquema JSON de validación de argumentos
     const promptSchema = {
         name: z.string().describe("Nombre del objeto."),
-        target: z.string().optional().describe("Nombre del objeto base a extender (obligatorio si el objeto es una extensión)."),
+        target: z.string().optional().describe("Nombre del objeto base a extender (opcional)."),
         type: z.enum(TYPES).describe("Tipo de objeto."),
         description: z.string().optional().describe(
             "Descripción textual del objeto. Se pueden incluir campos, controles, acciones, etc. a generar, o bien se puede explicar qué función debe cumplir el objeto AL."
@@ -97,7 +79,7 @@ export const registerCreateNewObjectPrompt = (server: McpServer) => {
                         role: "assistant",
                         content: {
                             type: "text",
-                            text: `Guarda el contenido del objeto AL generado en un fichero en el directorio "${process.env.AL_PROJECT_PATH}/${args.type}s/${args.name}.al".`,
+                            text: `Guarda el objeto AL generado utilizando la herramienta 'save-al-file' con los parámetros type="${args.type}", name="${args.name}" y el contenido generado en el paso anterior.`,
                         },
                     },
                     {

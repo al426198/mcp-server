@@ -23,6 +23,25 @@ export const BASE_METADATA_PATH = path.join(PROJECT_PATH!, ".alpackages");
 const appJson = JSON.parse(fs.readFileSync(path.join(PROJECT_PATH!, "app.json"), "utf8"));
 export const APP_METADATA_PATH = path.join(PROJECT_PATH!, `${appJson.publisher}_${appJson.name}_${appJson.version}.app`);
 
+/** 
+ * Tipos de objetos disponibles en AL
+ * Para el proyecto solo serán considerados 'table', 'page' y 'codeunit', 
+ * y los tipos extensión 'tableextension' y 'pageextension'
+ */
+export const TYPES = [
+    "Table",
+    "Page",
+    "Codeunit",
+    "Report",
+    "XmlPort",
+    "Query",
+    "Enum",
+    "TableExtension",
+    "PageExtension",
+    "ReportExtension",
+    "EnumExtension"
+]
+
 async function main() {
     // Crear instancia del servidor
     const server = new McpServer({
