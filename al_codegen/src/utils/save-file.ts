@@ -14,13 +14,13 @@ import path from "path";
  */
 export function saveFile(projectPath: string, type: string, name: string, content: string): string {
     // Crear directorio si no existe
-    const targetDir = path.join(projectPath, "src", `${type.toLowerCase()}s`);
+    const targetDir = path.join(projectPath, "src", `${type}s`);
     if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir);
     }
 
     // Guardar el fichero AL
-    const filePath = path.join(targetDir, `${name}.al`);
+    const filePath = path.join(targetDir, `${name}.${type}.al`.replace(/\s+/g, ''));
     fs.writeFileSync(filePath, content, "utf-8");
     return filePath;
 }

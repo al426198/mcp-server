@@ -7,6 +7,7 @@ import { registerPrompts } from "./handlers/prompts/index.js";
 import { fileURLToPath } from 'url';
 import { registerTablePartials } from "./templates/tables/partials/index.js";
 import { registerPagePartials } from "./templates/pages/partials/index.js";
+import { registerCodeunitPartials } from "./templates/codeunits/partials/index.js";
 import path from 'path';
 import fs from 'fs';
 
@@ -63,6 +64,7 @@ async function main() {
     // Registrar parciales de Handlebars
     registerTablePartials();
     registerPagePartials();
+    registerCodeunitPartials();
 
     // Iniciar servidor
     const transport = new StdioServerTransport();

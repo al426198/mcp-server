@@ -1,0 +1,10 @@
+{{#if access}}{{access}} {{/if}}procedure {{name}}({{#each parameters}}{{#if isVar}}var {{/if}}{{name}}: {{type}}{{#if length}}[{{length}}]{{/if}}{{#unless @last}}; {{/unless}}{{/each}}){{#if returnType}}: {{returnType}}{{/if}}
+{{#if variables}}
+var
+    {{#each variables}}
+    {{name}}: {{{type}}}{{#if length}}[{{length}}]{{/if}};
+    {{/each}}
+{{/if}}
+begin
+    {{{body}}}
+end;

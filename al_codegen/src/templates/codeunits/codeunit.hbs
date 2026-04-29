@@ -1,0 +1,19 @@
+codeunit {{id}} "{{name}}"
+{
+    {{#if properties}}
+    {{#each properties}}
+    {{@key}} = {{{this}}};
+    {{/each}}
+
+    {{/if}}
+    {{#if procedures}}
+    {{#each procedures}}
+    {{> procedure}}
+    {{/each}}
+
+    {{/if}}
+    trigger OnRun()
+    begin
+
+    end;
+}
