@@ -25,9 +25,11 @@ class ApiPageGenerator extends BasePageGenerator {
 }
 
 /**
- * HU205: Generación de páginas de tipo API en lenguaje AL
+ * HU204: Generación de páginas de tipo API en lenguaje AL
  * 
  * Genera una página de tipo API en lenguaje AL.
+ * 
+ * El esquema JSON requerido es el siguiente:
  * 
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
