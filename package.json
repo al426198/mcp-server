@@ -11,7 +11,7 @@
     "genkey": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
     "show": "npm run build && npx @modelcontextprotocol/inspector node ./build/index.js MCP_PROXY_AUTH_TOKEN=$(npm run genkey)",
     "build": "tsc",
-    "docs": "typedoc \"src/handlers/tools/generators/**/*.ts\" --plugin typedoc-rhineai-theme --theme typedoc-rhineai-theme --entryPointStrategy expand"
+    "docs": "typedoc \"src/handlers/tools/generators/**/gen-*.ts\" --plugin typedoc-rhineai-theme --theme typedoc-rhineai-theme --entryPointStrategy expand"
   },
   "files": [
     "build",
