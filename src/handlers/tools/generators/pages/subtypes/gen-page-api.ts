@@ -30,7 +30,6 @@ class ApiPageGenerator extends BasePageGenerator {
  * Genera una página de tipo API en lenguaje AL.
  * 
  * El esquema JSON requerido es el siguiente:
- * 
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
  * - `sourceTable` - Tabla de origen.
@@ -42,6 +41,11 @@ class ApiPageGenerator extends BasePageGenerator {
  * - `odataKeyFields` - Campos clave de OData.
  * - `properties` - Propiedades clave-valor de la página (opcional).
  * - `repeater` - Repetidor de la página.
+ *  - `name` - Nombre del repetidor.
+ *  - `fields` - Campos del repetidor.
+ *   - `name` - Nombre del campo.
+ *   - `sourceField` - Campo de origen.
+ *   - `properties` - Propiedades clave-valor del campo (opcional).
  * 
  * @returns La página AL generada.
  * 

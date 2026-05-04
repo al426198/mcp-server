@@ -16,14 +16,30 @@ class CardPageGenerator extends BasePageGenerator {
  * 
  * Genera una página de tipo Card en lenguaje AL.
  * 
+ * El esquema JSON requerido es el siguiente:
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
  * - `sourceTable` - Tabla de origen.
  * - `properties` - Propiedades clave-valor de la página (opcional).
  * - `groups` - Grupos de controles de la página.
+ *  - `name` - Nombre del grupo.
+ *  - `fields` - Campos del grupo.
+ *   - `name` - Nombre del campo.
+ *   - `sourceField` - Campo de origen.
+ * - `parts` - Partes de la página (opcional).
+ *  - `name` - Nombre de la parte.
+ *  - `source` - Tabla de origen de la parte.
  * - `actions` - Acciones de la página (opcional).
+ * - `areas` - Áreas de la página (opcional).
+ *  - `name` - Nombre del área.
+ *  - `type` - Tipo del área.
+ *  - `actions` - Acciones del área (opcional).
+ *  - `groups` - Grupos del área (opcional).
+ *   - `name` - Nombre del grupo.
+ *   - `actions` - Acciones del grupo (opcional).
  * 
  * @returns La página AL generada.
+ * 
  * @example
  * ```json
  * {

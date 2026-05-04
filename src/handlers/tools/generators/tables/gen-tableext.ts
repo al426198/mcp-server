@@ -10,17 +10,24 @@ import path from "path";
 /**
  * HU206: Generación de extensiones de tabla en lenguaje AL
  * 
- * Genera una extensión de tabla en lenguaje AL. No soporta lógica compleja (ej. triggers).
- * Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.
+ * Genera una extensión de tabla en lenguaje AL.
  * 
  * - `id` - ID del objeto. Debe ser único dentro de la extensión AL actual.
  * - `name` - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
  * - `target` - Nombre de la tabla base a extender. Debe existir en la extensión AL actual.
  * - `properties` - Propiedades clave-valor del objeto AL (opcional).
  * - `fields` - Campos del objeto AL a añadir o modificar (opcional).
+ *  - `id` - ID del campo.
+ *  - `name` - Nombre del campo.
+ *  - `type` - Tipo del campo.
+ *  - `length` - Longitud del campo.
+ *  - `properties` - Propiedades clave-valor del campo (opcional).
  * - `fieldGroups` - Grupos de campos del objeto AL a añadir (opcional).
+ *  - `type` - Tipo del grupo de campos.
+ *  - `fieldNames` - Campos del grupo de campos.
  * 
  * @returns La extensión de tabla AL generada.
+ * 
  * @example
  * ```json
  * {

@@ -18,8 +18,6 @@ import path from "path";
  * - `name` - Nombre del objeto.
  * - `properties` - Propiedades clave-valor de la codeunit (opcional).
  * - `procedures` - Lista de procedimientos de la codeunit (opcional).
- * 
- * @see codeunitSchema
  *
  * @returns La codeunit AL generada.
  * 
