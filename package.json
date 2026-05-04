@@ -1,7 +1,10 @@
 {
+  "name": "@laberit/mcp-al-codegen",
+  "version": "1.0.0",
+  "description": "Servidor MCP para la generación de código AL",
   "type": "module",
   "bin": {
-    "al_codegen": "./build/index.js"
+    "al_codegen": "build/index.js"
   },
   "scripts": {
     "genkey": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
