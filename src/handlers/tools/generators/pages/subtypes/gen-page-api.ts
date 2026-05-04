@@ -29,17 +29,17 @@ class ApiPageGenerator extends BasePageGenerator {
  * 
  * Genera una página de tipo API en lenguaje AL.
  * 
- * @param id - ID del objeto.
- * @param name - Nombre del objeto.
- * @param sourceTable - Tabla de origen.
- * @param apiGroup - Grupo de la API.
- * @param apiPublisher - Publicador de la API.
- * @param apiVersion - Versión de la API.
- * @param entityName - Nombre de la entidad.
- * @param entitySetName - Nombre del conjunto de entidades.
- * @param odataKeyFields - Campos clave de OData.
- * @param properties - Propiedades clave-valor de la página (opcional).
- * @param repeater - Repetidor de la página.
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `sourceTable` - Tabla de origen.
+ * - `apiGroup` - Grupo de la API.
+ * - `apiPublisher` - Publicador de la API.
+ * - `apiVersion` - Versión de la API.
+ * - `entityName` - Nombre de la entidad.
+ * - `entitySetName` - Nombre del conjunto de entidades.
+ * - `odataKeyFields` - Campos clave de OData.
+ * - `properties` - Propiedades clave-valor de la página (opcional).
+ * - `repeater` - Repetidor de la página.
  * 
  * @returns La página AL generada.
  * 

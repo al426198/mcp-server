@@ -11,9 +11,9 @@ import { TYPES } from "../../index.js";
  * del tipo pluralizado (p. ej. "tables", "pages"). Si no existe, lo crea bajo
  * `/src`. El fichero resultante tendrá el nombre `<name>.al`.
  *
- * @param type    - Tipo de objeto AL (p. ej. "Table", "Page").
- * @param name    - Nombre del objeto AL, que también será el nombre del fichero.
- * @param content - Contenido AL a escribir en el fichero.
+ * - `type` - Tipo de objeto AL (p. ej. "Table", "Page").
+ * - `name` - Nombre del objeto AL, que también será el nombre del fichero.
+ * - `content` - Contenido AL a escribir en el fichero.
  *
  * @returns La ruta absoluta al fichero creado.
  */

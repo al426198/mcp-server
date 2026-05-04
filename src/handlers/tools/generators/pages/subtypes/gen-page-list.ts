@@ -17,14 +17,14 @@ class ListPageGenerator extends BasePageGenerator {
  * 
  * Genera una página de tipo List en lenguaje AL.
  * 
- * @param id - ID del objeto.
- * @param name - Nombre del objeto.
- * @param properties - Propiedades clave-valor de la página (opcional).
- * @param repeaterName - Nombre del repeater.
- * @param repeaterProperties - Propiedades del repeater (opcional).
- * @param fields - Campos de la página.
- * @param parts - Partes de la página (opcional).
- * @param actions - Acciones de la página (opcional).
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `properties` - Propiedades clave-valor de la página (opcional).
+ * - `repeaterName` - Nombre del repeater.
+ * - `repeaterProperties` - Propiedades del repeater (opcional).
+ * - `fields` - Campos de la página.
+ * - `parts` - Partes de la página (opcional).
+ * - `actions` - Acciones de la página (opcional).
  * 
  * @returns La página AL generada.
  * @example

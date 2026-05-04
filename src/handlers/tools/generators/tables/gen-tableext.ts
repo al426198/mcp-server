@@ -13,12 +13,12 @@ import path from "path";
  * Genera una extensión de tabla en lenguaje AL. No soporta lógica compleja (ej. triggers).
  * Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.
  * 
- * @param id - ID del objeto. Debe ser único dentro de la extensión AL actual.
- * @param name - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
- * @param target - Nombre de la tabla base a extender. Debe existir en la extensión AL actual.
- * @param properties - Propiedades clave-valor del objeto AL (opcional).
- * @param fields - Campos del objeto AL a añadir o modificar (opcional).
- * @param fieldGroups - Grupos de campos del objeto AL a añadir (opcional).
+ * - `id` - ID del objeto. Debe ser único dentro de la extensión AL actual.
+ * - `name` - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
+ * - `target` - Nombre de la tabla base a extender. Debe existir en la extensión AL actual.
+ * - `properties` - Propiedades clave-valor del objeto AL (opcional).
+ * - `fields` - Campos del objeto AL a añadir o modificar (opcional).
+ * - `fieldGroups` - Grupos de campos del objeto AL a añadir (opcional).
  * 
  * @returns La extensión de tabla AL generada.
  * @example

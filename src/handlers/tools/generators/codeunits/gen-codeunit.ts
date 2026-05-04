@@ -10,18 +10,12 @@ import path from "path";
 /**
  * HU205: Generación de codeunits en lenguaje AL
  *
- * Genera una codeunit en lenguaje AL. Soporta procedimientos con parámetros,
- * variables locales, tipo de retorno y modificadores de acceso, así como el
- * trigger OnRun.
+ * Genera una codeunit en lenguaje AL.
  *
- * No soporta lógica compleja (ej. triggers de procedimiento).
- * Se deben comprobar las referencias a objetos AL externos antes de generar código.
- *
- * @param id - ID del objeto.
- * @param name - Nombre del objeto.
- * @param properties - Propiedades clave-valor de la codeunit (opcional).
- * @param procedures - Lista de procedimientos de la codeunit (opcional).
- * @param onRun - Líneas del cuerpo del trigger OnRun (opcional).
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `properties` - Propiedades clave-valor de la codeunit (opcional).
+ * - `procedures` - Lista de procedimientos de la codeunit (opcional).
  *
  * @returns La codeunit AL generada.
  * @example

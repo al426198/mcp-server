@@ -13,12 +13,12 @@ import path from "path";
  * Genera una tabla en lenguaje AL. No soporta lógica compleja (ej. triggers).
  * Se deben comprobar las referencias a objetos AL externos antes de empezar a generar código.
  * 
- * @param id - ID del objeto.
- * @param name - Nombre del objeto.
- * @param properties - Propiedades clave-valor del objeto AL (opcional).
- * @param fields - Campos del objeto AL.
- * @param keys - Claves del objeto AL (opcional).
- * @param fieldGroups - Grupos de campos del objeto AL (opcional).
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `properties` - Propiedades clave-valor del objeto AL (opcional).
+ * - `fields` - Campos del objeto AL.
+ * - `keys` - Claves del objeto AL (opcional).
+ * - `fieldGroups` - Grupos de campos del objeto AL (opcional).
  * 
  * @returns La tabla AL generada.
  * @example
@@ -27,8 +27,8 @@ import path from "path";
  *  "id": 50101,
  *  "name": "Customer",
  *  "properties": {
- *      "Caption": 'Cliente',
- *      "DataClassification": ToBeClassified
+ *      "Caption": "'Cliente'",
+ *      "DataClassification": "ToBeClassified"
  *  },
  *  "fields": [
  *      {

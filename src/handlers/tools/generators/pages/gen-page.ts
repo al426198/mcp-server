@@ -14,12 +14,12 @@ import path from "path";
  * Para ver ejemplos, véase el resto de ficheros `gen-page-*.ts`.
  * 
  * @param server - Servidor MCP.
- * @param name - Nombre de la herramienta.
- * @param title - Título de la herramienta.
- * @param description - Descripción de la herramienta.
- * @param inputSchema - Esquema de entrada de la herramienta.
- * @param templatePath - Ruta de la plantilla Handlebars.
- * @param pageType - Tipo de página.
+ * - `name` - Nombre de la herramienta.
+ * - `title` - Título de la herramienta.
+ * - `description` - Descripción de la herramienta.
+ * - `inputSchema` - Esquema de entrada de la herramienta.
+ * - `templatePath` - Ruta de la plantilla Handlebars.
+ * - `pageType` - Tipo de página.
  */
 
 export abstract class BasePageGenerator {

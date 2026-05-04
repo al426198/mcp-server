@@ -16,12 +16,12 @@ class CardPageGenerator extends BasePageGenerator {
  * 
  * Genera una página de tipo Card en lenguaje AL.
  * 
- * @param id - ID del objeto.
- * @param name - Nombre del objeto.
- * @param sourceTable - Tabla de origen.
- * @param properties - Propiedades clave-valor de la página (opcional).
- * @param groups - Grupos de controles de la página.
- * @param actions - Acciones de la página (opcional).
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `sourceTable` - Tabla de origen.
+ * - `properties` - Propiedades clave-valor de la página (opcional).
+ * - `groups` - Grupos de controles de la página.
+ * - `actions` - Acciones de la página (opcional).
  * 
  * @returns La página AL generada.
  * @example

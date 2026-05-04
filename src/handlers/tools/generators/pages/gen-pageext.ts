@@ -12,11 +12,11 @@ import path from "path";
  *
  * Genera una extensión de página (pageextension) en lenguaje AL.
  *
- * @param id      - ID del objeto. Debe obtenerse con la herramienta 'assign-id'.
- * @param name    - Nombre del objeto de extensión.
- * @param target  - Nombre de la página base a extender.
- * @param layout  - Lista de bloques de cambio en el layout (opcional).
- * @param actions - Lista de bloques de cambio en las acciones (opcional).
+ * - `id` - ID del objeto. Debe obtenerse con la herramienta 'assign-id'.
+ * - `name` - Nombre del objeto de extensión.
+ * - `target` - Nombre de la página base a extender.
+ * - `layout` - Lista de bloques de cambio en el layout (opcional).
+ * - `actions` - Lista de bloques de cambio en las acciones (opcional).
  *
  * @returns La extensión de página AL generada.
  *
