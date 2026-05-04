@@ -12,12 +12,14 @@ import path from "path";
  *
  * Genera una codeunit en lenguaje AL.
  *
- * @see{codeunitSchema} El esquema JSON requerido es el siguiente:
+ * El esquema JSON requerido es el siguiente:
  *
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
  * - `properties` - Propiedades clave-valor de la codeunit (opcional).
  * - `procedures` - Lista de procedimientos de la codeunit (opcional).
+ * 
+ * @see{codeunitSchema}
  *
  * @returns La codeunit AL generada.
  * 
