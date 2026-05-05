@@ -11,7 +11,7 @@
     "genkey": "node -e \"console.log(require('crypto').randomBytes(32).toString('hex'))\"",
     "show": "npm run build && npx @modelcontextprotocol/inspector node ./build/index.js MCP_PROXY_AUTH_TOKEN=$(npm run genkey)",
     "build": "tsc",
-    "docs": "typedoc ./src/handlers/tools/generators/tables/gen-table.ts ./src/handlers/tools/generators/pages/subtypes/*.ts ./src/handlers/tools/generators/codeunits/gen-codeunit.ts"
+    "docs": "typedoc ./src/handlers/tools/generators/tables/gen-table*.ts ./src/handlers/tools/generators/pages/**/gen-page*.ts ./src/handlers/tools/generators/codeunits/gen-codeunit.ts"
   },
   "files": [
     "build",
@@ -19,7 +19,6 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "dotenv": "^17.4.2",
     "handlebars": "^4.7.9",
     "typedoc-material-theme": "^1.4.1",
     "zod": "^4.3.6"
@@ -27,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^25.5.0",
     "typedoc": "^0.28.19",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.2",
+    "dotenv": "^17.4.2"
   }
 }
