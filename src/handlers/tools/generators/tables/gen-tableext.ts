@@ -82,9 +82,7 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
                 const template = Handlebars.compile(templateSource);
 
                 // Ordenar propiedades por clave alfabéticamente
-                args.properties = Object.fromEntries(
-                    Object.entries(args.properties || {}).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-                );
+                args.properties = Object.fromEntries(Object.entries(args.properties || {}).sort());
 
                 // Generación de la tabla
                 return {

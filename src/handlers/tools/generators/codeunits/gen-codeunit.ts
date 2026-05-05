@@ -67,6 +67,9 @@ export const registerGenerateCodeunitTool = (server: McpServer) => {
                 const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/codeunits/codeunit.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
+                // Ordenamos los procedimientos alfabéticamente
+                args.properties = Object.fromEntries(Object.entries(args.properties || {}).sort());
+
                 // Generación de la codeunit
                 return {
                     content: [

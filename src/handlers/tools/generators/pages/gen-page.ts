@@ -73,9 +73,7 @@ export abstract class BasePageGenerator {
                     properties["SourceTable"] = '\"' + args.sourceTable + '\"';     // Por seguridad se entrecomilla
 
                     // Ordenar propiedades por clave alfabéticamente
-                    properties = Object.fromEntries(
-                        Object.entries(properties).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-                    );
+                    properties = Object.fromEntries(Object.entries(properties).sort());
 
                     // Generación de la página
                     return {

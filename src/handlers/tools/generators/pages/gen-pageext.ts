@@ -122,6 +122,9 @@ export const registerGeneratePageExtensionTool = (server: McpServer) => {
                 const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/pages/pageext.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
+                // Ordenar propiedades por clave alfabéticamente
+                args.properties = Object.fromEntries(Object.entries(args.properties || {}).sort());
+
                 // Generación de la extensión de página
                 return {
                     content: [
