@@ -65,6 +65,41 @@ class ListPageGenerator extends BasePageGenerator {
  *         "name": "Saldo (div. local)",
  *         "sourceField": "Balance (LCY)"
  *       }
+ *     ],
+ *     "parts": [
+ *       {
+ *         "name": "Foto",
+ *         "source": "Customer Picture"
+ *       }
+ *     ],
+ *     "areas": [
+ *       {
+ *         "name": "Processing",
+ *         "type": "area",
+ *         "actions": [
+ *           {
+ *             "name": "New",
+ *             "properties": {
+ *               "Caption": "'Nuevo pedido'",
+ *               "Image": "NewDocument"
+ *             }
+ *           }
+ *         ],
+ *         "groups": [
+ *           {
+ *             "name": "RelatedInformation",
+ *             "actions": [
+ *               {
+ *                 "name": "New",
+ *                 "properties": {
+ *                   "Caption": "'Nuevo pedido'",
+ *                   "Image": "NewDocument"
+ *                 }
+ *               }
+ *             ]
+ *           }
+ *         ]
+ *       }
  *     ]
  *   }
  * }

@@ -22,6 +22,7 @@ import path from "path";
  * - `pageType` - Tipo de página.
  */
 
+/** @internal */
 export abstract class BasePageGenerator {
     // Nombre de la herramienta
     protected abstract name: string;

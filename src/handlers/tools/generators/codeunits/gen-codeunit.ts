@@ -28,7 +28,7 @@ import path from "path";
  * ```json
  * {
  *   "id": 50100,
- *   "name": "My Codeunit",
+ *   "name": "Ejemplo",
  *   "properties": {
  *     "SingleInstance": "true"
  *   },

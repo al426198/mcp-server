@@ -63,10 +63,10 @@ class ApiPageGenerator extends BasePageGenerator {
  *     "name": "General",
  *     "fields": [
  *       {
- *         "name": "Name",
- *         "sourceField": "Name",
+ *         "name": "No.",
+ *         "sourceField": "No.",
  *         "properties": {
- *           "Caption": "'Name'"
+ *           "Caption": "'N.º'"
  *         }
  *       }
  *     ]
