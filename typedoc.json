@@ -3,11 +3,4 @@
         "typedoc-material-theme"
     ],
     "themeColor": "#cb9820",
-    "excludeCategories": [
-        "class"
-    ],
-    "excludeNotDocumented": true,
-    "exclude": [
-        "**/gen-page.ts"
-    ]
 }

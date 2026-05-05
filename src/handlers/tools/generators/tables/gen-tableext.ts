@@ -34,8 +34,8 @@ import path from "path";
  *  "name": "Customer Extension",
  *  "target": "Customer",
  *  "properties": {
- *      "Caption": 'Cliente',
- *      "DataClassification": ToBeClassified
+ *      "Caption": "'Cliente'",
+ *      "DataClassification": "ToBeClassified"
  *  },
  *  "fields": [
  *      {

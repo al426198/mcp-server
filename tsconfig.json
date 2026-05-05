@@ -14,7 +14,8 @@
         ]
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "src/docs-index.ts"
     ],
     "exclude": [
         "node_modules"
