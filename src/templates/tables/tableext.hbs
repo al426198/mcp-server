@@ -2,7 +2,7 @@ tableextension {{id}} "{{name}}" extends "{{target}}"
 {
     {{#if properties}}
     {{#each properties}}
-    {{@key}} = {{this}};
+    {{@key}} = {{{this}}};
     {{/each}}
     {{/if}}
     {{#if fields}}
