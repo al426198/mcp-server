@@ -17,18 +17,18 @@ import path from "path";
  * - `name` - Nombre del objeto.
  * - `properties` - Propiedades clave-valor del objeto AL (opcional).
  * - `fields` - Campos del objeto AL.
- *  - `id` - ID del campo.
- *  - `name` - Nombre del campo.
- *  - `type` - Tipo del campo.
- *  - `length` - Longitud del campo.
- *  - `properties` - Propiedades clave-valor del campo (opcional).
+ *     - `id` - ID del campo.
+ *     - `name` - Nombre del campo.
+ *     - `type` - Tipo del campo.
+ *     - `length` - Longitud del campo.
+ *     - `properties` - Propiedades clave-valor del campo (opcional).
  * - `keys` - Claves del objeto AL (opcional).
- *  - `name` - Nombre de la clave.
- *  - `fieldNames` - Campos de la clave.
- *  - `clustered` - Si la clave es agrupada (opcional).
+ *     - `name` - Nombre de la clave.
+ *     - `fieldNames` - Campos de la clave.
+ *     - `clustered` - Si la clave es agrupada (opcional).
  * - `fieldGroups` - Grupos de campos del objeto AL (opcional).
- *  - `type` - Tipo del grupo de campos.
- *  - `fieldNames` - Campos del grupo de campos.
+ *     - `type` - Tipo del grupo de campos.
+ *     - `fieldNames` - Campos del grupo de campos.
  * 
  * @example
  * ```json

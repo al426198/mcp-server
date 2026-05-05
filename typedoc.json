@@ -3,4 +3,5 @@
         "typedoc-material-theme"
     ],
     "themeColor": "#cb9820",
+    "customCss": "./custom.css"
 }

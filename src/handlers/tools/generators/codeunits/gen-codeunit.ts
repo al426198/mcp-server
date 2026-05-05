@@ -13,16 +13,16 @@ import path from "path";
  * Genera una codeunit en lenguaje AL.
  *
  * El esquema JSON requerido es el siguiente:
- *   - `id` - ID del objeto.
- *   - `name` - Nombre del objeto.
- *   - `properties` - Propiedades clave-valor de la codeunit (opcional).
- *   - `procedures` - Lista de procedimientos de la codeunit (opcional).
- *      - `name` - Nombre del procedimiento.
- *      - `access` - Acceso del procedimiento.
- *      - `parameters` - Parámetros del procedimiento.
- *      - `returnType` - Tipo de retorno del procedimiento.
- *      - `variables` - Variables del procedimiento.
- *      - `body` - Cuerpo del procedimiento.
+ * - `id` - ID del objeto.
+ * - `name` - Nombre del objeto.
+ * - `properties` - Propiedades clave-valor de la codeunit (opcional).
+ * - `procedures` - Lista de procedimientos de la codeunit (opcional).
+ *     - `name` - Nombre del procedimiento.
+ *     - `access` - Acceso del procedimiento.
+ *     - `parameters` - Parámetros del procedimiento.
+ *     - `returnType` - Tipo de retorno del procedimiento.
+ *     - `variables` - Variables del procedimiento.
+ *     - `body` - Cuerpo del procedimiento.
  *
  * @example
  * ```json
