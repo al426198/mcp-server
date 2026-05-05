@@ -30,22 +30,22 @@ class ApiPageGenerator extends BasePageGenerator {
  * Genera una página de tipo API en lenguaje AL.
  * 
  * El esquema JSON requerido es el siguiente:
- * - `id` - ID del objeto.
- * - `name` - Nombre del objeto.
- * - `sourceTable` - Tabla de origen.
- * - `apiGroup` - Grupo de la API.
- * - `apiPublisher` - Publicador de la API.
- * - `apiVersion` - Versión de la API.
- * - `entityName` - Nombre de la entidad.
- * - `entitySetName` - Nombre del conjunto de entidades.
- * - `odataKeyFields` - Campos clave de OData.
- * - `properties` - Propiedades clave-valor de la página (opcional).
- * - `repeater` - Repetidor de la página.
- *  - `name` - Nombre del repetidor.
- *  - `fields` - Campos del repetidor.
- *   - `name` - Nombre del campo.
- *   - `sourceField` - Campo de origen.
- *   - `properties` - Propiedades clave-valor del campo (opcional).
+ *   - `id` - ID del objeto.
+ *   - `name` - Nombre del objeto.
+ *   - `sourceTable` - Tabla de origen.
+ *   - `apiGroup` - Grupo de la API.
+ *   - `apiPublisher` - Publicador de la API.
+ *   - `apiVersion` - Versión de la API.
+ *   - `entityName` - Nombre de la entidad.
+ *   - `entitySetName` - Nombre del conjunto de entidades.
+ *   - `odataKeyFields` - Campos clave de OData.
+ *   - `properties` - Propiedades clave-valor de la página (opcional).
+ *   - `repeater` - Repetidor de la página.
+ *      - `name` - Nombre del repetidor.
+ *      - `fields` - Campos del repetidor.
+ *          - `name` - Nombre del campo.
+ *          - `sourceField` - Campo de origen.
+ *          - `properties` - Propiedades clave-valor del campo (opcional).
  * 
  * @returns La página AL generada.
  * 

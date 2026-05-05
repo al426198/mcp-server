@@ -24,14 +24,14 @@ class ListPageGenerator extends BasePageGenerator {
  * - `repeaterName` - Nombre del repeater.
  * - `repeaterProperties` - Propiedades del repeater (opcional).
  * - `fields` - Campos de la página.
- *  - `name` - Nombre del campo.
- *  - `sourceField` - Campo de origen.
+ *      - `name` - Nombre del campo.
+ *      - `sourceField` - Campo de origen.
  * - `parts` - Partes de la página (opcional).
- *  - `name` - Nombre de la parte.
- *  - `source` - Tabla de origen de la parte.
+ *      - `name` - Nombre de la parte.
+ *      - `source` - Tabla de origen de la parte.
  * - `actions` - Acciones de la página (opcional).
- *  - `name` - Nombre de la acción.
- *  - `properties` - Propiedades clave-valor de la acción (opcional).
+ *      - `name` - Nombre de la acción.
+ *      - `properties` - Propiedades clave-valor de la acción (opcional).
  * 
  * @returns La página AL generada.
  * 

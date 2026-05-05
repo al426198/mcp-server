@@ -13,7 +13,6 @@ import path from "path";
  * Registra una herramienta en el servidor MCP para generar páginas de tipo AL.
  * Para ver ejemplos, véase el resto de ficheros `gen-page-*.ts`.
  * 
- * @param server - Servidor MCP.
  * - `name` - Nombre de la herramienta.
  * - `title` - Título de la herramienta.
  * - `description` - Descripción de la herramienta.
