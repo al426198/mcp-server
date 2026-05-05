@@ -17,12 +17,10 @@ import path from "path";
  * - `name` - Nombre de la herramienta.
  * - `title` - Título de la herramienta.
  * - `description` - Descripción de la herramienta.
- * - `inputSchema` - Esquema de entrada de la herramienta.
- * - `templatePath` - Ruta de la plantilla Handlebars.
+ * - `inputSchema` - Esquema JSON de valdiación de entrada.
  * - `pageType` - Tipo de página.
  */
 
-/** @internal */
 export abstract class BasePageGenerator {
     // Nombre de la herramienta
     protected abstract name: string;
@@ -64,7 +62,7 @@ export abstract class BasePageGenerator {
                     const template = Handlebars.compile(templateSource);
 
                     // Combinar propiedades por defecto con las pasadas como argumentos (opcionales)
-                    const properties = {
+                    let properties = {
                         ...this.defaultProperties,
                         ...(args.properties || {}),
                         ...this.getProperties(args)
@@ -75,7 +73,7 @@ export abstract class BasePageGenerator {
                     properties["SourceTable"] = '\"' + args.sourceTable + '\"';     // Por seguridad se entrecomilla
 
                     // Ordenar propiedades por clave alfabéticamente
-                    const sortedProperties = Object.fromEntries(
+                    properties = Object.fromEntries(
                         Object.entries(properties).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
                     );
 
@@ -84,7 +82,7 @@ export abstract class BasePageGenerator {
                         content: [
                             {
                                 type: "text",
-                                text: template({ ...args, properties: sortedProperties }),
+                                text: template({ ...args, properties }),
                             },
                         ],
                     };

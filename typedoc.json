@@ -2,5 +2,9 @@
     "plugin": [
         "typedoc-material-theme"
     ],
-    "themeColor": "#cb9820"
+    "themeColor": "#cb9820",
+    "excludeCategories": [
+        "class"
+    ],
+    "excludeNotDocumented": true,
 }

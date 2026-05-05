@@ -81,6 +81,11 @@ export const registerGenerateTableExtensionTool = (server: McpServer) => {
                 const templateSource = fs.readFileSync(path.join(ROOT, "src/templates/tables/tableext.hbs"), "utf-8");
                 const template = Handlebars.compile(templateSource);
 
+                // Ordenar propiedades por clave alfabéticamente
+                args.properties = Object.fromEntries(
+                    Object.entries(args.properties || {}).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+                );
+
                 // Generación de la tabla
                 return {
                     content: [
