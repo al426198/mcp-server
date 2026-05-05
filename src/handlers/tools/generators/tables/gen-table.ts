@@ -12,6 +12,7 @@ import path from "path";
  * 
  * Genera una tabla en lenguaje AL.
  * 
+ * El esquema JSON requerido es el siguiente:
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
  * - `properties` - Propiedades clave-valor del objeto AL (opcional).
@@ -28,8 +29,6 @@ import path from "path";
  * - `fieldGroups` - Grupos de campos del objeto AL (opcional).
  *  - `type` - Tipo del grupo de campos.
  *  - `fieldNames` - Campos del grupo de campos.
- * 
- * @returns La tabla AL generada.
  * 
  * @example
  * ```json

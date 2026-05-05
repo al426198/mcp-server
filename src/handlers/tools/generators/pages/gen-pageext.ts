@@ -12,6 +12,7 @@ import path from "path";
  *
  * Genera una extensión de página (pageextension) en lenguaje AL.
  *
+ * El esquema JSON requerido es el siguiente:
  * - `id` - ID del objeto. Debe obtenerse con la herramienta 'assign-id'.
  * - `name` - Nombre del objeto de extensión.
  * - `target` - Nombre de la página base a extender.
@@ -19,17 +20,23 @@ import path from "path";
  *     - `operation` - Tipo de operación a realizar.
  *     - `anchor` - Pivote de la operación.
  *     - `changes` - Cambios a realizar. Solo permitido en operaciones "add*" (addfirst, addlast, addafter, addbefore).
+ *          - `name` - Nombre del elemento.
+ *          - `sourceField` - Campo de origen.
+ *          - `properties` - Propiedades clave-valor del elemento (opcional).
  *     - `properties` - Propiedades clave-valor del elemento pivote (opcional). Solo permitido en operaciones "modify".
  *     - `control` - Nombre del elemento a mover. Solo permitido en operaciones "move*" (movefirst, movelast, moveafter, movebefore).
  * - `actionChanges` - Lista de bloques de cambio en las acciones (opcional).
  *     - `operation` - Operación a realizar.
  *     - `anchor` - Pivote de la operación.
  *     - `changes` - Cambios a realizar. Solo permitido en operaciones "add*" (addfirst, addlast, addafter, addbefore).
+ *         - `name` - Nombre del elemento.
+ *         - `properties` - Propiedades clave-valor del elemento (opcional).
+ *         - `actions` - Lista de acciones del elemento (opcional).
+ *             - `name` - Nombre de la acción.
+ *             - `properties` - Propiedades clave-valor de la acción (opcional).
  *     - `properties` - Propiedades clave-valor del elemento pivote (opcional). Solo permitido en operaciones "modify".
  *     - `control` - Nombre del elemento a mover. Solo permitido en operaciones "move*" (movefirst, movelast, moveafter, movebefore).
  * 
- * @returns La extensión de página AL generada.
- *
  * @example
  * ```json
  * {

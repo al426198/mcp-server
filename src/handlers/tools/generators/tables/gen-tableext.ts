@@ -12,6 +12,7 @@ import path from "path";
  * 
  * Genera una extensión de tabla en lenguaje AL.
  * 
+ * El esquema JSON requerido es el siguiente:
  * - `id` - ID del objeto. Debe ser único dentro de la extensión AL actual.
  * - `name` - Nombre del objeto. Debe ser único dentro de la extensión AL actual.
  * - `target` - Nombre de la tabla base a extender. Debe existir en la extensión AL actual.
@@ -25,8 +26,6 @@ import path from "path";
  * - `fieldGroups` - Grupos de campos del objeto AL a añadir (opcional).
  *  - `type` - Tipo del grupo de campos.
  *  - `fieldNames` - Campos del grupo de campos.
- * 
- * @returns La extensión de tabla AL generada.
  * 
  * @example
  * ```json

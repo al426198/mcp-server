@@ -17,6 +17,7 @@ class ListPageGenerator extends BasePageGenerator {
  * 
  * Genera una página de tipo List en lenguaje AL.
  * 
+ * El esquema JSON requerido es el siguiente:
  * - `id` - ID del objeto.
  * - `name` - Nombre del objeto.
  * - `sourceTable` - Tabla de origen.
@@ -32,8 +33,6 @@ class ListPageGenerator extends BasePageGenerator {
  * - `actions` - Acciones de la página (opcional).
  *      - `name` - Nombre de la acción.
  *      - `properties` - Propiedades clave-valor de la acción (opcional).
- * 
- * @returns La página AL generada.
  * 
  * @example
  * ```json

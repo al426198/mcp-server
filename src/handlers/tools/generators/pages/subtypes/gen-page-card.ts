@@ -38,8 +38,6 @@ class CardPageGenerator extends BasePageGenerator {
  *          - `name` - Nombre del grupo.
  *          - `actions` - Acciones del grupo (opcional).
  * 
- * @returns La página AL generada.
- * 
  * @example
  * ```json
  * {

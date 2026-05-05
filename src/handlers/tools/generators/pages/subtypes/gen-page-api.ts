@@ -47,8 +47,6 @@ class ApiPageGenerator extends BasePageGenerator {
  *          - `sourceField` - Campo de origen.
  *          - `properties` - Propiedades clave-valor del campo (opcional).
  * 
- * @returns La página AL generada.
- * 
  * @example
  * ```json
  * {
