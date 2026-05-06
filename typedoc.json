@@ -2,7 +2,7 @@
     "plugin": [
         "typedoc-material-theme"
     ],
-    "themeColor": "#a30000",
+    "themeColor": "#750000",
     "customCss": "./custom.css",
     "highlightLanguages": [
         "powershell",
