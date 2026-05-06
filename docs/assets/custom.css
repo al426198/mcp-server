@@ -3,8 +3,8 @@
     display: none !important;
 }
 
-:root .tsd-typography ul {
-    list-style-type: disc !important;
+.tsd-typography ul {
+    list-style-type: disc;
 }
 
 .tsd-typography ul ul {

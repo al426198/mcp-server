@@ -8,9 +8,9 @@
 }
 
 .tsd-typography ul ul {
-    list-style-type: circle;
+    list-style-type: circle !important;
 }
 
 .tsd-typography ul ul ul {
-    list-style-type: square;
+    list-style-type: square !important;
 }
