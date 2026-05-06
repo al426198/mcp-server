@@ -3,7 +3,6 @@
         "typedoc-material-theme"
     ],
     "themeColor": "#750000",
-    "customCss": "./custom.css",
     "highlightLanguages": [
         "powershell",
         "json"
