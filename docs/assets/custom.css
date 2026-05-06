@@ -1,6 +1,5 @@
 :root,
 body,
-.always-dark,
 [data-theme="dark"] {
     --md-sys-color-surface: #101F2D !important;
     --md-sys-color-surface-container: #101F2D !important;

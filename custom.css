@@ -1,6 +1,15 @@
 :root,
-body {
+body,
+[data-theme="dark"] {
+    --md-sys-color-surface: #101F2D !important;
+    --md-sys-color-surface-container: #101F2D !important;
+    --md-sys-color-surface-container-low: #0c1924 !important;
+    --md-sys-color-surface-container-high: #162840 !important;
+    --md-sys-color-surface-container-highest: #1a2f4a !important;
+    --md-sys-color-background: #101F2D !important;
     --color-background: #101F2D !important;
+    --light-color-background: #101F2D !important;
+    --dark-color-background: #101F2D !important;
 }
 
 .tsd-parameters,
