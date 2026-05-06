@@ -3,17 +3,14 @@
     display: none !important;
 }
 
-:root ul,
 .tsd-typography ul {
-    list-style-type: disc !important;
+    list-style-type: disc;
 }
 
-ul ul,
 .tsd-typography ul ul {
-    list-style-type: circle !important;
+    list-style-type: circle;
 }
 
-ul ul ul,
 .tsd-typography ul ul ul {
-    list-style-type: square !important;
+    list-style-type: square;
 }
