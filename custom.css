@@ -1,5 +1,6 @@
-html {
-    background-color: #101F2D !important;
+:root,
+body {
+    --color-background: #101F2D !important;
 }
 
 .tsd-parameters,
