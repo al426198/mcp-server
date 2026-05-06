@@ -46,7 +46,7 @@ class ListPageGenerator extends BasePageGenerator {
  *     "ApplicationArea": "All",
  *     "CardPageId": "Customer Card"
  *   },
- *   repeater: {
+ *   "repeater": {
  *     "name": "Customers",
  *     "fields": [
  *       {
