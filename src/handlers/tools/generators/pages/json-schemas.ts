@@ -59,7 +59,7 @@ export const actionAreaSchema = z.object({
 
 // Esquema base JSON de validación de argumentos de página
 export const basePageSchema = z.object({
-    id: z.number().default(50100).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
+    id: z.number().default(50100).describe("ID del objeto. Debe haber sido asignado previamente mediante AL Object ID Ninja."),
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
     sourceTable: z.string().describe("Nombre de la tabla de origen."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades opcionales de la página. No incluye 'PageType' ni 'SourceTable'."),

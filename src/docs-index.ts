@@ -1,3 +1,4 @@
+// Índice de páginas de documentación
 export * from './handlers/tools/generators/tables/gen-table.js';
 export * from './handlers/tools/generators/tables/gen-tableext.js';
 export * from './handlers/tools/generators/pages/subtypes/gen-page-api.js';

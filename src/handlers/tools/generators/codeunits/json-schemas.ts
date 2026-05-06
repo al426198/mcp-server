@@ -40,7 +40,7 @@ export const procedureSchema = z.object({
 
 // Esquema JSON de validación de argumentos de codeunit
 export const codeunitSchema = z.object({
-    id: z.number().default(50100).describe("ID del objeto. Se debe obtener mediante la herramienta 'assign-id'."),
+    id: z.number().default(50100).describe("ID del objeto. Debe ser haber sido asignado previamente mediante AL Object ID Ninja."),
     name: z.string().describe("Nombre del objeto. No debe existir dentro de la extensión AL actual."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor de la codeunit (opcional)."),
     procedures: z.array(procedureSchema).default([]).optional().describe("Lista de procedimientos de la codeunit (opcional).")

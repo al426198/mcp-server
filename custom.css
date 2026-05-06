@@ -2,3 +2,13 @@
 .tsd-returns-title {
     display: none !important;
 }
+
+ul ul,
+.tsd-typography ul ul {
+    list-style-type: circle !important;
+}
+
+ul ul ul,
+.tsd-typography ul ul ul {
+    list-style-type: square !important;
+}
