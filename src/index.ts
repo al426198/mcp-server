@@ -10,20 +10,9 @@ import { registerTablePartials } from "./templates/tables/partials/index.js";
 import { registerPagePartials } from "./templates/pages/partials/index.js";
 import { registerCodeunitPartials } from "./templates/codeunits/partials/index.js";
 import path from 'path';
-import fs from 'fs';
 
-// Ruta raíz del proyecto
+// Ruta raíz del proyecto actual
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-
-// Ruta al directorio raíz del proyecto AL
-const PROJECT_PATH = process.env.AL_PROJECT_PATH;
-
-// Ruta al directorio donde se almacenan los ficheros `.app` de las extensiones base.
-export const BASE_METADATA_PATH = path.join(PROJECT_PATH!, ".alpackages");
-
-// Ruta al fichero de metadatos de la extensión AL
-const appJson = JSON.parse(fs.readFileSync(path.join(PROJECT_PATH!, "app.json"), "utf8"));
-export const APP_METADATA_PATH = path.join(PROJECT_PATH!, `${appJson.publisher}_${appJson.name}_${appJson.version}.app`);
 
 /** 
  * Tipos de objetos disponibles en AL
@@ -52,7 +41,7 @@ async function main() {
     });
 
     // Comprobar que se ha especificado la ruta al directorio raíz del proyecto.
-    if (!PROJECT_PATH) {
+    if (!process.env.AL_PROJECT_PATH) {
         console.error("Error: No se ha especificado la ruta al directorio raíz del proyecto.");
         process.exit(1);
     }
