@@ -178,7 +178,7 @@
 <li><strong>modelcontextprotocol/sdk</strong>: <em>framework</em> utilizado</li>
 <li><strong>zod (v4)</strong>: validador de formato, expone el formato de petición al agente</li>
 <li><strong>handlebars</strong>: gestor de plantillas de generación de código</li>
-<li><strong>dotenv</strong>: gestor de variables de entorno (ficheros <em>.env</em>)</li>
+<li><strong>dotenv</strong>: gestor de variables de entorno (ficheros <em>.env</em>). Permite ejecutar el servidor de forma independiente.</li>
 </ul>
 </li>
 <li>
@@ -196,7 +196,7 @@
 
 <h2 id="configuración-y-uso" class="tsd-anchor-link">Configuración y uso<a href="#configuración-y-uso" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>Antes de comenzar con la configuración, se asume que debe haber instalado un agente que soporte integraciones MCP (Claude, Copilot, etc.) en el dispositivo que actúe a modo de cliente, ya sea independiente (aplicación propia) o esté integrado en un IDE
-(como <a href="https://code.visualstudio.com/download">VS Code</a> o <a href="https://antigravity.google/download">Google Antigravity</a>.</p>
+(como <a href="https://code.visualstudio.com/download">VS Code</a> o <a href="https://antigravity.google/download">Google Antigravity</a>).</p>
 <p>En este <a href="https://modelcontextprotocol.io/clients">listado</a> se pueden ver los clientes disponibles. A priori, todos permiten el uso de herramientas (<em>tools</em>).
 Aún así, se recomienda que el agente escogido soporte también como mínimo peticiones (<em>prompts</em>) y recursos (<em>resources</em>) para no comprometer el funcionamiento de la aplicación conforme se vaya ampliando.</p>
 <h3 id="configuración" class="tsd-anchor-link">Configuración<a href="#configuración" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
@@ -232,13 +232,13 @@ Se debería utilizar la última versión disponible; de no haber ninguna instala
 </code><button type="button">Copy</button></pre>
 
 <ul>
-<li>La variable <code>AL_PROJECT_PATH</code>, que hace referencia a la ruta <strong>absoluta</strong> al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor.</li>
+<li>La variable <code>AL_PROJECT_PATH</code>, que hace referencia a la ruta <strong>absoluta</strong> al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor. Si se quiere probar el servidor manualmente, también se deberá definir en el entorno (uso de <em>dotenv</em>).</li>
 </ul>
 <h3 id="uso-del-servidor" class="tsd-anchor-link">Uso del servidor<a href="#uso-del-servidor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <p>Antes de emplear el servidor hay que comprobar que esté activo y funcionando. En VS Code se puede comprobar desde la configuración de agentes:</p>
 <img width="922" height="492" alt="image" src="https://github.com/user-attachments/assets/ce48cdc1-f338-4229-a4ac-93bd1bd1238c" />
 <p>Desde una aplicación externa (como Claude, véase abajo), se puede consultar desde el apartado &quot;Conectores&quot; o similar:</p>
-<img width="782" height="520" alt="image" src="https://github.com/user-attachments/assets/b3bf0e1f-24c8-46a4-a218-22acf34d8b8b" />
+<img width="520" height="347" alt="image" src="https://github.com/user-attachments/assets/b3bf0e1f-24c8-46a4-a218-22acf34d8b8b" />
 <p>Una vez hecho esto, ya es posible hacer uso del servidor preguntando directamente al agente, aunque no es muy recomendable puesto que ante la falta de contexto puede saltarse algunas comprobaciones básicas como:</p>
 <ul>
 <li>La existencia de colisiones con la extensión actual (nombres e IDs de objeto).</li>
@@ -246,15 +246,14 @@ Se debería utilizar la última versión disponible; de no haber ninguna instala
 </ul>
 <p>Existen 2 maneras de reducir el impacto de este problema:</p>
 <ul>
-<li>Desde el cliente, inyectando el contexto pertinente mediante ficheros &quot;ocultos&quot; que el agente lee en tiempo de ejecución por defecto (generalmente formateados como &quot;*<a href="http://rules.md">rules.md</a>&quot;).</li>
-<li>Desde el servidor, añadir una petición a modo de guía o un recurso a modo de manual. Durante el desarrollo, se ha optado por utilizar una petición a modo de flujo de trabajo para realizar pruebas, que el usuario puede utilizar tanto desde VS Code:</li>
+<li>Desde el cliente, inyectando el contexto pertinente mediante ficheros &quot;ocultos&quot; que el agente lee en tiempo de ejecución (suelen terminar en -rules.md).</li>
+<li>Desde el servidor, añadir una petición a modo de guía o un recurso a modo de manual. Durante el desarrollo, se ha optado por utilizar una petición a modo de flujo de trabajo para realizar pruebas, que el usuario puede utilizar tanto desde VS Code...</li>
 </ul>
 <img width="350" height="232" alt="image" src="https://github.com/user-attachments/assets/a2bd3041-1c12-42bc-9c71-f6737e234b36" />
 <img width="488" height="158" alt="image" src="https://github.com/user-attachments/assets/e3ba9413-b53d-40d1-b38e-dee1c6535be3" />
-<p>como Claude:</p>
-<img width="1097" height="533" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
+<p>...como Claude o similares.</p>
+<img width="731" height="355" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
 <img width="620" height="635" alt="image" src="https://github.com/user-attachments/assets/4a341724-274c-4a63-b3f4-d30d02451688" />
-<p>Se podría adaptar en un futuro según la utilidad dada por el usuario.</p>
 <h3 id="consideraciones" class="tsd-anchor-link">Consideraciones<a href="#consideraciones" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <p>Puesto que esta herramienta está pensada exclusivamente para agentes de Inteligencia Artificial (IA), se debe tener en cuenta lo siguiente:</p>
 <ul>
