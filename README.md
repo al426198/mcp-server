@@ -18,7 +18,7 @@ Para ello, se ha optado por emplear el lenguaje TypeScript y el SDK correspondie
   - **modelcontextprotocol/sdk**: *framework* utilizado
   - **zod (v4)**: validador de formato, expone el formato de petición al agente
   - **handlebars**: gestor de plantillas de generación de código
-  - **dotenv**: gestor de variables de entorno (ficheros *.env*)
+  - **dotenv**: gestor de variables de entorno (ficheros *.env*). Permite ejecutar el servidor de forma independiente.
     
 - Para compilar el proyecto y ejecutar en local, será necesario instalar además:
   - **typescript**: lenguaje TypeScript
@@ -97,7 +97,7 @@ En cambio, si se desea ejecutar el proyecto localmente, se debe cambiar:
     }
 }
 ```
-- La variable ```AL_PROJECT_PATH```, que hace referencia a la ruta **absoluta** al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor.
+- La variable ```AL_PROJECT_PATH```, que hace referencia a la ruta **absoluta** al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor. Si se quiere probar el servidor manualmente, también se deberá definir en el entorno (uso de *dotenv*).
 
 ### Uso del servidor
 Antes de emplear el servidor hay que comprobar que esté activo y funcionando. En VS Code se puede comprobar desde la configuración de agentes:
@@ -106,25 +106,25 @@ Antes de emplear el servidor hay que comprobar que esté activo y funcionando. E
 
 Desde una aplicación externa (como Claude, véase abajo), se puede consultar desde el apartado "Conectores" o similar:
 
-<img width="782" height="520" alt="image" src="https://github.com/user-attachments/assets/b3bf0e1f-24c8-46a4-a218-22acf34d8b8b" />
+<img width="520" height="347" alt="image" src="https://github.com/user-attachments/assets/b3bf0e1f-24c8-46a4-a218-22acf34d8b8b" />
 
 Una vez hecho esto, ya es posible hacer uso del servidor preguntando directamente al agente, aunque no es muy recomendable puesto que ante la falta de contexto puede saltarse algunas comprobaciones básicas como:
 - La existencia de colisiones con la extensión actual (nombres e IDs de objeto).
 - La compilación exitosa del código generado.
 
 Existen 2 maneras de reducir el impacto de este problema:
-- Desde el cliente, inyectando el contexto pertinente mediante ficheros "ocultos" que el agente lee en tiempo de ejecución por defecto (generalmente formateados como "*rules.md").
-- Desde el servidor, añadir una petición a modo de guía o un recurso a modo de manual. Durante el desarrollo, se ha optado por utilizar una petición a modo de flujo de trabajo para realizar pruebas, que el usuario puede utilizar tanto desde VS Code:
+- Desde el cliente, inyectando el contexto pertinente mediante ficheros "ocultos" que el agente lee en tiempo de ejecución (suelen terminar en -rules.md).
+- Desde el servidor, añadir una petición a modo de guía o un recurso a modo de manual. Durante el desarrollo, se ha optado por utilizar una petición a modo de flujo de trabajo para realizar pruebas, que el usuario puede utilizar tanto desde VS Code...
 
 <img width="350" height="232" alt="image" src="https://github.com/user-attachments/assets/a2bd3041-1c12-42bc-9c71-f6737e234b36" />
+
 <img width="488" height="158" alt="image" src="https://github.com/user-attachments/assets/e3ba9413-b53d-40d1-b38e-dee1c6535be3" />
 
- como Claude:
+...como Claude o similares.
 
 <img width="1097" height="533" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
-<img width="620" height="635" alt="image" src="https://github.com/user-attachments/assets/4a341724-274c-4a63-b3f4-d30d02451688" />
 
-Se podría adaptar en un futuro según la utilidad dada por el usuario.
+<img width="620" height="635" alt="image" src="https://github.com/user-attachments/assets/4a341724-274c-4a63-b3f4-d30d02451688" />
 
 ### Consideraciones
 Puesto que esta herramienta está pensada exclusivamente para agentes de Inteligencia Artificial (IA), se debe tener en cuenta lo siguiente:
