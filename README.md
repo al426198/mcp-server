@@ -40,7 +40,7 @@ npm install
 
 ## Configuración y uso
 Antes de comenzar con la configuración, se asume que debe haber instalado un agente que soporte integraciones MCP (Claude, Copilot, etc.) en el dispositivo que actúe a modo de cliente, ya sea independiente (aplicación propia) o esté integrado en un IDE 
-(como [VS Code](https://code.visualstudio.com/download) o [Google Antigravity](https://antigravity.google/download).  
+(como [VS Code](https://code.visualstudio.com/download) o [Google Antigravity](https://antigravity.google/download)).  
 
 En este [listado](https://modelcontextprotocol.io/clients) se pueden ver los clientes disponibles. A priori, todos permiten el uso de herramientas (*tools*). 
 Aún así, se recomienda que el agente escogido soporte también como mínimo peticiones (*prompts*) y recursos (*resources*) para no comprometer el funcionamiento de la aplicación conforme se vaya ampliando.
@@ -122,7 +122,7 @@ Existen 2 maneras de reducir el impacto de este problema:
 
 ...como Claude o similares.
 
-<img width="1097" height="533" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
+<img width="731" height="355" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
 
 <img width="620" height="635" alt="image" src="https://github.com/user-attachments/assets/4a341724-274c-4a63-b3f4-d30d02451688" />
 
