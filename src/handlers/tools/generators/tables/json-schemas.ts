@@ -7,11 +7,11 @@ import { z } from "zod";
 // Tipos de grupos de campos que soporta AL. 'Brick' no es sintáticamente incorrecto, pero funciona solo para páginas.
 const FG_TYPES = ["DropDown", "Brick"];
 
-// Esquema de validación de campos (nuevos o modificados)
+// Esquema de validación de campos
 export const fieldSchema = z.object({
     id: z.number().describe("ID del campo. Debe ser único dentro de la tabla."),
     name: z.string().describe("Nombre del campo. Debe ser único dentro de la tabla."),
-    type: z.string().describe("Tipo del campo."),
+    type: z.string().describe("Tipo de dato del campo."),
     length: z.number().optional().describe("Longitud del campo. Solo se aplica a campos de tipo `Code` o `Text`."),
     properties: z.record(z.string(), z.string()).default({}).optional().describe("Propiedades clave-valor del campo."),
 });
@@ -43,6 +43,7 @@ export const tableSchema = z.object({
     fields: z.array(fieldSchema).describe("Campos del objeto AL."),
     keys: z.array(keySchema).default([]).optional().describe("Claves del objeto AL (opcional)."),
     fieldGroups: z.array(fieldGroupSchema).default([]).optional().describe("Grupos de campos del objeto AL (opcional).")
+    // Añadir esquemas para triggers en un futuro
 });
 
 // Esquema JSON de validación de argumentos de extensión de tabla

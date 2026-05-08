@@ -19,8 +19,8 @@ import path from "path";
  * - `fields` - Campos del objeto AL.
  *     - `id` - ID del campo.
  *     - `name` - Nombre del campo.
- *     - `type` - Tipo del campo.
- *     - `length` - Longitud del campo.
+ *     - `type` - Tipo de dato del campo.
+ *     - `length` - Longitud del campo (opcional).
  *     - `properties` - Propiedades clave-valor del campo (opcional).
  * - `keys` - Claves del objeto AL (opcional).
  *     - `name` - Nombre de la clave.
