@@ -120,6 +120,8 @@ Existen 2 maneras de reducir el impacto de este problema:
 
 <img width="488" height="158" alt="image" src="https://github.com/user-attachments/assets/e3ba9413-b53d-40d1-b38e-dee1c6535be3" />
 
+<img width="595" height="141" alt="image" src="https://github.com/user-attachments/assets/dd3d96dc-6824-4964-b27f-1a7ac7c24122" />
+
 ...como Claude o similares.
 
 <img width="731" height="355" alt="image" src="https://github.com/user-attachments/assets/c7d4bcb7-11a4-4bbc-a621-afcfb3321681" />
