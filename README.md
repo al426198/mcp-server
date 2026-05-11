@@ -48,7 +48,7 @@ Aún así, se recomienda que el agente escogido soporte también como mínimo pe
 ### Configuración
 Para que el agente reconozca el servidor, es necesario acceder al fichero de configuración MCP correspondiente. Dicho fichero suele ser accesible desde los ajustes de la aplicación desde la cual se invoca al agente. 
 
-Por ejemplo, en VS Code, la configuración MCP se encuentra en la ruta ```~/.vscode/mcp.json```, mientras que en Claude se puede localizar en el fichero ```~/AppData/Local/Packages/Claude_.../LocalCache/Roaming/Claude/claude_desktop_config.json```.
+Por ejemplo, en VS Code, la configuración MCP se encuentra en la ruta ```/.vscode/mcp.json``` desde la raíz del proyecto, mientras que en Claude se puede localizar en el fichero ```~/AppData/Local/Packages/Claude_.../LocalCache/Roaming/Claude/claude_desktop_config.json```.
 
 #### Ejecución en remoto (recomendada)
 Dentro de la clave de configuración para MCP en dicho fichero (cuyo nombre debería ser "servers", "mcpServers" o similar), añadir lo siguiente:
