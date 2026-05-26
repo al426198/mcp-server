@@ -97,7 +97,46 @@ En cambio, si se desea ejecutar el proyecto localmente, se debe cambiar:
     }
 }
 ```
-- La variable ```AL_PROJECT_PATH```, que hace referencia a la ruta **absoluta** al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor. Si se quiere probar el servidor manualmente, también se deberá definir en el entorno (uso de *dotenv*).
+- La variable ```AL_PROJECT_PATH```, que hace referencia a la ruta **absoluta** al proyecto AL sobre el cual se vaya a probar la aplicación, NO el proyecto destinado al servidor.
+
+#### Realización de pruebas en local
+Si se quiere probar el servidor de forma aislada, una forma de hacerlo es mediante la herramienta **MCP Inspector**. El servidor incluye el comando "show" a tal efecto, cuya sintaxis se muestra a continuación:
+<img width="604" height="29" alt="image" src="https://github.com/user-attachments/assets/6a84bbac-8420-4387-a993-a24af5007a8d" />
+
+Se ejecuta mediante la orden: ```npm run show```.
+
+El comando realiza 3 tareas en el siguiente orden:
+1. Compila el proyecto a JS para actualizar los cambios en la carpeta ```build```.
+2. Genera una clave secreta automáticamente y la guarda en la sesión del usuario. Esta clave se actualiza cada vez que se ejecuta el servidor.
+3. Ejecuta el programa MCP Inspector en el navegador. La primera vez pedirá instalar el paquete Node correspondiente.
+
+**Nota**: por cuestiones de compatibilidad, también se debe definir la variable de entorno "AL_PROJECT_PATH" dentro de un fichero llamado ```.env``` en la raíz del proyecto, aunque en la versión final del servidor se podría omitir, puesto que no hace nada. Se puede utilizar cualquier valor.
+
+Una vez hecho esto, debería abrirse en el navegador la siguiente pantalla (también debe haber un enlace a la misma en la terminal):
+<img width="948" height="439" alt="image" src="https://github.com/user-attachments/assets/7b1a836c-0476-49af-bb6d-2a7a41adfe08" />
+
+Para conectarse al servidor, se debe hacer click en "Connect". Al utilizar el comando "show", MCP Inspector ya tiene la configuración necesaria para conectarse directamente al servidor MCP:  
+<img width="216" height="376" alt="image" src="https://github.com/user-attachments/assets/e7e313c7-2e61-4a8c-9cdd-c690523ab09a" />
+
+Si todo ha ido bien, debería mostrarse la siguiente interfaz:
+
+<img width="710" height="345" alt="image" src="https://github.com/user-attachments/assets/d139badb-a98b-42d2-9afc-c78f1429de18" />
+
+Si no, es probable que no esté definida la variable de entorno "AL_PROJECT_PATH" o que no se encuentre donde se esperaba. 
+
+A partir de aquí, la idea es mostrar el listado de herramientas para ir probando, haciendo click sobre "Tools":
+
+<img width="692" height="347" alt="image" src="https://github.com/user-attachments/assets/ad02c8c1-871b-41b7-91df-496292b24a93" />
+
+Para ejecutar la herramienta, simplemente es necesario rellenar el formulario. Como este paso puede llegar a ser bastante tedioso, en la documentación extendida (y por ende, en el código), hay ejemplos de código comentados antes de cada una de ellas:
+<img width="424" height="160" alt="image" src="https://github.com/user-attachments/assets/db18fe92-2ade-45f9-8244-a6846d5b2571" />
+
+La idea es ir copiando cada uno de estos fragmentos y pegándolos en los campos correspondientes del formulario. Se pueden modificar los datos como se desee, pero los JSON utilizados pueden llegar a ser algo complicados, aunque MCP Inspector suele indicar los errores de sintaxis (si falta un cierre, si sobra un carácter, etc.)
+
+Por último, se debe hacer click en "Run Tool", que invocará el recurso del servidor y mostrará el resultado por pantalla. A continuación se muestra el resultado de ejecutar el ejemplo visto anteriormente:  
+
+<img width="330" height="329" alt="image" src="https://github.com/user-attachments/assets/89eb36a0-0f21-4e29-a7c5-ff8518f8a78f" />
+
 
 ### Uso del servidor
 Antes de emplear el servidor hay que comprobar que esté activo y funcionando. En VS Code se puede comprobar desde la configuración de agentes:
