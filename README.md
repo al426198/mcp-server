@@ -79,6 +79,15 @@ Dentro de la clave de configuración para MCP en dicho fichero (cuyo nombre debe
 - El segundo servidor pertenece a AL Object ID Ninja, es una utilidad para obtener IDs de objeto evitando colisiones.
 - El tercer servidor sirve para interactuar con BC, y viene incluido en la [extensión para el lenguaje AL](https://marketplace.visualstudio.com/items?itemName=ms-dynamics-smb.al) a partir de la 17.0 (Business Central 2026 Release Wave 1).
   Se debería utilizar la última versión disponible; de no haber ninguna instalada, el código generado podría no ser compilable.
+
+  **Nota**: la versión 17.0 emplea un argumento adicional, representando la ruta al proyecto AL del usuario, que dejará de ser necesario a partir de la versión 18.0.  
+  El comando queda entonces así:
+  ```json
+  "al": {
+  "command": "ruta/a/la/extensión/AL/bin/win32/altool.exe",
+  "args": ["launchmcpserver", "--transport", "stdio", "--projects", "ruta/absoluta/al/proyecto/AL"]
+  }
+  ```
   
   En Windows, el comando correspondiente para hallar dicha ruta es:
   ```powershell
